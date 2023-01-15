@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import EcosystemsList from "@/components/EcosystemsList.vue";
+
 defineProps<{
-  msg: string;
-}>();
+  msg: string
+}>()
 </script>
 
 <template>
@@ -11,6 +13,7 @@ defineProps<{
       You’ve successfully created a project with
       <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
+      <EcosystemsList />
       What's next?
     </h3>
   </div>

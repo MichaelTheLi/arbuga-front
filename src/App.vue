@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
+import { RouterLink, RouterView } from "vue-router"
+import HelloWorld from "./components/HelloWorld.vue"
+import { ref } from "vue";
+const msgOrig = "You did it!"
+let msg = ref("You did it!")
+let counter = ref(0);
+const onclick = () => {
+  counter.value++;
+  msg.value = msgOrig + " " + counter.value;
+}
 </script>
 
 <template>
@@ -14,11 +22,14 @@ import HelloWorld from "./components/HelloWorld.vue";
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld :msg="msg" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/arbuga">Arbuga</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+
+        <button @click="onclick">Test</button>
       </nav>
     </div>
   </header>
