@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRaw, watch } from "vue";
+import { defineComponent, ref, watch } from "vue";
 
 export default defineComponent({
   name: "EditEcosystem",
@@ -49,8 +49,8 @@ export default defineComponent({
 
     watch(
       () => props.ecosystem,
-      (newValue, prevValue) => {
-        ecosystemData.value = newValue
+      (newValue) => {
+        ecosystemData.value = newValue;
       }
     );
 

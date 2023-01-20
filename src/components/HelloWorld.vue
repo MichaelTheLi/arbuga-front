@@ -2,8 +2,8 @@
 import EcosystemsList from "@/components/EcosystemsList.vue";
 
 defineProps<{
-  msg: string
-}>()
+  msg: string;
+}>();
 </script>
 
 <template>

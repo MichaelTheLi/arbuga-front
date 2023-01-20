@@ -2,7 +2,7 @@
 import EditEcosystem from "@/components/EditEcosystem.vue";
 import { useEcosystemsStore, Ecosystem } from "@/stores/ecosystems";
 import _ from "lodash";
-import { computed, reactive, ref, toRaw, unref } from "vue";
+import { ref } from "vue";
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
