@@ -1,5 +1,4 @@
 <template>
-  <h2>New Ecosystems</h2>
   <form @submit="submit" class="form">
     <label for="name">Name: </label>
     <input v-model="ecosystemData.name" id="name" name="name" type="text" />
@@ -32,7 +31,7 @@
       name="volumeManual"
       type="number"
     />
-
+    <br>
     <button type="submit">Save</button>
   </form>
 </template>

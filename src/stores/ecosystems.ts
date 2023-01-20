@@ -15,9 +15,9 @@ export const useEcosystemsStore = defineStore("ecosystems", () => {
   const createNew = (nameProvided = ""): Ecosystem => {
     const name = nameProvided;
 
-    const width = ref(10);
-    const height = ref(20);
-    const length = ref(10);
+    const width = ref(0);
+    const height = ref(0);
+    const length = ref(0);
     const volumeManual = ref(0);
     const volumeCubicCm = computed(
       () => width.value * height.value * length.value

@@ -1,11 +1,22 @@
 <script setup lang="ts">
 import EcosystemsList from "@/components/EcosystemsList.vue";
+import CreateEcosystemButton from "@/components/CreateEcosystemButton.vue";
+import { useRouter } from 'vue-router';
+import type { Ecosystem } from "@/stores/ecosystems";
+
+const router = useRouter();
+
+const onCreated = (newEcosystem: Ecosystem) => {
+  router.push("/editCurrentEcosystem");
+};
 </script>
 
 <template>
   <div class="greetings">
     <h1 class="green">Arbuga</h1>
     <EcosystemsList />
+    <br>
+    <CreateEcosystemButton @created="onCreated"/>
   </div>
 </template>
 

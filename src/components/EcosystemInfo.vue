@@ -1,14 +1,16 @@
 <template>
-  <p>Name: {{ ecosystem.name }}</p>
-  <p>Volume: {{ ecosystem.volume }}l</p>
-  <p>Dimensions: {{ ecosystem.length }}cm x {{ ecosystem.width }}cm x {{ ecosystem.height }}cm</p>
+  <p>Name: {{ current.name }}</p>
+  <p>Volume: {{ current.volume }}l</p>
+  <p>Dimensions: {{ current.length }}cm x {{ current.width }}cm x {{ current.height }}cm</p>
 </template>
 
 <script setup lang="ts">
 import { useEcosystemsStore } from "@/stores/ecosystems";
+import { storeToRefs } from "pinia";
 const store = useEcosystemsStore();
 
-const ecosystem = store.current;
+
+let { current } = storeToRefs(store);
 </script>
 
 <style scoped></style>

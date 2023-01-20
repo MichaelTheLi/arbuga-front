@@ -18,9 +18,9 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
-      path: "/arbuga",
-      name: "arbuga",
-      component: () => import("../views/ArbugaView.vue"),
+      path: "/editCurrentEcosystem",
+      name: "editCurrentEcosystem",
+      component: () => import("../views/EditEcosystemView.vue"),
     },
   ],
 });

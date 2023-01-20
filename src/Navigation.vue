@@ -5,7 +5,7 @@ import { RouterLink } from "vue-router";
 <template>
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/arbuga">Arbuga</RouterLink>
+      <RouterLink to="/editCurrentEcosystem">Edit</RouterLink>
       <RouterLink to="/about">About</RouterLink>
     </nav>
 </template>
