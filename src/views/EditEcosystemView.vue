@@ -15,6 +15,7 @@ const onsave = function (ecosystemData: Ecosystem) {
 
 <template>
   <main>
-    <EditEcosystem :ecosystem="current" @save="onsave" />
+    <EditEcosystem v-if="current" :ecosystem="current" @save="onsave" />
+    <div v-else>Select an ecosystem</div>
   </main>
 </template>

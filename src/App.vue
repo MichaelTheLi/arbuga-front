@@ -2,6 +2,9 @@
 import { RouterView } from "vue-router";
 import MainInfo from "./components/MainInfo.vue";
 import Navigation from "@/Navigation.vue";
+import { seed } from "@/seed";
+
+seed();
 </script>
 
 <template>

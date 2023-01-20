@@ -35,12 +35,7 @@ export const useEcosystemsStore = defineStore("ecosystems", () => {
     };
   };
 
-  const initialList = [
-    createNew("Test 1") as Ecosystem,
-    createNew("Test 2"),
-    createNew("Test 3"),
-  ];
-  const list = ref(initialList);
+  const list = ref([]);
 
   const current = ref(list.value[0]);
 
