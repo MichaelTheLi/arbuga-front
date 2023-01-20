@@ -1,6 +1,10 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <div>
+      <h1>Arbuga is a aquarium builder</h1>
+      <p>Arbuga allows to create and analyse aquarium ecosystems</p>
+      <p>Arbuga will compute and provide crucial ecosystems parameters</p>
+    </div>
   </div>
 </template>
 

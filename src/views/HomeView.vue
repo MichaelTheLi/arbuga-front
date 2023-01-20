@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheWelcome from "../components/TheWelcome.vue";
+import EcosystemInfo from "@/components/EcosystemInfo.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <EcosystemInfo />
   </main>
 </template>

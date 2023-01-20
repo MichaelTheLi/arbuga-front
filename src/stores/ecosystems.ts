@@ -1,16 +1,18 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import type { Ref, ComputedRef } from "vue";
 
 export interface Ecosystem {
   name: string;
-  width: number;
-  height: number;
-  length: number;
-  volume: number;
+  width: Ref<number>;
+  height: Ref<number>;
+  length: Ref<number>;
+  volumeManual: Ref<number>;
+  volume: ComputedRef<number>;
 }
 
 export const useEcosystemsStore = defineStore("ecosystems", () => {
-  const createNew = (nameProvided = "") => {
+  const createNew = (nameProvided = ""): Ecosystem => {
     const name = nameProvided;
 
     const width = ref(10);
@@ -30,19 +32,26 @@ export const useEcosystemsStore = defineStore("ecosystems", () => {
       length,
       volume,
       volumeManual,
-      volumeCubicCm,
-      volumeLiters,
     };
   };
 
-  const list = ref([
-    createNew("Test 1"),
+  const initialList = [
+    createNew("Test 1") as Ecosystem,
     createNew("Test 2"),
     createNew("Test 3"),
-  ]);
+  ];
+  const list = ref(initialList);
+
+  const current = ref(list.value[0]);
+
+  const changeCurrent = (newCurrent: Ecosystem) => {
+    current.value = newCurrent;
+  };
 
   return {
-    list: list,
-    createNew: createNew,
+    list,
+    createNew,
+    current,
+    changeCurrent,
   };
 });

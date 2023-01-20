@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
-import { ref } from "vue";
-const msgOrig = "You did it!";
-let msg = ref("You did it!");
-let counter = ref(0);
-const onclick = () => {
-  counter.value++;
-  msg.value = msgOrig + " " + counter.value;
-};
+import { RouterView } from "vue-router";
+import MainInfo from "./components/MainInfo.vue";
+import Navigation from "@/Navigation.vue";
 </script>
 
 <template>
@@ -22,15 +15,8 @@ const onclick = () => {
     />
 
     <div class="wrapper">
-      <HelloWorld :msg="msg" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/arbuga">Arbuga</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-
-        <button @click="onclick">Test</button>
-      </nav>
+      <MainInfo />
+      <Navigation />
     </div>
   </header>
 
@@ -46,31 +32,6 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 
 @media (min-width: 1024px) {
