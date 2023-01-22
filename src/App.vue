@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 import MainInfo from "./components/MainInfo.vue";
-import Navigation from "@/Navigation.vue";
+import NavigationView from "@/NavigationView.vue";
 import { seed } from "@/seed";
 
 seed();
@@ -19,7 +19,7 @@ seed();
 
     <div class="wrapper">
       <MainInfo />
-      <Navigation />
+      <NavigationView />
     </div>
   </header>
 

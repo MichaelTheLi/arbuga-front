@@ -16,7 +16,7 @@ export const seed = () => {
     ecosystem.length.value = length;
     ecosystem.height.value = height;
 
-    store.list.push(ecosystem);
+    store.addNew(ecosystem);
   }
 
   addEcosystem("Living room", 30, 70, 35);

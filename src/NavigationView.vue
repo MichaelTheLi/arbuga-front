@@ -3,11 +3,11 @@ import { RouterLink } from "vue-router";
 </script>
 
 <template>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/editCurrentEcosystem">Edit</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-    </nav>
+  <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/editCurrentEcosystem">Edit</RouterLink>
+    <RouterLink to="/about">About</RouterLink>
+  </nav>
 </template>
 
 <style scoped>

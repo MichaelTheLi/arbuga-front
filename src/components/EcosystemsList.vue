@@ -1,5 +1,9 @@
 <template>
-  <a v-for="ecosystem in store.list" :key="ecosystem.name" @click="onEcosystemSelect(ecosystem)">
+  <a
+    v-for="ecosystem in list"
+    :key="ecosystem.name"
+    @click="onEcosystemSelect(ecosystem)"
+  >
     <div>{{ ecosystem.name || "New" }}</div>
     <div class="additional-info">
       <span>{{ ecosystem.volume }} L</span>,&nbsp;
@@ -13,9 +17,14 @@
 <script lang="ts" setup>
 import { useEcosystemsStore } from "@/stores/ecosystems";
 import type { Ecosystem } from "@/stores/ecosystems";
+import { storeToRefs } from "pinia";
+import type { UnwrapRef } from "vue";
 
 const store = useEcosystemsStore();
-const onEcosystemSelect = (ecosystem: Ecosystem) => {
+
+const { list } = storeToRefs(store);
+
+const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
   store.changeCurrent(ecosystem);
 };
 </script>

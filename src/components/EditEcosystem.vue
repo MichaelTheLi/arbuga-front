@@ -31,7 +31,7 @@
       name="volumeManual"
       type="number"
     />
-    <br>
+    <br />
     <button type="submit">Save</button>
   </form>
 </template>
@@ -58,7 +58,7 @@ export default defineComponent({
     };
   },
   methods: {
-    submit(e: SubmitEvent) {
+    submit(e: Event) {
       if (this.validate()) {
         this.save();
       }
