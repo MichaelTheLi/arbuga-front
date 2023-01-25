@@ -3,6 +3,7 @@ import { RouterView } from "vue-router";
 import MainInfo from "./components/MainInfo.vue";
 import NavigationView from "@/NavigationView.vue";
 import { seed } from "@/seed";
+import TestApollo from "@/components/TestApollo.vue";
 
 seed();
 </script>
@@ -19,6 +20,7 @@ seed();
 
     <div class="wrapper">
       <MainInfo />
+      <TestApollo />
       <NavigationView />
     </div>
   </header>
