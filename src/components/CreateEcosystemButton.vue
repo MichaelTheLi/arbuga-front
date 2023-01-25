@@ -1,9 +1,10 @@
 <template>
-  <button @click="createNew">Create new</button>
+  <q-btn @click="createNew" label="Create new" />
 </template>
 
 <script setup lang="ts">
 import { useEcosystemsStore } from "@/stores/ecosystems";
+import { QBtn } from "quasar";
 
 const emit = defineEmits(["created"]);
 

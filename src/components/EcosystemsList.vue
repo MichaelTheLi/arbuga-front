@@ -1,17 +1,18 @@
 <template>
-  <a
-    v-for="ecosystem in list"
-    :key="ecosystem.name"
-    @click="onEcosystemSelect(ecosystem)"
-  >
-    <div>{{ ecosystem.name || "New" }}</div>
-    <div class="additional-info">
-      <span>{{ ecosystem.volume }} L</span>,&nbsp;
-      <span>
-        {{ ecosystem.length }}x{{ ecosystem.width }}x{{ ecosystem.height }}
-      </span>
-    </div>
-  </a>
+  <div class="q-pa-md">
+    <q-list dark separator>
+      <q-item v-for="ecosystem in list"
+              :key="ecosystem.name"
+              @click="onEcosystemSelect(ecosystem)"
+              clickable
+              v-ripple>
+        <q-item-section>
+          <q-item-label overline>{{ ecosystem.name || "New" }}</q-item-label>
+          <q-item-label>{{ ecosystem.volume }} L, {{ ecosystem.length }}x{{ ecosystem.width }}x{{ ecosystem.height }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -19,6 +20,7 @@ import { useEcosystemsStore } from "@/stores/ecosystems";
 import type { Ecosystem } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
+import { QItem, QItemLabel, QItemSection, QList } from "quasar";
 
 const store = useEcosystemsStore();
 
@@ -29,16 +31,4 @@ const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
 };
 </script>
 
-<style scoped>
-a {
-  cursor: pointer;
-  display: block;
-  padding: 4px 6px;
-}
-
-.additional-info {
-  font-size: 10px;
-  font-weight: 300;
-  line-height: 12px;
-}
-</style>
+<style scoped></style>
