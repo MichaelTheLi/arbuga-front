@@ -1,46 +1,24 @@
 <template>
-  <form @submit="submit" class="form">
-    <label for="name">Name: </label>
-    <input v-model="ecosystemData.name" id="name" name="name" type="text" />
-    <label for="width">Width, cm: </label>
-    <input
-      v-model.number="ecosystemData.width"
-      id="width"
-      name="width"
-      type="number"
-    />
-    <label for="height">Height, cm: </label>
-    <input
-      v-model.number="ecosystemData.height"
-      id="height"
-      name="height"
-      type="number"
-    />
-    <label for="length">Length, cm: </label>
-    <input
-      v-model.number="ecosystemData.length"
-      id="length"
-      name="length"
-      type="number"
-    />
-    <label for="volumeManual">volume, l: ({{ ecosystemData.volume }})</label>
-    <input
-      v-model.number="ecosystemData.volumeManual"
-      :placeholder="ecosystemData.volume"
-      id="volumeManual"
-      name="volumeManual"
-      type="number"
-    />
-    <br />
-    <button type="submit">Save</button>
-  </form>
+  <div>
+    <q-form @submit="onSubmit" class="q-gutter-y-sm">
+      <q-input filled v-model="ecosystemData.name" label="Name" stack-label dense />
+      <q-input filled v-model="ecosystemData.width" label="Width" stack-label dense />
+      <q-input filled v-model="ecosystemData.height" label="Height" stack-label dense />
+      <q-input filled v-model="ecosystemData.length" label="Length" stack-label dense />
+      <q-input filled v-model="ecosystemData.volumeManual" :placeholder="ecosystemData.volume" hint="Volume calculated based on the dimensions. Manually enter the volume if required" dense />
+
+      <q-btn label="Save" type="submit" color="primary" />
+    </q-form>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
+import { QBtn, QInput } from "quasar";
 
 export default defineComponent({
   name: "EditEcosystem",
+  components: { QBtn, QInput },
   emits: ["save"],
   props: ["ecosystem"],
   setup(props) {
@@ -58,7 +36,7 @@ export default defineComponent({
     };
   },
   methods: {
-    submit(e: Event) {
+    onSubmit(e: Event) {
       if (this.validate()) {
         this.save();
       }
@@ -84,9 +62,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.form {
-  display: flex;
-  flex-direction: column;
-}
-</style>
+<style scoped></style>

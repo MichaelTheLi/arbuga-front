@@ -7,7 +7,7 @@ export interface Ecosystem {
   width: Ref<number>;
   height: Ref<number>;
   length: Ref<number>;
-  volumeManual: Ref<number>;
+  volumeManual: Ref<number | null>;
   volume: ComputedRef<number>;
 }
 
@@ -34,7 +34,7 @@ export const useEcosystemsStore = defineStore(
       const width = ref(0);
       const height = ref(0);
       const length = ref(0);
-      const volumeManual = ref(0);
+      const volumeManual = ref(null as number | null);
       const volumeCubicCm = computed(
         () => width.value * height.value * length.value
       );

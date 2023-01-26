@@ -32,7 +32,7 @@ seed();
 
 <template>
   <q-layout view="lhh LpR fFf">
-    <q-header elevated class="bg-primary text-white" height-hint="98">
+    <q-header class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
@@ -53,7 +53,7 @@ seed();
       </q-tabs>
     </q-header>
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+    <q-drawer bordered show-if-above v-model="leftDrawerOpen" side="left">
       <EcosystemsManagement />
     </q-drawer>
 
@@ -61,13 +61,12 @@ seed();
       show-if-above
       v-model="rightDrawerOpen"
       side="right"
-      elevated
       class="q-pa-sm"
     >
       Here will be fish, plants and equipment gallery to add to the aquarium
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="bg-grey-10">
       <RouterView />
     </q-page-container>
   </q-layout>

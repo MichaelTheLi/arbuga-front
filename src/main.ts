@@ -42,6 +42,22 @@ const app = createApp({
 app.use(createPinia());
 app.use(router);
 app.use(Quasar, {
+  config: {
+    dark: true, // 'auto'
+    brand: {
+      primary: '#1f5b9c',
+      secondary: '#26A69A',
+      accent: '#9C27B0',
+
+      dark: '#343434',
+      'dark-page': '#121212',
+
+      positive: '#21BA45',
+      negative: '#C10015',
+      info: '#31CCEC',
+      warning: '#F2C037'
+    }
+  },
   plugins: {},
 });
 

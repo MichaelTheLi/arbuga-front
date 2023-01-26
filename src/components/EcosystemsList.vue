@@ -6,14 +6,18 @@
       @click="onEcosystemSelect(ecosystem)"
       clickable
       v-ripple
+      :active="isActive(ecosystem)"
+      active-class="bg-primary text-white"
     >
       <q-item-section>
-        <q-item-label overline>{{ ecosystem.name || "New" }}</q-item-label>
-        <q-item-label
-          >{{ ecosystem.volume }} L, {{ ecosystem.length }}x{{
-            ecosystem.width
-          }}x{{ ecosystem.height }}</q-item-label
-        >
+        <q-item-label>{{ ecosystem.name || "New" }}</q-item-label>
+      </q-item-section>
+
+      <q-item-section side top>
+        <q-item-label caption>{{ ecosystem.volume }} L</q-item-label>
+        <q-item-label>
+          {{ ecosystem.length }}x{{ecosystem.width }}x{{ ecosystem.height }}
+        </q-item-label>
       </q-item-section>
     </q-item>
   </q-list>
@@ -24,7 +28,7 @@ import { useEcosystemsStore } from "@/stores/ecosystems";
 import type { Ecosystem } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
-import { QItem, QItemLabel, QItemSection, QList } from "quasar";
+import { QIcon, QItem, QItemLabel, QItemSection, QList } from "quasar";
 
 const store = useEcosystemsStore();
 
@@ -32,6 +36,10 @@ const { list } = storeToRefs(store);
 
 const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
   store.changeCurrent(ecosystem);
+};
+
+const isActive = (ecosystem: UnwrapRef<Ecosystem>) => {
+  return store.current === ecosystem;
 };
 </script>
 
