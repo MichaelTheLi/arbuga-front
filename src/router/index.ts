@@ -18,8 +18,8 @@ const router = createRouter({
       component: () => import("../views/AboutView.vue"),
     },
     {
-      path: "/editCurrentEcosystem",
-      name: "editCurrentEcosystem",
+      path: "/edit",
+      name: "edit",
       component: () => import("../views/EditEcosystemView.vue"),
     },
   ],

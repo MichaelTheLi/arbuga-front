@@ -1,68 +1,76 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { RouterView } from "vue-router";
-import MainInfo from "./components/MainInfo.vue";
-import NavigationView from "@/NavigationView.vue";
+import EcosystemsManagement from "./components/EcosystemsManagement.vue";
 import { seed } from "@/seed";
-import TestApollo from "@/components/TestApollo.vue";
+import {
+  QAvatar,
+  QBtn,
+  QDrawer,
+  QHeader,
+  QLayout,
+  QPageContainer,
+  QRouteTab,
+  QTabs,
+  QToolbar,
+  QToolbarTitle,
+} from "quasar";
+
+const leftDrawerOpen = ref(false);
+const rightDrawerOpen = ref(false);
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
+
+const toggleRightDrawer = () => {
+  rightDrawerOpen.value = !rightDrawerOpen.value;
+};
 
 seed();
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
+  <q-layout view="lhh LpR fFf">
+    <q-header elevated class="bg-primary text-white" height-hint="98">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-    <div class="wrapper">
-      <MainInfo />
-      <TestApollo />
-      <NavigationView />
-    </div>
-  </header>
+        <q-toolbar-title>
+          <q-avatar>
+            <img alt="Vue logo" class="logo" src="@/assets/logo.svg" />
+          </q-avatar>
+          Arbuga
+        </q-toolbar-title>
 
-  <RouterView />
+        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+      </q-toolbar>
+
+      <q-tabs align="left">
+        <q-route-tab to="/" label="Home" />
+        <q-route-tab to="/edit" label="Edit" />
+        <q-route-tab to="/about" label="About" />
+      </q-tabs>
+    </q-header>
+
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+      <EcosystemsManagement />
+    </q-drawer>
+
+    <q-drawer
+      show-if-above
+      v-model="rightDrawerOpen"
+      side="right"
+      elevated
+      class="q-pa-sm"
+    >
+      Here will be fish, plants and equipment gallery to add to the aquarium
+    </q-drawer>
+
+    <q-page-container>
+      <RouterView />
+    </q-page-container>
+  </q-layout>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+<style scoped></style>

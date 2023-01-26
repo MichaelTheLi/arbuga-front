@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import { watch } from "vue";
 
 const { result, loading, error } = useQuery(gql`
   query getUsers {
-    users(options: {paginate: {page: 0, limit: 2}}) {
+    users(options: { paginate: { page: 0, limit: 2 } }) {
       data {
         id
         name
@@ -31,5 +31,4 @@ watch(result, (value) => {
   </ul>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

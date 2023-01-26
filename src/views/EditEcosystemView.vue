@@ -5,6 +5,7 @@ import type { Ecosystem } from "@/stores/ecosystems";
 import _ from "lodash";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
+import { QPage } from "quasar";
 
 const store = useEcosystemsStore();
 
@@ -16,8 +17,8 @@ const onsave = function (ecosystemData: UnwrapRef<Ecosystem>) {
 </script>
 
 <template>
-  <main>
+  <q-page padding>
     <EditEcosystem v-if="current" :ecosystem="current" @save="onsave" />
     <div v-else>Select an ecosystem</div>
-  </main>
+  </q-page>
 </template>

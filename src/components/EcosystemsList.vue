@@ -1,18 +1,22 @@
 <template>
-  <div class="q-pa-md">
-    <q-list dark separator>
-      <q-item v-for="ecosystem in list"
-              :key="ecosystem.name"
-              @click="onEcosystemSelect(ecosystem)"
-              clickable
-              v-ripple>
-        <q-item-section>
-          <q-item-label overline>{{ ecosystem.name || "New" }}</q-item-label>
-          <q-item-label>{{ ecosystem.volume }} L, {{ ecosystem.length }}x{{ ecosystem.width }}x{{ ecosystem.height }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
-  </div>
+  <q-list separator>
+    <q-item
+      v-for="ecosystem in list"
+      :key="ecosystem.name"
+      @click="onEcosystemSelect(ecosystem)"
+      clickable
+      v-ripple
+    >
+      <q-item-section>
+        <q-item-label overline>{{ ecosystem.name || "New" }}</q-item-label>
+        <q-item-label
+          >{{ ecosystem.volume }} L, {{ ecosystem.length }}x{{
+            ecosystem.width
+          }}x{{ ecosystem.height }}</q-item-label
+        >
+      </q-item-section>
+    </q-item>
+  </q-list>
 </template>
 
 <script lang="ts" setup>

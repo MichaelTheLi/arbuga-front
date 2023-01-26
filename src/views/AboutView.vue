@@ -1,19 +1,17 @@
+<script setup lang="ts">
+import TestApollo from "@/components/TestApollo.vue";
+import { QPage } from "quasar";
+</script>
+
 <template>
-  <div class="about">
+  <q-page padding>
     <div>
       <h1>Arbuga is a aquarium builder</h1>
       <p>Arbuga allows to create and analyse aquarium ecosystems</p>
       <p>Arbuga will compute and provide crucial ecosystems parameters</p>
     </div>
-  </div>
+    <TestApollo />
+  </q-page>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style></style>
