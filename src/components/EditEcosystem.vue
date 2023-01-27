@@ -14,11 +14,11 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import { QBtn, QInput } from "quasar";
+import { QBtn, QForm, QInput } from "quasar";
 
 export default defineComponent({
   name: "EditEcosystem",
-  components: { QBtn, QInput },
+  components: { QForm, QBtn, QInput },
   emits: ["save"],
   props: ["ecosystem"],
   setup(props) {

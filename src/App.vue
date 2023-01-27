@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { RouterView } from "vue-router";
 import EcosystemsManagement from "./components/EcosystemsManagement.vue";
-import { seed } from "@/seed";
 import {
   QAvatar,
   QBtn,
@@ -15,6 +14,8 @@ import {
   QToolbar,
   QToolbarTitle,
 } from "quasar";
+import { loadEcosystems } from "@/gateway/gateway";
+import { useEcosystemsStore } from "@/stores/ecosystems";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
@@ -27,7 +28,20 @@ const toggleRightDrawer = () => {
   rightDrawerOpen.value = !rightDrawerOpen.value;
 };
 
-seed();
+loadEcosystems().then((ecosystems) => {
+  const store = useEcosystemsStore();
+
+  ecosystems.forEach((ecosystemData) => {
+    const ecosystem = store.createNew();
+
+    ecosystem.name = ecosystemData.name;
+    ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
+    ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
+    ecosystem.height.value = ecosystemData.aquarium.dimensions.height;
+
+    store.addNew(ecosystem);
+  });
+});
 </script>
 
 <template>
