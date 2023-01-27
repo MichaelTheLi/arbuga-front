@@ -66,7 +66,7 @@ seed();
       Here will be fish, plants and equipment gallery to add to the aquarium
     </q-drawer>
 
-    <q-page-container class="bg-grey-10">
+    <q-page-container>
       <RouterView />
     </q-page-container>
   </q-layout>

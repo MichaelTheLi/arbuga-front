@@ -45,18 +45,18 @@ app.use(Quasar, {
   config: {
     dark: true, // 'auto'
     brand: {
-      primary: '#1f5b9c',
-      secondary: '#26A69A',
-      accent: '#9C27B0',
+      primary: "#0b7b88",
+      secondary: "#157172",
+      accent: "#E94560",
 
-      dark: '#343434',
-      'dark-page': '#121212',
+      dark: "#13232c",
+      "dark-page": "#0e1c26",
 
-      positive: '#21BA45',
-      negative: '#C10015',
-      info: '#31CCEC',
-      warning: '#F2C037'
-    }
+      positive: "#21BA45",
+      negative: "#C10015",
+      info: "#31CCEC",
+      warning: "#F2C037",
+    },
   },
   plugins: {},
 });
