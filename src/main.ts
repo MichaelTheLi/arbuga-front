@@ -16,19 +16,53 @@ import {
   InMemoryCache,
 } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
+import typeDefs from "@/gateway/schema";
+import { faker } from "@faker-js/faker";
 
-const httpLink = createHttpLink({
-  // You should use an absolute URL here
-  uri: "https://graphqlzero.almansi.me/api",
+const httpLink = createHttpLink({ uri: "https://graphqlzero.almansi.me/api" });
+
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        ecosystems: {
+          read() {
+            return [
+              {
+                id: "zxc",
+                name: faker.word.adjective() + " " + faker.word.noun(),
+                aquarium: {
+                  dimensions: {
+                    width: faker.datatype.number({ min: 20, max: 100 }),
+                    height: faker.datatype.number({ min: 20, max: 100 }),
+                    length: faker.datatype.number({ min: 20, max: 100 }),
+                  },
+                },
+              },
+              {
+                id: "qwe",
+                name: faker.word.adjective() + " " + faker.word.noun(),
+                aquarium: {
+                  dimensions: {
+                    width: faker.datatype.number({ min: 20, max: 100 }),
+                    height: faker.datatype.number({ min: 20, max: 100 }),
+                    length: faker.datatype.number({ min: 20, max: 100 }),
+                  },
+                },
+              },
+            ];
+          },
+        },
+      },
+    },
+  },
 });
-
-// Cache implementation
-const cache = new InMemoryCache();
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
+  typeDefs,
 });
 
 const app = createApp({

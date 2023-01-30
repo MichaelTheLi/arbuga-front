@@ -1,6 +1,10 @@
 # arbuga-front
 
-This template should help get you started developing with Vue 3 in Vite.
+## TODO
+codegen.ts generates a little broken code:   
+`import { TypedDocumentNode as DocumentNode, ResultOf } from '@graphql-typed-document-node/core';`  
+vs  
+`import type { TypedDocumentNode as DocumentNode, ResultOf } from '@graphql-typed-document-node/core';`
 
 ## Recommended IDE Setup
 

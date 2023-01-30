@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { RouterView } from "vue-router";
 import EcosystemsManagement from "./components/EcosystemsManagement.vue";
 import {
@@ -14,7 +14,7 @@ import {
   QToolbar,
   QToolbarTitle,
 } from "quasar";
-import { loadEcosystems } from "@/gateway/gateway";
+import { loadEcosystems } from "@/gateway/gateway_apollo";
 import { useEcosystemsStore } from "@/stores/ecosystems";
 
 const leftDrawerOpen = ref(false);
@@ -28,19 +28,24 @@ const toggleRightDrawer = () => {
   rightDrawerOpen.value = !rightDrawerOpen.value;
 };
 
-loadEcosystems().then((ecosystems) => {
+const { result } = loadEcosystems();
+
+watch(result, (ecosystems) => {
+  console.log(ecosystems);
   const store = useEcosystemsStore();
 
-  ecosystems.forEach((ecosystemData) => {
-    const ecosystem = store.createNew();
+  if (ecosystems && ecosystems.ecosystems) {
+    ecosystems.ecosystems.forEach((ecosystemData) => {
+      const ecosystem = store.createNew();
 
-    ecosystem.name = ecosystemData.name;
-    ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
-    ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
-    ecosystem.height.value = ecosystemData.aquarium.dimensions.height;
+      ecosystem.name = ecosystemData.name;
+      ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
+      ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
+      ecosystem.height.value = ecosystemData.aquarium.dimensions.height;
 
-    store.addNew(ecosystem);
-  });
+      store.addNew(ecosystem);
+    });
+  }
 });
 </script>
 
