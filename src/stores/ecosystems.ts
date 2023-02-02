@@ -9,6 +9,22 @@ export interface Ecosystem {
   length: Ref<number>;
   volumeManual: Ref<number | null>;
   volume: ComputedRef<number>;
+  analysis: Ref<EcosystemAnalysis | null>;
+}
+
+export interface EcosystemAnalysis {
+  id: string;
+  name: string;
+  description: string;
+  status: string /* enum actually */;
+  messages: EcosystemAnalysisMessage[];
+}
+
+export interface EcosystemAnalysisMessage {
+  id: string;
+  name: string;
+  description: string;
+  status: string /* enum actually */;
 }
 
 export interface EcosystemState {
@@ -34,6 +50,7 @@ export const useEcosystemsStore = defineStore(
       const width = ref(0);
       const height = ref(0);
       const length = ref(0);
+      const analysis = ref(null);
       const volumeManual = ref(null as number | null);
       const volumeCubicCm = computed(
         () => width.value * height.value * length.value
@@ -48,6 +65,7 @@ export const useEcosystemsStore = defineStore(
         length,
         volume,
         volumeManual,
+        analysis,
       };
     };
 

@@ -3,17 +3,28 @@ extend type Ecosystem {
   id: ID!
   name: String!
   aquarium: AquariumGlass!
-  info: EcosystemInfo!
+  analysis: [EcosystemAnalysisCategory!]
 }
 
-extend type EcosystemInfo {
-  heuristics: [EcosystemHeuristic]
-}
-
-extend type EcosystemHeuristic {
+extend type EcosystemAnalysisCategory {
   id: ID!
   name: String!
   description: String!
+  status: AnalysisStatus!
+  messages: [EcosystemAnalysisMessage!]
+}
+
+enum AnalysisStatus {
+  ok
+  moderate
+  bad
+}
+
+extend type EcosystemAnalysisMessage {
+  id: ID!
+  name: String!
+  description: String!
+  status: AnalysisStatus!
 }
 
 extend type AquariumGlass {

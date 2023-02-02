@@ -13,7 +13,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  query ecosystemsQuery {\n    ecosystems @client {\n      id\n      name\n      aquarium {\n        dimensions {\n          width\n          height\n          length\n        }\n      }\n    }\n  }\n": types.EcosystemsQueryDocument,
+    "\n  query ecosystemsQuery {\n    ecosystems @client {\n      id\n      name\n      aquarium {\n        dimensions {\n          width\n          height\n          length\n        }\n      }\n      analysis {\n        id\n        name\n        description\n        status\n        messages {\n          id\n          name\n          description\n          status\n        }\n      }\n    }\n  }\n": types.EcosystemsQueryDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query ecosystemsQuery {\n    ecosystems @client {\n      id\n      name\n      aquarium {\n        dimensions {\n          width\n          height\n          length\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ecosystemsQuery {\n    ecosystems @client {\n      id\n      name\n      aquarium {\n        dimensions {\n          width\n          height\n          length\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query ecosystemsQuery {\n    ecosystems @client {\n      id\n      name\n      aquarium {\n        dimensions {\n          width\n          height\n          length\n        }\n      }\n      analysis {\n        id\n        name\n        description\n        status\n        messages {\n          id\n          name\n          description\n          status\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ecosystemsQuery {\n    ecosystems @client {\n      id\n      name\n      aquarium {\n        dimensions {\n          width\n          height\n          length\n        }\n      }\n      analysis {\n        id\n        name\n        description\n        status\n        messages {\n          id\n          name\n          description\n          status\n        }\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

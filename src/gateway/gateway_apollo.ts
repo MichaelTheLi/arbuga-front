@@ -13,6 +13,18 @@ const LOAD_ECOSYSTEMS = gql(/* GraphQL */ `
           length
         }
       }
+      analysis {
+        id
+        name
+        description
+        status
+        messages {
+          id
+          name
+          description
+          status
+        }
+      }
     }
   }
 `);

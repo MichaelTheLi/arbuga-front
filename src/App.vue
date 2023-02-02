@@ -9,13 +9,14 @@ import {
   QHeader,
   QLayout,
   QPageContainer,
-  QRouteTab,
+  QRouteTab, QSpace,
   QTabs,
   QToolbar,
-  QToolbarTitle,
+  QToolbarTitle
 } from "quasar";
 import { loadEcosystems } from "@/gateway/gateway_apollo";
 import { useEcosystemsStore } from "@/stores/ecosystems";
+import EcosystemAnalysisWrap from "@/components/EcosystemAnalysisWrap.vue";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
@@ -38,10 +39,15 @@ watch(result, (ecosystems) => {
     ecosystems.ecosystems.forEach((ecosystemData) => {
       const ecosystem = store.createNew();
 
+      console.log(ecosystem);
+      console.log(ecosystemData);
       ecosystem.name = ecosystemData.name;
       ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
       ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
       ecosystem.height.value = ecosystemData.aquarium.dimensions.height;
+      if (ecosystemData.analysis) {
+        ecosystem.analysis.value = ecosystemData.analysis;
+      }
 
       store.addNew(ecosystem);
     });
@@ -55,21 +61,24 @@ watch(result, (ecosystems) => {
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title>
+        <q-toolbar-title shrink>
           <q-avatar>
             <img alt="Vue logo" class="logo" src="@/assets/logo.svg" />
           </q-avatar>
           Arbuga
         </q-toolbar-title>
 
+        <q-tabs align="left">
+          <q-route-tab to="/" label="Browse" />
+          <q-route-tab to="/edit" label="Ecosystem" />
+        </q-tabs>
+        <q-space />
+
+        <q-tabs>
+          <q-route-tab to="/about" label="About" />
+        </q-tabs>
         <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
-
-      <q-tabs align="left">
-        <q-route-tab to="/" label="Home" />
-        <q-route-tab to="/edit" label="Edit" />
-        <q-route-tab to="/about" label="About" />
-      </q-tabs>
     </q-header>
 
     <q-drawer bordered show-if-above v-model="leftDrawerOpen" side="left">
@@ -82,7 +91,7 @@ watch(result, (ecosystems) => {
       side="right"
       class="q-pa-sm"
     >
-      Here will be fish, plants and equipment gallery to add to the aquarium
+      <EcosystemAnalysisWrap />
     </q-drawer>
 
     <q-page-container>

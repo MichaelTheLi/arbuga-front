@@ -1,4 +1,4 @@
-import { createApp, h, provide } from "vue";
+import { createApp, h, provide, reactive } from "vue";
 import { createPinia } from "pinia";
 
 import { Quasar } from "quasar";
@@ -17,7 +17,7 @@ import {
 } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import typeDefs from "@/gateway/schema";
-import { faker } from "@faker-js/faker";
+import { seedEcosystems } from "@/seed";
 
 const httpLink = createHttpLink({ uri: "https://graphqlzero.almansi.me/api" });
 
@@ -27,30 +27,7 @@ const cache = new InMemoryCache({
       fields: {
         ecosystems: {
           read() {
-            return [
-              {
-                id: "zxc",
-                name: faker.word.adjective() + " " + faker.word.noun(),
-                aquarium: {
-                  dimensions: {
-                    width: faker.datatype.number({ min: 20, max: 100 }),
-                    height: faker.datatype.number({ min: 20, max: 100 }),
-                    length: faker.datatype.number({ min: 20, max: 100 }),
-                  },
-                },
-              },
-              {
-                id: "qwe",
-                name: faker.word.adjective() + " " + faker.word.noun(),
-                aquarium: {
-                  dimensions: {
-                    width: faker.datatype.number({ min: 20, max: 100 }),
-                    height: faker.datatype.number({ min: 20, max: 100 }),
-                    length: faker.datatype.number({ min: 20, max: 100 }),
-                  },
-                },
-              },
-            ];
+            return seedEcosystems;
           },
         },
       },

@@ -14,6 +14,12 @@ export type Scalars = {
   Float: number;
 };
 
+export enum AnalysisStatus {
+  Bad = 'bad',
+  Moderate = 'moderate',
+  Ok = 'ok'
+}
+
 export type AquariumGlass = {
   __typename?: 'AquariumGlass';
   decorationsVolume?: Maybe<Scalars['Int']>;
@@ -31,22 +37,27 @@ export type Dimensions = {
 
 export type Ecosystem = {
   __typename?: 'Ecosystem';
+  analysis?: Maybe<Array<EcosystemAnalysisCategory>>;
   aquarium: AquariumGlass;
   id: Scalars['ID'];
-  info: EcosystemInfo;
   name: Scalars['String'];
 };
 
-export type EcosystemHeuristic = {
-  __typename?: 'EcosystemHeuristic';
+export type EcosystemAnalysisCategory = {
+  __typename?: 'EcosystemAnalysisCategory';
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  messages?: Maybe<Array<EcosystemAnalysisMessage>>;
+  name: Scalars['String'];
+  status: AnalysisStatus;
+};
+
+export type EcosystemAnalysisMessage = {
+  __typename?: 'EcosystemAnalysisMessage';
   description: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
-};
-
-export type EcosystemInfo = {
-  __typename?: 'EcosystemInfo';
-  heuristics?: Maybe<Array<Maybe<EcosystemHeuristic>>>;
+  status: AnalysisStatus;
 };
 
 export type Query = {
@@ -63,7 +74,7 @@ export type QueryEcosystemArgs = {
 export type EcosystemsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EcosystemsQueryQuery = { __typename?: 'Query', ecosystems?: Array<{ __typename?: 'Ecosystem', id: string, name: string, aquarium: { __typename?: 'AquariumGlass', dimensions: { __typename?: 'Dimensions', width: number, height: number, length: number } } }> | null };
+export type EcosystemsQueryQuery = { __typename?: 'Query', ecosystems?: Array<{ __typename?: 'Ecosystem', id: string, name: string, aquarium: { __typename?: 'AquariumGlass', dimensions: { __typename?: 'Dimensions', width: number, height: number, length: number } }, analysis?: Array<{ __typename?: 'EcosystemAnalysisCategory', id: string, name: string, description: string, status: AnalysisStatus, messages?: Array<{ __typename?: 'EcosystemAnalysisMessage', id: string, name: string, description: string, status: AnalysisStatus }> | null }> | null }> | null };
 
 
-export const EcosystemsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ecosystemsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ecosystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aquarium"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"length"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EcosystemsQueryQuery, EcosystemsQueryQueryVariables>;
+export const EcosystemsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ecosystemsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ecosystems"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"client"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aquarium"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dimensions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"length"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"analysis"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]}}]} as unknown as DocumentNode<EcosystemsQueryQuery, EcosystemsQueryQueryVariables>;
