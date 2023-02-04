@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import EcosystemAnalysis from "@/components/EcosystemAnalysis.vue";
+import EcosystemAnalysis from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
 import { useEcosystemsStore } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 

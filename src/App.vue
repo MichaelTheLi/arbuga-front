@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { RouterView } from "vue-router";
-import EcosystemsManagement from "./components/EcosystemsManagement.vue";
+import EcosystemsManagement from "./components/EcosystemsManagement/index.vue";
 import {
   QAvatar,
   QBtn,
@@ -16,7 +16,7 @@ import {
 } from "quasar";
 import { loadEcosystems } from "@/gateway/gateway_apollo";
 import { useEcosystemsStore } from "@/stores/ecosystems";
-import EcosystemAnalysisWrap from "@/components/EcosystemAnalysisWrap.vue";
+import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/index.vue";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);

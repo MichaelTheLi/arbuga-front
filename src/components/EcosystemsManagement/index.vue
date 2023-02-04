@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import EcosystemsList from "@/components/EcosystemsList.vue";
-import CreateEcosystemButton from "@/components/CreateEcosystemButton.vue";
+import EcosystemsList from "@/components/EcosystemsManagement/EcosystemsList.vue";
+import CreateEcosystemButton from "@/components/EcosystemsManagement/CreateEcosystemButton.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
