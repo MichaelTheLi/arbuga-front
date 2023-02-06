@@ -1,5 +1,5 @@
 <template>
-  <q-btn @click="createNew" label="Create new" color="primary"/>
+  <q-btn @click="createNew" label="Create new" color="primary" />
 </template>
 
 <script setup lang="ts">

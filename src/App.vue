@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { RouterView } from "vue-router";
-import EcosystemsManagement from "./components/EcosystemsManagement/index.vue";
+import EcosystemsManagement from "./components/EcosystemsManagement/EcosystemsManagement.vue";
 import {
   QAvatar,
   QBtn,
@@ -9,14 +9,15 @@ import {
   QHeader,
   QLayout,
   QPageContainer,
-  QRouteTab, QSpace,
+  QRouteTab,
+  QSpace,
   QTabs,
   QToolbar,
-  QToolbarTitle
+  QToolbarTitle,
 } from "quasar";
 import { loadEcosystems } from "@/gateway/gateway_apollo";
 import { useEcosystemsStore } from "@/stores/ecosystems";
-import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/index.vue";
+import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
@@ -68,9 +69,9 @@ watch(result, (ecosystems) => {
           Arbuga
         </q-toolbar-title>
 
-<!--        <q-tabs align="left">-->
-<!--          <q-route-tab to="/" label="Browse" />-->
-<!--        </q-tabs>-->
+        <!--        <q-tabs align="left">-->
+        <!--          <q-route-tab to="/" label="Browse" />-->
+        <!--        </q-tabs>-->
         <q-space />
 
         <q-tabs>
@@ -80,7 +81,13 @@ watch(result, (ecosystems) => {
       </q-toolbar>
     </q-header>
 
-    <q-drawer bordered show-if-above v-model="leftDrawerOpen" side="left" :width="250">
+    <q-drawer
+      bordered
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      :width="250"
+    >
       <EcosystemsManagement />
     </q-drawer>
 

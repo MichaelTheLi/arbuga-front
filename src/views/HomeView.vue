@@ -9,7 +9,7 @@ const store = useEcosystemsStore();
 let { current } = storeToRefs(store);
 
 const onsave = function () {
-  console.log(current.value)
+  console.log(current.value);
 };
 </script>
 

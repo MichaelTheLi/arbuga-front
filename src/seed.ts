@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { reactive } from "vue";
 
 export const seedEcosystems = [
   {

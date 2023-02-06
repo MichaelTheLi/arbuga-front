@@ -16,7 +16,7 @@
       <q-item-section side top>
         <q-item-label caption>{{ ecosystem.volume }} L</q-item-label>
         <q-item-label>
-          {{ ecosystem.length }}x{{ecosystem.width }}x{{ ecosystem.height }}
+          {{ ecosystem.length }}x{{ ecosystem.width }}x{{ ecosystem.height }}
         </q-item-label>
       </q-item-section>
     </q-item>
@@ -28,7 +28,7 @@ import { useEcosystemsStore } from "@/stores/ecosystems";
 import type { Ecosystem } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
-import { QIcon, QItem, QItemLabel, QItemSection, QList } from "quasar";
+import { QItem, QItemLabel, QItemSection, QList } from "quasar";
 
 const store = useEcosystemsStore();
 

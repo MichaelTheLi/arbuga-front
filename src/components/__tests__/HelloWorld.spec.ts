@@ -5,7 +5,9 @@ import EcosystemInfo from "../EcosystemInfo.vue";
 
 describe("HelloWorld", () => {
   it("renders properly", () => {
-    const wrapper = mount(EcosystemInfo, { props: { ecosystem: {name: "Test name"} } });
-    expect(wrapper.text()).toContain("Name: Test name");
+    const wrapper = mount(EcosystemInfo, {
+      props: { ecosystem: { volume: 123 } },
+    });
+    expect(wrapper.text()).toContain("Actual volume: 123l");
   });
 });
