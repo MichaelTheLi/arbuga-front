@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import {
   QBadge,
+  QIcon,
   QItem,
   QItemLabel,
   QItemSection,

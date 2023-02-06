@@ -1,10 +1,10 @@
 <template>
-  <p>Name: {{ ecosystem.name }}</p>
-  <p>Volume: {{ ecosystem.volume }}l</p>
-  <p>
-    Dimensions: {{ ecosystem.length }}cm x {{ ecosystem.width }}cm x
-    {{ ecosystem.height }}cm
-  </p>
+  <div>
+    <div class="text-body2">
+      <p>Actual volume: {{ ecosystem.volume }}l</p>
+      <p>Something else: 123i</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

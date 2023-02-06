@@ -32,15 +32,12 @@ const toggleRightDrawer = () => {
 const { result } = loadEcosystems();
 
 watch(result, (ecosystems) => {
-  console.log(ecosystems);
   const store = useEcosystemsStore();
 
   if (ecosystems && ecosystems.ecosystems) {
     ecosystems.ecosystems.forEach((ecosystemData) => {
       const ecosystem = store.createNew();
 
-      console.log(ecosystem);
-      console.log(ecosystemData);
       ecosystem.name = ecosystemData.name;
       ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
       ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
@@ -49,6 +46,9 @@ watch(result, (ecosystems) => {
         ecosystem.analysis.value = ecosystemData.analysis;
       }
 
+      if (!store.current) {
+        store.changeCurrent(ecosystem);
+      }
       store.addNew(ecosystem);
     });
   }
@@ -68,10 +68,9 @@ watch(result, (ecosystems) => {
           Arbuga
         </q-toolbar-title>
 
-        <q-tabs align="left">
-          <q-route-tab to="/" label="Browse" />
-          <q-route-tab to="/edit" label="Ecosystem" />
-        </q-tabs>
+<!--        <q-tabs align="left">-->
+<!--          <q-route-tab to="/" label="Browse" />-->
+<!--        </q-tabs>-->
         <q-space />
 
         <q-tabs>
@@ -81,7 +80,7 @@ watch(result, (ecosystems) => {
       </q-toolbar>
     </q-header>
 
-    <q-drawer bordered show-if-above v-model="leftDrawerOpen" side="left">
+    <q-drawer bordered show-if-above v-model="leftDrawerOpen" side="left" :width="250">
       <EcosystemsManagement />
     </q-drawer>
 
@@ -90,6 +89,7 @@ watch(result, (ecosystems) => {
       v-model="rightDrawerOpen"
       side="right"
       class="q-pa-sm"
+      :width="400"
     >
       <EcosystemAnalysisWrap />
     </q-drawer>

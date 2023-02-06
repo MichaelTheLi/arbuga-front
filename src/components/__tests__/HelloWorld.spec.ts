@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 
 import { mount } from "@vue/test-utils";
-import HelloWorld from "../EcosystemsManagement/index.vue";
+import EcosystemInfo from "../EcosystemInfo.vue";
 
 describe("HelloWorld", () => {
   it("renders properly", () => {
-    const wrapper = mount(HelloWorld, { props: { msg: "Hello Vitest" } });
-    expect(wrapper.text()).toContain("Hello Vitest");
+    const wrapper = mount(EcosystemInfo, { props: { ecosystem: {name: "Test name"} } });
+    expect(wrapper.text()).toContain("Name: Test name");
   });
 });
