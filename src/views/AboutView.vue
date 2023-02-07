@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import TestApollo from "@/components/TestApollo.vue";
 import { QPage } from "quasar";
 </script>
 
@@ -10,7 +9,6 @@ import { QPage } from "quasar";
       <p>Arbuga allows to create and analyse aquarium ecosystems</p>
       <p>Arbuga will compute and provide crucial ecosystems parameters</p>
     </div>
-    <TestApollo />
   </q-page>
 </template>
 
