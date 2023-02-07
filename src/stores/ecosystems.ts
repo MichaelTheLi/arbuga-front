@@ -1,6 +1,7 @@
+import { deepUnref } from "vue-deepunref";
 import { defineStore } from "pinia";
 import type { ComputedRef, Ref, UnwrapRef } from "vue";
-import { computed, ref, unref } from "vue";
+import { computed, ref, toRaw, unref } from "vue";
 
 export interface Ecosystem {
   name: string;
@@ -30,7 +31,8 @@ export interface EcosystemAnalysisMessage {
 export interface EcosystemState {
   list: Ref<UnwrapRef<Ecosystem>[]>;
   createNew: (nameProvided?: string) => Ecosystem;
-  current: Ref<UnwrapRef<Ecosystem>>;
+  current: Ref<UnwrapRef<Ecosystem> | null>;
+  rememberedCurrent: Ref<UnwrapRef<Ecosystem> | null>;
   changeCurrent: (
     newCurrent:
       | Ecosystem
@@ -39,6 +41,8 @@ export interface EcosystemState {
       | UnwrapRef<Ecosystem>
   ) => void;
   addNew: (newEcosystem: Ecosystem) => void;
+  restoreCurrent: () => void;
+  rememberCurrent: () => void;
 }
 
 export const useEcosystemsStore = defineStore(
@@ -71,8 +75,10 @@ export const useEcosystemsStore = defineStore(
 
     const list = ref([]) as Ref<UnwrapRef<Ecosystem>[]>;
 
-    const currentRaw = list.value[0];
+    const currentRaw = list.value[0] as UnwrapRef<Ecosystem> | null;
     const current = ref(currentRaw);
+    const rememberedCurrentRaw = null as UnwrapRef<Ecosystem> | null;
+    const rememberedCurrent = ref(rememberedCurrentRaw);
 
     const changeCurrent = (
       newCurrent:
@@ -82,6 +88,17 @@ export const useEcosystemsStore = defineStore(
         | UnwrapRef<Ecosystem>
     ) => {
       current.value = unref(newCurrent as Ref<UnwrapRef<Ecosystem>>);
+      rememberCurrent();
+    };
+
+    const restoreCurrent = () => {
+      if (current.value) {
+        Object.assign(current.value, rememberedCurrent.value);
+      }
+    };
+
+    const rememberCurrent = () => {
+      rememberedCurrent.value = { ...deepUnref(current.value) };
     };
 
     const addNew = (newEcosystem: Ecosystem) => {
@@ -93,8 +110,11 @@ export const useEcosystemsStore = defineStore(
       list,
       createNew,
       current,
+      rememberedCurrent,
       changeCurrent,
       addNew,
+      restoreCurrent,
+      rememberCurrent,
     };
   }
 );

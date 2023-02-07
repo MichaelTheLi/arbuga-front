@@ -9,7 +9,16 @@ const store = useEcosystemsStore();
 let { current } = storeToRefs(store);
 
 const onsave = function () {
+  console.group("save");
   console.log(current.value);
+  console.groupEnd();
+};
+
+const onrestore = function () {
+  console.group("restore");
+  console.log(current.value);
+  store.restoreCurrent();
+  console.groupEnd();
 };
 </script>
 
@@ -21,7 +30,10 @@ const onsave = function () {
       <EcosystemInfo :ecosystem="current" />
 
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn fab icon="save" color="accent" @click="onsave" />
+        <div class="q-gutter-sm">
+          <q-btn fab icon="restore" color="accent" @click="onrestore" />
+          <q-btn fab icon="save" color="accent" @click="onsave" />
+        </div>
       </q-page-sticky>
     </div>
     <div v-else>Select an ecosystem</div>
