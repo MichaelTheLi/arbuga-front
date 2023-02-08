@@ -17,7 +17,7 @@ import {
 } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import typeDefs from "@/gateway/schema";
-import { seedEcosystems } from "@/seed";
+import { seedUser } from "@/gateway/seed";
 
 const httpLink = createHttpLink({ uri: "https://graphqlzero.almansi.me/api" });
 
@@ -25,9 +25,9 @@ const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        ecosystems: {
+        me: {
           read() {
-            return seedEcosystems;
+            return seedUser;
           },
         },
       },

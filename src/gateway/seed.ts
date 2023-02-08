@@ -91,3 +91,10 @@ export const seedEcosystems = [
     ],
   },
 ];
+
+export const seedUser = {
+  id: faker.datatype.uuid(),
+  login: null,
+  name: "It's a me, Mario",
+  ecosystems: seedEcosystems,
+};

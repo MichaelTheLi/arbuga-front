@@ -2,16 +2,18 @@
   <q-list>
     <h5 class="q-my-md">Your progress</h5>
     <q-linear-progress
-      dark
       rounded
       color="accent"
       size="lg"
       :value="progress"
       class="q-my-md"
+      animation-speed="300"
     />
     <div v-for="(category, index) of analysis" :key="category.id">
       <q-item-label header>
-        <span :class="'text-' + statusToColor(category.status)">{{ category.name }}</span>
+        <span :class="'text-' + statusToColor(category.status)">{{
+          category.name
+        }}</span>
         <q-badge
           v-if="category.status !== 'ok'"
           :color="statusToColor(category.status)"

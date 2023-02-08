@@ -40,9 +40,18 @@ extend type Dimensions {
   length: Int!
 }
 
-extend type Query {
+extend type User {
+  id: ID!
+  login: String
+  name: String!
   ecosystems: [Ecosystem!]
   ecosystem(id: ID!): Ecosystem
+}
+
+extend type Query {
+  me: User
+  publicEcosystems: [Ecosystem!]
+  publicEcosystem(id: ID!): Ecosystem
 }
 `;
 

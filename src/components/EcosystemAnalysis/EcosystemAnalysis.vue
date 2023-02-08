@@ -1,6 +1,9 @@
 <template>
-  <EcosystemAnalysis v-if="current" :analysis="current.analysis" />
-  <div v-else>Select an ecosystem</div>
+  <EcosystemAnalysis
+    v-if="current && current.analysis"
+    :analysis="current.analysis"
+  />
+  <div v-else>No analysis available. Please select or create an ecosystem</div>
 </template>
 
 <script setup lang="ts">

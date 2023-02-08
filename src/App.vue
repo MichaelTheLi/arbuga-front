@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { RouterView } from "vue-router";
 import EcosystemsManagement from "./components/EcosystemsManagement/EcosystemsManagement.vue";
 import {
@@ -15,8 +15,7 @@ import {
   QToolbar,
   QToolbarTitle,
 } from "quasar";
-import { loadEcosystems } from "@/gateway/gateway_apollo";
-import { useEcosystemsStore } from "@/stores/ecosystems";
+import { fetchUser } from "@/gateway/gateway_apollo";
 import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
 
 const leftDrawerOpen = ref(false);
@@ -30,30 +29,7 @@ const toggleRightDrawer = () => {
   rightDrawerOpen.value = !rightDrawerOpen.value;
 };
 
-const { result } = loadEcosystems();
-
-watch(result, (ecosystems) => {
-  const store = useEcosystemsStore();
-
-  if (ecosystems && ecosystems.ecosystems) {
-    ecosystems.ecosystems.forEach((ecosystemData) => {
-      const ecosystem = store.createNew();
-
-      ecosystem.name = ecosystemData.name;
-      ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
-      ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
-      ecosystem.height.value = ecosystemData.aquarium.dimensions.height;
-      if (ecosystemData.analysis) {
-        ecosystem.analysis.value = ecosystemData.analysis;
-      }
-
-      if (!store.current) {
-        store.changeCurrent(ecosystem);
-      }
-      store.addNew(ecosystem);
-    });
-  }
-});
+fetchUser();
 </script>
 
 <template>
