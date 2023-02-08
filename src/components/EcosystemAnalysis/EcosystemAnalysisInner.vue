@@ -1,12 +1,23 @@
 <template>
   <q-list>
+    <h5 class="q-my-md">Your progress</h5>
+    <q-linear-progress
+      dark
+      rounded
+      color="accent"
+      size="lg"
+      :value="progress"
+      class="q-my-md"
+    />
     <div v-for="(category, index) of analysis" :key="category.id">
       <q-item-label header>
-        {{ category.name }}
+        <span :class="'text-' + statusToColor(category.status)">{{ category.name }}</span>
         <q-badge
+          v-if="category.status !== 'ok'"
           :color="statusToColor(category.status)"
           :label="category.status"
           text-color="black"
+          class="q-ml-xs"
         />
       </q-item-label>
 
@@ -38,11 +49,25 @@ import {
   QItem,
   QItemLabel,
   QItemSection,
+  QLinearProgress,
   QList,
   QSeparator,
 } from "quasar";
+import { computed } from "vue";
+import type { EcosystemAnalysis } from "@/stores/ecosystems";
 
-defineProps(["analysis"]);
+const props = defineProps<{
+  analysis: EcosystemAnalysis[];
+}>();
+
+const progress = computed(() => {
+  const valid = props.analysis.filter(
+    (analysisItem) => analysisItem.status === "ok"
+  ).length;
+  const total = props.analysis.length;
+  return valid / total;
+});
+
 const statusToColor = (status: string) => {
   if (status === "ok") {
     return "teal-7";
