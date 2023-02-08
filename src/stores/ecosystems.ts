@@ -119,7 +119,10 @@ export const useEcosystemsStore = defineStore(
 
     const restoreCurrent = () => {
       if (current.value) {
-        Object.assign(current.value, rememberedCurrent.value);
+        Object.assign(
+          current.value,
+          _.omit(rememberedCurrent.value, ["volume"])
+        );
       }
     };
 
