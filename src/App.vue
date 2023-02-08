@@ -6,17 +6,18 @@ import {
   QAvatar,
   QBtn,
   QDrawer,
-  QHeader,
+  QHeader, QIcon,
   QLayout,
   QPageContainer,
-  QRouteTab,
+  QRouteTab, QSeparator,
   QSpace,
   QTabs,
   QToolbar,
-  QToolbarTitle,
+  QToolbarTitle
 } from "quasar";
 import { fetchUser } from "@/gateway/gateway_apollo";
 import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
+import UserInfoView from "@/components/UserInfoView.vue";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
@@ -64,6 +65,11 @@ fetchUser();
       side="left"
       :width="250"
     >
+      <div class="q-pa-sm">
+        <UserInfoView />
+      </div>
+<!--      <q-separator />-->
+      <h6 class="q-my-sm q-pa-sm">Ecosystems</h6>
       <EcosystemsManagement />
     </q-drawer>
 

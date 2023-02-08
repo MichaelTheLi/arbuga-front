@@ -75,7 +75,7 @@ export const propagateUser = (me: UserQueryQuery["me"]) => {
 };
 
 export const fetchUser = () => {
-  const { result } = loadUser();
+  const { loading, error, result } = loadUser();
 
   watch(result, (queryResult: Ref<UserQueryQuery | undefined>) => {
     if (queryResult) {
@@ -86,4 +86,6 @@ export const fetchUser = () => {
       }
     }
   });
+
+  return { loading, error };
 };
