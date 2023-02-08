@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const onCreated = () => {
-  router.push("/edit");
+  router.push("/");
 };
 </script>
 

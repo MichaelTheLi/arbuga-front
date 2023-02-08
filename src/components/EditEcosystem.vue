@@ -12,7 +12,7 @@
         <q-input
           class="col"
           filled
-          v-model="ecosystemData.width"
+          v-model.number="ecosystemData.width"
           label="Width"
           stack-label
           dense
@@ -21,7 +21,7 @@
         <q-input
           class="col"
           filled
-          v-model="ecosystemData.height"
+          v-model.number="ecosystemData.height"
           label="Height"
           stack-label
           dense
@@ -30,7 +30,7 @@
         <q-input
           class="col"
           filled
-          v-model="ecosystemData.length"
+          v-model.number="ecosystemData.length"
           label="Length"
           stack-label
           dense
@@ -39,7 +39,8 @@
       </div>
       <q-input
         filled
-        v-model="ecosystemData.volumeManual"
+        type="number"
+        v-model.number="ecosystemData.volumeManual"
         :placeholder="ecosystemData.volume"
         hint="Volume calculated based on the dimensions. Manually enter the volume if required"
         dense

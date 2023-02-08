@@ -1,16 +1,18 @@
+// @ts-ignore
 import { deepUnref } from "vue-deepunref";
 import { defineStore } from "pinia";
 import type { ComputedRef, Ref, UnwrapRef } from "vue";
-import { computed, ref, toRaw, unref } from "vue";
+import { computed, ref, unref, watch } from "vue";
+import _ from "lodash";
 
 export interface Ecosystem {
   name: string;
-  width: Ref<number>;
-  height: Ref<number>;
-  length: Ref<number>;
+  width: Ref<number | null>;
+  height: Ref<number | null>;
+  length: Ref<number | null>;
   volumeManual: Ref<number | null>;
   volume: ComputedRef<number>;
-  analysis: Ref<EcosystemAnalysis | null>;
+  analysis: Ref<EcosystemAnalysis[] | null>;
 }
 
 export interface EcosystemAnalysis {
@@ -18,7 +20,7 @@ export interface EcosystemAnalysis {
   name: string;
   description: string;
   status: string /* enum actually */;
-  messages: EcosystemAnalysisMessage[];
+  messages: EcosystemAnalysisMessage[] | [] | null | undefined;
 }
 
 export interface EcosystemAnalysisMessage {
@@ -32,7 +34,7 @@ export interface EcosystemState {
   list: Ref<UnwrapRef<Ecosystem>[]>;
   createNew: (nameProvided?: string) => Ecosystem;
   current: Ref<UnwrapRef<Ecosystem> | null>;
-  rememberedCurrent: Ref<UnwrapRef<Ecosystem> | null>;
+  rememberedCurrent: Ref<UnwrapRef<Ecosystem> | null>; // TODO Make this part of the list, maybe EcosystemItem which stores both state and initialState
   changeCurrent: (
     newCurrent:
       | Ecosystem
@@ -43,6 +45,7 @@ export interface EcosystemState {
   addNew: (newEcosystem: Ecosystem) => void;
   restoreCurrent: () => void;
   rememberCurrent: () => void;
+  currentChanged: ComputedRef<boolean>;
 }
 
 export const useEcosystemsStore = defineStore(
@@ -51,16 +54,32 @@ export const useEcosystemsStore = defineStore(
     const createNew = (nameProvided = ""): Ecosystem => {
       const name = nameProvided;
 
-      const width = ref(0);
-      const height = ref(0);
-      const length = ref(0);
+      const width = ref(null as number | null);
+      const height = ref(null as number | null);
+      const length = ref(null as number | null);
       const analysis = ref(null);
       const volumeManual = ref(null as number | null);
       const volumeCubicCm = computed(
-        () => width.value * height.value * length.value
+        () => (width.value || 0) * (height.value || 0) * (length.value || 0)
       );
       const volumeLiters = computed(() => volumeCubicCm.value / 1000);
       const volume = computed(() => volumeManual.value || volumeLiters.value);
+
+      const convertToInt = (value: number | string | null): number | null => {
+        if (typeof value === "string") {
+          value = parseFloat(value);
+        }
+
+        return value ? value : null;
+      };
+
+      watch(width, (newValue) => (width.value = convertToInt(newValue)));
+      watch(height, (newValue) => (height.value = convertToInt(newValue)));
+      watch(length, (newValue) => (length.value = convertToInt(newValue)));
+      watch(
+        volumeManual,
+        (newValue) => (volumeManual.value = convertToInt(newValue))
+      );
 
       return {
         name,
@@ -91,6 +110,13 @@ export const useEcosystemsStore = defineStore(
       rememberCurrent();
     };
 
+    const currentChanged = computed(() => {
+      return !_.isEqual(
+        _.omit(deepUnref(current.value), ["analysis"]),
+        _.omit(deepUnref(rememberedCurrent.value), ["analysis"])
+      );
+    });
+
     const restoreCurrent = () => {
       if (current.value) {
         Object.assign(current.value, rememberedCurrent.value);
@@ -115,6 +141,7 @@ export const useEcosystemsStore = defineStore(
       addNew,
       restoreCurrent,
       rememberCurrent,
+      currentChanged,
     };
   }
 );

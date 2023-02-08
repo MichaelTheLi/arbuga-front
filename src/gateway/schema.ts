@@ -11,7 +11,7 @@ extend type EcosystemAnalysisCategory {
   name: String!
   description: String!
   status: AnalysisStatus!
-  messages: [EcosystemAnalysisMessage!]
+  messages: [EcosystemAnalysisMessage!]!
 }
 
 enum AnalysisStatus {

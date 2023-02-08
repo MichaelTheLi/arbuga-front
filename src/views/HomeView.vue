@@ -6,7 +6,7 @@ import { QBtn, QPage, QPageSticky } from "quasar";
 import EditEcosystem from "@/components/EditEcosystem.vue";
 const store = useEcosystemsStore();
 
-let { current } = storeToRefs(store);
+let { current, currentChanged } = storeToRefs(store);
 
 const onsave = function () {
   console.group("save");
@@ -31,8 +31,20 @@ const onrestore = function () {
 
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <div class="q-gutter-sm">
-          <q-btn fab icon="restore" color="accent" @click="onrestore" />
-          <q-btn fab icon="save" color="accent" @click="onsave" />
+          <q-btn
+            fab
+            icon="restore"
+            color="accent"
+            @click="onrestore"
+            :disabled="!currentChanged"
+          />
+          <q-btn
+            fab
+            icon="save"
+            color="accent"
+            @click="onsave"
+            :disabled="!currentChanged"
+          />
         </div>
       </q-page-sticky>
     </div>
