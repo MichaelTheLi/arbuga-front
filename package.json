@@ -17,6 +17,7 @@
     "@apollo/client": "^3.7.5",
     "@faker-js/faker": "^7.6.0",
     "@quasar/extras": "^1.15.10",
+    "@quasar/quasar-app-extension-testing-unit-vitest": "^0.1.2",
     "@vue/apollo-composable": "^4.0.0-beta.1",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
