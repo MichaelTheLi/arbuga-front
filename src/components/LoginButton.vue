@@ -79,3 +79,19 @@ const onSignOn = () => {
   }
 };
 </script>
+
+<style>
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: yellow !important;
+  -webkit-box-shadow: 0 0 0 1000px #24333b inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill:hover {
+  -webkit-text-fill-color: yellow !important;
+  -webkit-box-shadow: 0 0 0 1000px #334149 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+</style>
