@@ -29,13 +29,16 @@ import type { Ecosystem } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
 import { QItem, QItemLabel, QItemSection, QList } from "quasar";
+import { useRouter } from "vue-router";
 
 const store = useEcosystemsStore();
+const router = useRouter();
 
 const { list } = storeToRefs(store);
 
 const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
   store.changeCurrent(ecosystem);
+  router.push("/");
 };
 
 const isActive = (ecosystem: UnwrapRef<Ecosystem>) => {

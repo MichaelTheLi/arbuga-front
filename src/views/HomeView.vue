@@ -34,14 +34,14 @@ const onrestore = function () {
           <q-btn
             fab
             icon="restore"
-            color="accent"
+            color="secondary"
             @click="onrestore"
             :disabled="!currentChanged"
           />
           <q-btn
             fab
             icon="save"
-            color="accent"
+            color="secondary"
             @click="onsave"
             :disabled="!currentChanged"
           />

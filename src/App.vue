@@ -65,12 +65,12 @@ fetchUser();
       side="left"
       :width="250"
     >
+      <h5 class="q-my-sm q-pa-sm">Ecosystems</h5>
+      <EcosystemsManagement />
+      <q-separator />
       <div class="q-pa-sm">
         <UserInfoView />
       </div>
-<!--      <q-separator />-->
-      <h6 class="q-my-sm q-pa-sm">Ecosystems</h6>
-      <EcosystemsManagement />
     </q-drawer>
 
     <q-drawer
