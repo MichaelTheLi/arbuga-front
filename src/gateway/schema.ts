@@ -53,6 +53,10 @@ extend type Query {
   publicEcosystems: [Ecosystem!]
   publicEcosystem(id: ID!): Ecosystem
 }
+
+extend type Mutation {
+  login(login: String!, password: String!): User
+}
 `;
 
 export default typeDefs;

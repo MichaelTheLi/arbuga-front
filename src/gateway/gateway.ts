@@ -1,4 +1,4 @@
-import { useQuery } from "@vue/apollo-composable";
+import { useMutation, useQuery } from "@vue/apollo-composable";
 import _ from "lodash";
 import { gql } from "@/__generated__";
 import { watch, type Ref, unref } from "vue";
@@ -7,7 +7,7 @@ import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
 
 // noinspection GraphQLUnresolvedReference
-const LOAD_USER = gql(/* GraphQL */ `
+export const LOAD_USER = gql(/* GraphQL */ `
   query userQuery {
     me @client {
       id
@@ -40,9 +40,39 @@ const LOAD_USER = gql(/* GraphQL */ `
   }
 `);
 
-export const loadUser = () => {
-  return useQuery(LOAD_USER);
-};
+// noinspection GraphQLUnresolvedReference
+export const LOGIN_USER = gql(/* GraphQL */ `
+  mutation userLogin($login: String!, $password: String!) {
+    login(login: $login, password: $password) @client {
+      id
+      login
+      name
+      ecosystems {
+        id
+        name
+        aquarium {
+          dimensions {
+            width
+            height
+            length
+          }
+        }
+        analysis {
+          id
+          name
+          description
+          status
+          messages {
+            id
+            name
+            description
+            status
+          }
+        }
+      }
+    }
+  }
+`);
 
 export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
   const store = useEcosystemsStore();
@@ -75,7 +105,7 @@ export const propagateUser = (me: UserQueryQuery["me"]) => {
 };
 
 export const fetchUser = () => {
-  const { loading, error, result } = loadUser();
+  const { loading, error, result } = useQuery(LOAD_USER);
 
   watch(result, (queryResult: Ref<UserQueryQuery | undefined>) => {
     if (queryResult) {
@@ -88,4 +118,14 @@ export const fetchUser = () => {
   });
 
   return { loading, error };
+};
+
+export const useLoginUser = () => {
+  const result = useMutation(LOGIN_USER, {
+    refetchQueries: [{ query: LOAD_USER }],
+  });
+
+  return {
+    execute: result.mutate,
+  };
 };

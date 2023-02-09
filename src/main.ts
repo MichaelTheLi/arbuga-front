@@ -9,38 +9,8 @@ import App from "./App.vue";
 import router from "./router";
 
 // import "./assets/main.css";
-
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-} from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
-import typeDefs from "@/gateway/schema";
-import { seedUser } from "@/gateway/seed";
-
-const httpLink = createHttpLink({ uri: "https://graphqlzero.almansi.me/api" });
-
-const cache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        me: {
-          read() {
-            return seedUser;
-          },
-        },
-      },
-    },
-  },
-});
-
-// Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
-  cache,
-  typeDefs,
-});
+import { apolloClient } from "@/gateway/client_apollo";
 
 const app = createApp({
   setup() {

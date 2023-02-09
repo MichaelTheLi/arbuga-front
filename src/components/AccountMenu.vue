@@ -1,7 +1,7 @@
 <template>
   <div class="q-mx-md">
     <div v-if="isLogged">
-      <span>Hello, {{ user.name }}</span>
+      <span>Hello, {{ user?.name }}</span>
     </div>
     <div v-else>
       <LoginButton />
@@ -15,7 +15,8 @@ import { storeToRefs } from "pinia";
 import LoginButton from "@/components/LoginButton.vue";
 import { computed } from "vue";
 
-let { user } = storeToRefs(useUserStore());
+const store = useUserStore();
+const { user } = storeToRefs(store);
 
 const isLogged = computed(() => {
   if (!user.value) {

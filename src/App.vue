@@ -10,13 +10,12 @@ import {
   QLayout,
   QPageContainer,
   QRouteTab,
-  QSeparator,
   QSpace,
   QTabs,
   QToolbar,
   QToolbarTitle,
 } from "quasar";
-import { fetchUser } from "@/gateway/gateway_apollo";
+import { fetchUser } from "@/gateway/gateway";
 import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
 import AccountMenu from "@/components/AccountMenu.vue";
 

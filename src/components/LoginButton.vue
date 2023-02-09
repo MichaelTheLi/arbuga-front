@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn flat label="Login" @click="onLoginRequested"/>
+    <q-btn flat label="Login" @click="onLoginRequested" />
 
     <q-dialog v-model="loginOpened">
       <q-card style="min-width: 350px" flat bordered>
@@ -8,25 +8,27 @@
           <div class="text-h6">Your address</div>
         </q-card-section>
 
-        <q-card-section class="q-col-gutter-sm">
-          <q-input
-            filled
-            label="Login"
-            stack-label
-            dense
-            v-model="userCredentials.login"
-            autofocus
-            type="email"
-          />
-          <q-input
-            filled
-            label="Password"
-            stack-label
-            dense
-            v-model="userCredentials.password"
-            autofocus
-            type="password"
-          />
+        <q-card-section>
+          <q-form class="q-col-gutter-sm">
+            <q-input
+              filled
+              label="Login"
+              stack-label
+              dense
+              v-model="userCredentials.login"
+              autofocus
+              type="email"
+            />
+            <q-input
+              filled
+              label="Password"
+              stack-label
+              dense
+              v-model="userCredentials.password"
+              autofocus
+              type="password"
+            />
+          </q-form>
         </q-card-section>
 
         <q-card-actions align="around" class="text-primary">
@@ -39,23 +41,17 @@
 </template>
 
 <script setup lang="ts">
-import { useUserStore } from "@/stores/user";
 import {
   QBtn,
   QCard,
   QCardActions,
   QCardSection,
   QDialog,
-  QIcon,
+  QForm,
   QInput,
-  QItem,
-  QItemLabel,
-  QItemSection
 } from "quasar";
-import { storeToRefs } from "pinia";
 import { ref } from "vue";
-
-let { user } = storeToRefs(useUserStore());
+import { useLoginUser } from "@/gateway/gateway";
 
 const loginOpened = ref(false);
 const userCredentials = ref({
@@ -67,17 +63,19 @@ const onLoginRequested = () => {
   loginOpened.value = true;
 };
 
+const loginUser = useLoginUser();
+
 const onLogin = () => {
   if (userCredentials.value.login && userCredentials.value.password) {
     loginOpened.value = false;
+    loginUser.execute(userCredentials.value);
   }
-  console.log(userCredentials.value);
 };
 
 const onSignOn = () => {
   if (userCredentials.value.login && userCredentials.value.password) {
     loginOpened.value = false;
+    loginUser.execute(userCredentials.value);
   }
-  console.log(userCredentials.value);
 };
 </script>
