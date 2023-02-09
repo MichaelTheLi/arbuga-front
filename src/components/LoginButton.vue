@@ -1,17 +1,6 @@
 <template>
   <div>
-    <q-item v-if="user" class="q-pa-xs">
-      <q-item-section>
-        <q-item-label>Hello, {{ user.login ? user.name : 'anonymous' }}</q-item-label>
-        <div v-if="!user.login">
-          <q-item-label caption class="q-my-sm">Please log-in or sign-in to save your ecosystems</q-item-label>
-          <q-btn color="secondary" size="md" class="q-my-sm" @click="onLoginRequested">
-            <span class="q-pr-xs">Log-in</span>
-            <q-icon name="login" />
-          </q-btn>
-        </div>
-      </q-item-section>
-    </q-item>
+    <q-btn flat label="Login" @click="onLoginRequested"/>
 
     <q-dialog v-model="loginOpened">
       <q-card style="min-width: 350px" flat bordered>
@@ -73,6 +62,7 @@ const userCredentials = ref({
   login: "",
   password: "",
 });
+
 const onLoginRequested = () => {
   loginOpened.value = true;
 };
