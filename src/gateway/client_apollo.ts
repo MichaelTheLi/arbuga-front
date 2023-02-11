@@ -3,33 +3,65 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client/core";
-import { LOAD_USER } from "@/gateway/gateway";
 import { anonymousUser, loggedUser } from "@/gateway/seed";
 import typeDefs from "@/gateway/schema";
 
-const httpLink = createHttpLink({ uri: "https://graphqlzero.almansi.me/api" });
+// TODO Auth https://www.apollographql.com/docs/react/networking/authentication/#cookie
+const httpLink = createHttpLink({ uri: "http://localhost:8080/query" });
 
-const cache = new InMemoryCache();
+export const cache = new InMemoryCache({
+  typePolicies: {
+    User: {
+      fields: {
+        ecosystems: {
+          read(_, { readField }) {
+            const login = readField("login");
+            if (login !== "" && login !== null) {
+              return loggedUser?.ecosystems;
+            }
 
-cache.writeQuery({
-  query: LOAD_USER,
-  data: {
-    me: anonymousUser,
+            return anonymousUser?.ecosystems;
+          },
+        },
+      },
+    },
   },
 });
 
+// cache.readQuery({ query: LOAD_USER });
+
+// cache.writeQuery({
+//   query: LOAD_USER,
+//   data: {
+//     me: anonymousUser,
+//   },
+// });
+
+// cache.updateQuery({ query: LOAD_USER }, (data) => {
+//   console.log(data);
+//   return {
+//     me: {
+//       id: "test",
+//       login: "Test login",
+//       name: "Test name",
+//       ...data?.me,
+//       ecosystems: anonymousUser?.ecosystems,
+//     },
+//   };
+// });
+
 const resolvers = {
-  Mutation: {
-    login: () => {
-      cache.writeQuery({
-        query: LOAD_USER,
-        data: {
-          me: loggedUser,
-        },
-      });
-      return loggedUser;
-    },
-  },
+  // Mutation: {
+  //   login: () => {
+  //     cache.writeQuery({
+  //       query: LOAD_USER,
+  //       data: {
+  //         me: loggedUser,
+  //       },
+  //     });
+  //     return loggedUser;
+  //   },
+  // },
 };
 
 export const apolloClient = new ApolloClient({

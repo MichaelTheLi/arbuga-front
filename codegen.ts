@@ -3,10 +3,12 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 import typeDefs from "./src/gateway/schema";
 
 const config: CodegenConfig = {
-  schema: typeDefs,
-  documents: ["src/**/*.ts"],
+  overwrite: true,
+  schema: "http://localhost:8080/query",
+  documents: ["src/**/*.vue", "src/**/*.ts"],
   generates: {
     "./src/__generated__/": {
+      schema: typeDefs,
       preset: "client",
       config: {
         skipTypename: true,
@@ -17,8 +19,10 @@ const config: CodegenConfig = {
         gqlTagName: "gql",
       },
     },
+    "./graphql.schema.json": {
+      plugins: ["introspection"],
+    },
   },
-  ignoreNoDocuments: true,
 };
 
 export default config;

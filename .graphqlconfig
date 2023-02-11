@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://graphqlzero.almansi.me/api",
+        "url": "http://localhost:8080/query",
         "headers": {
           "user-agent": "JS GraphQL"
         },

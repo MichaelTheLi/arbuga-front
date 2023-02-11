@@ -9,11 +9,11 @@ import type { UserQueryQuery } from "@/__generated__/graphql";
 // noinspection GraphQLUnresolvedReference
 export const LOAD_USER = gql(/* GraphQL */ `
   query userQuery {
-    me @client {
+    me {
       id
       login
       name
-      ecosystems {
+      ecosystems @client {
         id
         name
         aquarium {
@@ -43,11 +43,11 @@ export const LOAD_USER = gql(/* GraphQL */ `
 // noinspection GraphQLUnresolvedReference
 export const LOGIN_USER = gql(/* GraphQL */ `
   mutation userLogin($login: String!, $password: String!) {
-    login(login: $login, password: $password) @client {
+    login(login: $login, password: $password) {
       id
       login
       name
-      ecosystems {
+      ecosystems @client {
         id
         name
         aquarium {
