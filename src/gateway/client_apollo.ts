@@ -5,10 +5,24 @@ import {
 } from "@apollo/client/core";
 import { anonymousUser, loggedUser } from "@/gateway/seed";
 import typeDefs from "@/gateway/schema";
+import { setContext } from "@apollo/client/link/context";
 
 // TODO Auth https://www.apollographql.com/docs/react/networking/authentication/#cookie
 const httpLink = createHttpLink({ uri: "http://localhost:8080/query" });
 
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("token");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      // authorization: token ? `Bearer ${token}` : "",
+      "auth-token": token ? token : "",
+    },
+  };
+});
+const link = authLink.concat(httpLink);
 export const cache = new InMemoryCache({
   typePolicies: {
     User: {
@@ -65,7 +79,7 @@ const resolvers = {
 };
 
 export const apolloClient = new ApolloClient({
-  link: httpLink,
+  link,
   cache,
   typeDefs,
   resolvers,

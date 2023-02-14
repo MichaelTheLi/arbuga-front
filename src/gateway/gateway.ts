@@ -44,32 +44,7 @@ export const LOAD_USER = gql(/* GraphQL */ `
 export const LOGIN_USER = gql(/* GraphQL */ `
   mutation userLogin($login: String!, $password: String!) {
     login(login: $login, password: $password) {
-      id
-      login
-      name
-      ecosystems @client {
-        id
-        name
-        aquarium {
-          dimensions {
-            width
-            height
-            length
-          }
-        }
-        analysis {
-          id
-          name
-          description
-          status
-          messages {
-            id
-            name
-            description
-            status
-          }
-        }
-      }
+      token
     }
   }
 `);
@@ -105,9 +80,15 @@ export const propagateUser = (me: UserQueryQuery["me"]) => {
 };
 
 export const fetchUser = () => {
-  const { loading, error, result } = useQuery(LOAD_USER);
+  const { loading, error, result, refetch } = useQuery(
+    LOAD_USER,
+    {},
+    {
+      fetchPolicy: "cache-and-network",
+  });
 
   watch(result, (queryResult: Ref<UserQueryQuery | undefined>) => {
+    console.log(queryResult);
     if (queryResult) {
       const queryResultRaw = unref(queryResult);
       if (queryResultRaw && queryResultRaw.me) {
@@ -117,12 +98,21 @@ export const fetchUser = () => {
     }
   });
 
-  return { loading, error };
+  return { loading, error, refetch };
 };
 
 export const useLoginUser = () => {
   const result = useMutation(LOGIN_USER, {
-    refetchQueries: [{ query: LOAD_USER }],
+    // refetchQueries: [{ query: LOAD_USER }],
+    // updateQueries: [{ query: LOAD_USER }],
+  });
+
+  const { refetch } = fetchUser();
+
+  result.onDone(({ data }) => {
+    localStorage.setItem("token", _.get(data, "login.token", ""));
+
+    refetch();
   });
 
   return {

@@ -14,7 +14,7 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  */
 const documents = {
     "\n  query userQuery {\n    me {\n      id\n      login\n      name\n      ecosystems @client {\n        id\n        name\n        aquarium {\n          dimensions {\n            width\n            height\n            length\n          }\n        }\n        analysis {\n          id\n          name\n          description\n          status\n          messages {\n            id\n            name\n            description\n            status\n          }\n        }\n      }\n    }\n  }\n": types.UserQueryDocument,
-    "\n  mutation userLogin($login: String!, $password: String!) {\n    login(login: $login, password: $password) {\n      id\n      login\n      name\n      ecosystems @client {\n        id\n        name\n        aquarium {\n          dimensions {\n            width\n            height\n            length\n          }\n        }\n        analysis {\n          id\n          name\n          description\n          status\n          messages {\n            id\n            name\n            description\n            status\n          }\n        }\n      }\n    }\n  }\n": types.UserLoginDocument,
+    "\n  mutation userLogin($login: String!, $password: String!) {\n    login(login: $login, password: $password) {\n      token\n    }\n  }\n": types.UserLoginDocument,
 };
 
 /**
@@ -38,7 +38,7 @@ export function gql(source: "\n  query userQuery {\n    me {\n      id\n      lo
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation userLogin($login: String!, $password: String!) {\n    login(login: $login, password: $password) {\n      id\n      login\n      name\n      ecosystems @client {\n        id\n        name\n        aquarium {\n          dimensions {\n            width\n            height\n            length\n          }\n        }\n        analysis {\n          id\n          name\n          description\n          status\n          messages {\n            id\n            name\n            description\n            status\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation userLogin($login: String!, $password: String!) {\n    login(login: $login, password: $password) {\n      id\n      login\n      name\n      ecosystems @client {\n        id\n        name\n        aquarium {\n          dimensions {\n            width\n            height\n            length\n          }\n        }\n        analysis {\n          id\n          name\n          description\n          status\n          messages {\n            id\n            name\n            description\n            status\n          }\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  mutation userLogin($login: String!, $password: String!) {\n    login(login: $login, password: $password) {\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation userLogin($login: String!, $password: String!) {\n    login(login: $login, password: $password) {\n      token\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
