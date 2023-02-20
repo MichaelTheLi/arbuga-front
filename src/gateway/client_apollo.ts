@@ -7,7 +7,6 @@ import { anonymousUser, loggedUser } from "@/gateway/seed";
 import typeDefs from "@/gateway/schema";
 import { setContext } from "@apollo/client/link/context";
 
-// TODO Auth https://www.apollographql.com/docs/react/networking/authentication/#cookie
 const httpLink = createHttpLink({ uri: "http://localhost:8080/query" });
 
 const authLink = setContext((_, { headers }) => {
