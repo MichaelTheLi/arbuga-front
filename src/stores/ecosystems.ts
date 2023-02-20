@@ -6,6 +6,7 @@ import { computed, ref, unref, watch } from "vue";
 import _ from "lodash";
 
 export interface Ecosystem {
+  id: string;
   name: string;
   width: Ref<number | null>;
   height: Ref<number | null>;
@@ -45,7 +46,7 @@ export interface EcosystemState {
   addNew: (newEcosystem: Ecosystem) => void;
   restoreCurrent: () => void;
   rememberCurrent: () => void;
-  currentChanged: ComputedRef<boolean>;
+  currentChanged: ComputedRef<boolean>; // TODO Should store every ecosystem changed state, not only current.
 }
 
 export const useEcosystemsStore = defineStore(
@@ -54,6 +55,7 @@ export const useEcosystemsStore = defineStore(
     const createNew = (nameProvided = ""): Ecosystem => {
       const name = nameProvided;
 
+      const id = "";
       const width = ref(null as number | null);
       const height = ref(null as number | null);
       const length = ref(null as number | null);
@@ -82,6 +84,7 @@ export const useEcosystemsStore = defineStore(
       );
 
       return {
+        id,
         name,
         width,
         height,

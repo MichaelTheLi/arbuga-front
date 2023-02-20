@@ -56,6 +56,7 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
     me.ecosystems.forEach((ecosystemData) => {
       const ecosystem = store.createNew();
 
+      ecosystem.id = ecosystemData.id;
       ecosystem.name = ecosystemData.name;
       ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
       ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
@@ -85,10 +86,10 @@ export const fetchUser = () => {
     {},
     {
       fetchPolicy: "cache-and-network",
-  });
+    }
+  );
 
   watch(result, (queryResult: Ref<UserQueryQuery | undefined>) => {
-    console.log(queryResult);
     if (queryResult) {
       const queryResultRaw = unref(queryResult);
       if (queryResultRaw && queryResultRaw.me) {
@@ -103,7 +104,7 @@ export const fetchUser = () => {
 
 export const useLoginUser = () => {
   const result = useMutation(LOGIN_USER, {
-    // refetchQueries: [{ query: LOAD_USER }],
+    refetchQueries: [{ query: LOAD_USER }], // TODO Not working with the local query. Will work with real data, but it's better to use mutation result instead of refetch
     // updateQueries: [{ query: LOAD_USER }],
   });
 
