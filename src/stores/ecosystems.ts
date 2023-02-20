@@ -1,5 +1,3 @@
-// @ts-ignore
-import { deepUnref } from "vue-deepunref";
 import { defineStore } from "pinia";
 import type { ComputedRef, Ref, UnwrapRef } from "vue";
 import { computed, ref, unref, watch } from "vue";
@@ -36,7 +34,6 @@ export interface EcosystemState {
   list: Ref<UnwrapRef<Ecosystem>[]>;
   createNew: (nameProvided?: string) => Ecosystem;
   current: Ref<UnwrapRef<Ecosystem> | null>;
-  rememberedCurrent: Ref<UnwrapRef<Ecosystem> | null>; // TODO Make this part of the list, maybe EcosystemItem which stores both state and initialState
   changeCurrent: (
     newCurrent:
       | Ecosystem
@@ -45,9 +42,6 @@ export interface EcosystemState {
       | UnwrapRef<Ecosystem>
   ) => void;
   addNew: (newEcosystem: Ecosystem) => void;
-  restoreCurrent: () => void;
-  rememberCurrent: () => void;
-  currentChanged: ComputedRef<boolean>; // TODO Should store every ecosystem changed state, not only current.
 }
 
 export const useEcosystemsStore = defineStore(
@@ -100,8 +94,6 @@ export const useEcosystemsStore = defineStore(
 
     const currentRaw = list.value[0] as UnwrapRef<Ecosystem> | null;
     const current = ref(currentRaw);
-    const rememberedCurrentRaw = null as UnwrapRef<Ecosystem> | null;
-    const rememberedCurrent = ref(rememberedCurrentRaw);
 
     const changeCurrent = (
       newCurrent:
@@ -111,27 +103,6 @@ export const useEcosystemsStore = defineStore(
         | UnwrapRef<Ecosystem>
     ) => {
       current.value = unref(newCurrent as Ref<UnwrapRef<Ecosystem>>);
-      rememberCurrent();
-    };
-
-    const currentChanged = computed(() => {
-      return !_.isEqual(
-        _.omit(deepUnref(current.value), ["analysis"]),
-        _.omit(deepUnref(rememberedCurrent.value), ["analysis"])
-      );
-    });
-
-    const restoreCurrent = () => {
-      if (current.value) {
-        Object.assign(
-          current.value,
-          _.omit(rememberedCurrent.value, ["volume"])
-        );
-      }
-    };
-
-    const rememberCurrent = () => {
-      rememberedCurrent.value = { ...deepUnref(current.value) };
     };
 
     const { execute: _executeSaveEcosystem } = useSaveEcosystem();
@@ -162,12 +133,8 @@ export const useEcosystemsStore = defineStore(
       list,
       createNew,
       current,
-      rememberedCurrent,
       changeCurrent,
       addNew,
-      restoreCurrent,
-      rememberCurrent,
-      currentChanged,
     };
   }
 );
