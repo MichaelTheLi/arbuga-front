@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 import type { ComputedRef, Ref, UnwrapRef } from "vue";
 import { computed, ref, unref, watch } from "vue";
 import _ from "lodash";
+import { useSaveEcosystem } from "@/gateway/gateway";
 
 export interface Ecosystem {
   id: string;
@@ -133,9 +134,28 @@ export const useEcosystemsStore = defineStore(
       rememberedCurrent.value = { ...deepUnref(current.value) };
     };
 
+    const { execute: _executeSaveEcosystem } = useSaveEcosystem();
+    const executeSaveEcosystem = _.debounce(_executeSaveEcosystem, 500);
+
     const addNew = (newEcosystem: Ecosystem) => {
       // @ts-ignore
-      list.value.push(newEcosystem);
+      const index = list.value.push(newEcosystem);
+
+      watch(list.value[index - 1], (newVal) => {
+        executeSaveEcosystem({
+          id: newVal.id,
+          ecosystem: {
+            name: newVal.name,
+            aquarium: {
+              dimensions: {
+                width: newVal.width,
+                height: newVal.height,
+                length: newVal.length,
+              },
+            },
+          },
+        });
+      });
     };
 
     return {

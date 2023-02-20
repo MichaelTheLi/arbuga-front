@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { RouterView, useRouter } from "vue-router";
 import EcosystemsManagement from "./components/EcosystemsManagement/EcosystemsManagement.vue";
 import {
@@ -15,9 +15,10 @@ import {
   QToolbar,
   QToolbarTitle,
 } from "quasar";
-import { fetchUser } from "@/gateway/gateway";
+import { fetchUser, saveUser } from "@/gateway/gateway";
 import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
 import AccountMenu from "@/components/AccountMenu.vue";
+import { useEcosystemsStore } from "@/stores/ecosystems";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);

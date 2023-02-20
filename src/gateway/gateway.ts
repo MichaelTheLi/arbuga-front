@@ -49,6 +49,19 @@ export const LOGIN_USER = gql(/* GraphQL */ `
   }
 `);
 
+// noinspection GraphQLUnresolvedReference
+export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
+  mutation SAVE_ECOSYSTEM($id: ID!, $ecosystem: EcosystemInput!) {
+    saveEcosystem(id: $id, ecosystem: $ecosystem) {
+      ecosystem {
+        id
+      }
+      success
+      error
+    }
+  }
+`);
+
 export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
   const store = useEcosystemsStore();
 
@@ -100,6 +113,16 @@ export const fetchUser = () => {
   });
 
   return { loading, error, refetch };
+};
+
+export const useSaveEcosystem = () => {
+  const result = useMutation(SAVE_ECOSYSTEM, {
+    // updateQueries: [{ query: LOAD_USER }], // TODO Update ecosystem analysis
+  });
+
+  return {
+    execute: result.mutate,
+  };
 };
 
 export const useLoginUser = () => {
