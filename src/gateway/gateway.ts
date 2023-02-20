@@ -3,6 +3,7 @@ import _ from "lodash";
 import { gql } from "@/__generated__";
 import { watch, type Ref, unref } from "vue";
 import { useEcosystemsStore } from "@/stores/ecosystems";
+import type { Ecosystem } from "@/stores/ecosystems";
 import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
 
@@ -13,7 +14,7 @@ export const LOAD_USER = gql(/* GraphQL */ `
       id
       login
       name
-      ecosystems @client {
+      ecosystems {
         id
         name
         aquarium {
@@ -45,16 +46,64 @@ export const LOGIN_USER = gql(/* GraphQL */ `
   mutation userLogin($login: String!, $password: String!) {
     login(login: $login, password: $password) {
       token
+      user {
+        id
+        login
+        name
+        ecosystems {
+          id
+          name
+          aquarium {
+            dimensions {
+              width
+              height
+              length
+            }
+          }
+          analysis {
+            id
+            name
+            description
+            status
+            messages {
+              id
+              name
+              description
+              status
+            }
+          }
+        }
+      }
     }
   }
 `);
 
 // noinspection GraphQLUnresolvedReference
 export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
-  mutation SAVE_ECOSYSTEM($id: ID!, $ecosystem: EcosystemInput!) {
+  mutation SAVE_ECOSYSTEM($id: ID, $ecosystem: EcosystemInput!) {
     saveEcosystem(id: $id, ecosystem: $ecosystem) {
       ecosystem {
         id
+        name
+        aquarium {
+          dimensions {
+            width
+            height
+            length
+          }
+        }
+        analysis {
+          id
+          name
+          description
+          status
+          messages {
+            id
+            name
+            description
+            status
+          }
+        }
       }
       success
       error
@@ -117,7 +166,22 @@ export const fetchUser = () => {
 
 export const useSaveEcosystem = () => {
   const result = useMutation(SAVE_ECOSYSTEM, {
-    // updateQueries: [{ query: LOAD_USER }], // TODO Update ecosystem analysis
+    update: (cache, { data: { saveEcosystem }}, options) => {
+      let data = cache.readQuery({ query: LOAD_USER });
+      let ecosystems = [...data.me.ecosystems];
+
+      options.context?.idUpdate(saveEcosystem.ecosystem.id);
+      ecosystems.splice(options.context?.index, 1);
+
+      data = {
+        ...data,
+        me: {
+          ...data.me,
+          ecosystems: [...ecosystems, saveEcosystem.ecosystem],
+        },
+      };
+      cache.writeQuery({ query: LOAD_USER, data });
+    },
   });
 
   return {
@@ -127,8 +191,23 @@ export const useSaveEcosystem = () => {
 
 export const useLoginUser = () => {
   const result = useMutation(LOGIN_USER, {
-    refetchQueries: [{ query: LOAD_USER }], // TODO Not working with the local query. Will work with real data, but it's better to use mutation result instead of refetch
+    // refetchQueries: [{ query: LOAD_USER }], // TODO Not working with the local query. Will work with real data, but it's better to use mutation result instead of refetch
     // updateQueries: [{ query: LOAD_USER }],
+    update: (
+      cache,
+      {
+        data: {
+          login: { user },
+        },
+      }
+    ) => {
+      let data = cache.readQuery({ query: LOAD_USER });
+      data = {
+        ...data,
+        me: user,
+      };
+      cache.writeQuery({ query: LOAD_USER, data });
+    },
   });
 
   const { refetch } = fetchUser();
