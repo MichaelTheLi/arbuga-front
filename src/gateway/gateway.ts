@@ -1,9 +1,8 @@
 import { useMutation, useQuery } from "@vue/apollo-composable";
 import _ from "lodash";
 import { gql } from "@/__generated__";
-import { watch, type Ref, unref } from "vue";
+import { type Ref, unref, watch } from "vue";
 import { useEcosystemsStore } from "@/stores/ecosystems";
-import type { Ecosystem } from "@/stores/ecosystems";
 import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
 
@@ -166,21 +165,31 @@ export const fetchUser = () => {
 
 export const useSaveEcosystem = () => {
   const result = useMutation(SAVE_ECOSYSTEM, {
-    update: (cache, { data: { saveEcosystem }}, options) => {
-      let data = cache.readQuery({ query: LOAD_USER });
-      let ecosystems = [...data.me.ecosystems];
+    update: (cache, { data }, options) => {
+      if (!data || !data.saveEcosystem || !data.saveEcosystem.ecosystem) {
+        return;
+      }
+      const currentCache = cache.readQuery({ query: LOAD_USER });
 
-      options.context?.idUpdate(saveEcosystem.ecosystem.id);
+      const currentCacheEcosystems = currentCache?.me?.ecosystems;
+
+      let ecosystems: typeof currentCacheEcosystems = [];
+      if (currentCacheEcosystems) {
+        ecosystems = [...currentCacheEcosystems];
+      }
+
+      const { ecosystem } = data.saveEcosystem;
+      options.context?.idUpdate(ecosystem.id);
       ecosystems.splice(options.context?.index, 1);
 
-      data = {
-        ...data,
+      const newCache = {
+        ...currentCache,
         me: {
-          ...data.me,
-          ecosystems: [...ecosystems, saveEcosystem.ecosystem],
-        },
+          ...currentCache?.me,
+          ecosystems: [...ecosystems, ecosystem],
+        } as UserQueryQuery["me"],
       };
-      cache.writeQuery({ query: LOAD_USER, data });
+      cache.writeQuery({ query: LOAD_USER, data: newCache });
     },
   });
 
@@ -193,18 +202,11 @@ export const useLoginUser = () => {
   const result = useMutation(LOGIN_USER, {
     // refetchQueries: [{ query: LOAD_USER }], // TODO Not working with the local query. Will work with real data, but it's better to use mutation result instead of refetch
     // updateQueries: [{ query: LOAD_USER }],
-    update: (
-      cache,
-      {
-        data: {
-          login: { user },
-        },
-      }
-    ) => {
+    update: (cache, originalData) => {
       let data = cache.readQuery({ query: LOAD_USER });
       data = {
         ...data,
-        me: user,
+        me: originalData?.data?.login?.user,
       };
       cache.writeQuery({ query: LOAD_USER, data });
     },

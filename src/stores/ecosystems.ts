@@ -3,6 +3,7 @@ import type { ComputedRef, Ref, UnwrapRef } from "vue";
 import { computed, ref, unref, watch } from "vue";
 import _ from "lodash";
 import { useSaveEcosystem } from "@/gateway/gateway";
+// @ts-ignore
 import { deepUnref } from "vue-deepunref";
 
 export interface Ecosystem {
@@ -122,16 +123,18 @@ export const useEcosystemsStore = defineStore(
         index = list.value.push(newEcosystemToAdd) - 1;
       }
 
-      const variablesFromEcosystem = (ecosystem: UnwrapRef<Ecosystem>|Ecosystem) => {
+      const variablesFromEcosystem = (
+        ecosystem: UnwrapRef<Ecosystem> | Ecosystem
+      ) => {
         const variables = {
           id: undefined as string | undefined,
           ecosystem: {
             name: ecosystem.name,
             aquarium: {
               dimensions: {
-                width: ecosystem.width || 0,
-                height: ecosystem.height || 0,
-                length: ecosystem.length || 0,
+                width: unref(ecosystem.width) || 0,
+                height: unref(ecosystem.height) || 0,
+                length: unref(ecosystem.length) || 0,
               },
             },
           },
@@ -146,7 +149,7 @@ export const useEcosystemsStore = defineStore(
       let oldVariables = variablesFromEcosystem(deepUnref(newEcosystemToAdd));
 
       watch(list.value[index], (newEcosystem) => {
-        const newVariables = variablesFromEcosystem(newEcosystem);
+        const newVariables = variablesFromEcosystem(deepUnref(newEcosystem));
 
         if (!_.isEqual(oldVariables.ecosystem, newVariables.ecosystem)) {
           // TODO Current is broken by the new object
