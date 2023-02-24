@@ -3,6 +3,7 @@
     <div class="q-pa-sm">
       <h5 class="q-my-md">Your progress</h5>
       <q-linear-progress
+        data-testid="analysis-progress"
         rounded
         color="accent"
         size="lg"
@@ -10,8 +11,12 @@
         animation-speed="300"
       />
     </div>
-    <div v-for="(category, index) of analysis" :key="category.id">
-      <q-item-label header>
+    <div
+      v-for="(category, index) of analysis"
+      :key="category.id"
+      data-testid="analysis-category"
+    >
+      <q-item-label header data-testid="analysis-category-status">
         <span :class="'text-' + statusToColor(category.status)">{{
           category.name
         }}</span>
@@ -26,7 +31,11 @@
 
       <!--      <q-item-label overline>{{category.description}}</q-item-label>-->
 
-      <q-item v-for="message of category.messages" :key="message.id">
+      <q-item
+        v-for="message of category.messages"
+        :key="message.id"
+        data-testid="analysis-message"
+      >
         <q-item-section>
           <q-item-label lines="1">{{ message.name }}</q-item-label>
           <q-item-label caption>{{ message.description }}</q-item-label>
@@ -34,6 +43,7 @@
 
         <q-item-section side>
           <q-icon
+            data-testid="message-icon"
             :color="statusToColor(message.status)"
             :name="statusToIcon(message.status)"
           />
