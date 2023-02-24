@@ -12,8 +12,8 @@ const onCreated = () => {
 
 <template>
   <div class="q-pa-sm">
-    <EcosystemsList class="q-mb-md"/>
-    <CreateEcosystemButton @created="onCreated" class="full-width q-mb-md"/>
+    <EcosystemsList class="q-mb-md" />
+    <CreateEcosystemButton @created="onCreated" class="full-width q-mb-md" />
   </div>
 </template>
 
