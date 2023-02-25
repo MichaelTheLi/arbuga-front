@@ -8,6 +8,7 @@
       v-ripple
       :active="isActive(ecosystem)"
       active-class="bg-primary text-white"
+      data-testid="ecosystems-list-item"
     >
       <q-item-section>
         <q-item-label>{{ ecosystem.name || "New" }}</q-item-label>

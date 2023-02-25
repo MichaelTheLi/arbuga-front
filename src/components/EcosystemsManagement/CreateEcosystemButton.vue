@@ -1,5 +1,11 @@
 <template>
-  <q-btn @click="createNew" size="sm" label="Create new" color="secondary" />
+  <q-btn
+    @click="createNew"
+    size="sm"
+    label="Create new"
+    color="secondary"
+    data-testid="create-ecosystem-button"
+  />
 </template>
 
 <script setup lang="ts">

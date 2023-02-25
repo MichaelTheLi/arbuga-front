@@ -1360,6 +1360,13 @@
     tslib "^2.4.1"
     webcrypto-core "^1.7.4"
 
+"@pinia/testing@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.0.15.tgz#d6aa75c56d2496c14d0eed67af566d661cfa5f6f"
+  integrity sha512-Ykz5sPUVDphDMssA27+ExPSzxqfn7Y3jax77KA0AChDB6ODu31CnXIwoiUG+U5WA6ey7gzHkZh8wlnAtzVnB8g==
+  dependencies:
+    vue-demi "*"
+
 "@quasar/extras@^1.15.10":
   version "1.15.10"
   resolved "https://registry.npmjs.org/@quasar/extras/-/extras-1.15.10.tgz"
