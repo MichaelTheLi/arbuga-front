@@ -7,6 +7,7 @@
         label="Name"
         stack-label
         dense
+        data-testid="edit-ecosystem-name"
       />
       <div class="row q-col-gutter-x-sm">
         <q-input
@@ -17,6 +18,7 @@
           stack-label
           dense
           suffix="cm"
+          data-testid="edit-ecosystem-width"
         />
         <q-input
           class="col"
@@ -26,6 +28,7 @@
           stack-label
           dense
           suffix="cm"
+          data-testid="edit-ecosystem-height"
         />
         <q-input
           class="col"
@@ -35,6 +38,7 @@
           stack-label
           dense
           suffix="cm"
+          data-testid="edit-ecosystem-length"
         />
       </div>
       <q-input
@@ -44,6 +48,7 @@
         :placeholder="ecosystemData.volume"
         hint="Volume calculated based on the dimensions. Manually enter the volume if required"
         dense
+        data-testid="edit-ecosystem-volume"
       />
     </q-form>
   </div>

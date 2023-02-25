@@ -5,8 +5,7 @@ import EcosystemsManagement from "../EcosystemsManagement/EcosystemsManagement.v
 
 import { createTestingPinia } from "@pinia/testing";
 import { useEcosystemsStore } from "@/stores/ecosystems";
-import type { Ecosystem } from "../../stores/ecosystems";
-import { faker } from "@faker-js/faker";
+import { createRandomEcosystem } from "./utils";
 
 vi.mock("vue-router", () => ({
   useRoute: vi.fn(),
@@ -31,24 +30,13 @@ describe("EcosystemList", () => {
       },
     });
   };
-  const createRandomEcosystem = (
-    store: ReturnType<typeof useEcosystemsStore>
-  ): Ecosystem => {
-    const item = store.createNew();
-
-    item.name = faker.random.words(2);
-    item.width.value = faker.datatype.number({ min: 20, max: 100 });
-    item.height.value = faker.datatype.number({ min: 20, max: 100 });
-    item.length.value = faker.datatype.number({ min: 20, max: 100 });
-
-    return item;
-  };
 
   it("renders empty", () => {
     const wrapper = mountComponent();
+    expect(wrapper.exists()).toBeTruthy();
     expect(
-      wrapper.find('[data-testid="create-ecosystem-button"]')
-    ).not.toBeNull();
+      wrapper.get('[data-testid="create-ecosystem-button"]').isVisible()
+    ).toBeTruthy();
 
     expect(wrapper.text()).toContain("Create new");
   });
