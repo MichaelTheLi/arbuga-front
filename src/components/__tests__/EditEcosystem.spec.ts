@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from "vitest";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
-import { mount, VueWrapper } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import EditEcosystem from "@/components/EditEcosystem.vue";
 import { type Ecosystem, useEcosystemsStore } from "../../stores/ecosystems";
 import { createTestingPinia } from "@pinia/testing";
-import { createRandomEcosystem } from "./utils";
+import { createRandomEcosystem, elementValue } from "./utils";
 
 installQuasar();
 
@@ -26,11 +26,6 @@ describe("EditEcosystem", () => {
 
     expect(wrapper.exists()).toBeTruthy();
   });
-
-  const elementValue = (wrapper: VueWrapper<any>, name: string) => {
-    // @ts-ignore
-    return wrapper.get(`[data-testid="edit-ecosystem-${name}"]`).element.value;
-  };
 
   it("renders full ecosystem properly", () => {
     const store = useEcosystemsStore(

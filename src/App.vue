@@ -17,7 +17,7 @@ import {
 } from "quasar";
 import { fetchUser } from "@/gateway/gateway";
 import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
-import AccountMenu from "@/components/AccountMenu.vue";
+import AccountMenu from "@/components/Account/AccountMenu.vue";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);

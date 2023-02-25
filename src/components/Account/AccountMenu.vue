@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
-import LoginButton from "@/components/LoginButton.vue";
+import LoginButton from "@/components/Account/LoginButton.vue";
 import { computed } from "vue";
 
 const store = useUserStore();
