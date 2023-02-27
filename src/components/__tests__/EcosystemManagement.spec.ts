@@ -93,4 +93,11 @@ describe("EcosystemList", () => {
       wrapper.findAll('[data-testid="ecosystems-list-item"]')
     ).toHaveLength(1);
   });
+
+  it.todo("select one works", async () => {
+    const wrapper = mountComponent({
+      ecosystems: { list: [] },
+    });
+    const store = useEcosystemsStore();
+  });
 });

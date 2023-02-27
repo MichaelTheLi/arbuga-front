@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
 import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 
@@ -8,10 +8,12 @@ import { quasar, transformAssetUrls } from "@quasar/vite-plugin";
 export default defineConfig({
   // plugins: [vue()],
   plugins: [
+    // @ts-ignore
     vue({
       template: { transformAssetUrls },
     }),
 
+    // @ts-ignore
     quasar({
       autoImportComponentCase: "pascal",
     }),
@@ -19,6 +21,12 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+  test: {
+    coverage: {
+      provider: "istanbul", // or 'c8',
+      exclude: ["**/*.spec.js", "__generated__"],
     },
   },
 });
