@@ -12,7 +12,7 @@
       />
     </div>
     <div
-      v-for="(category, index) of analysis"
+      v-for="(category, index) of props.analysis"
       :key="category.id"
       data-testid="analysis-category"
     >

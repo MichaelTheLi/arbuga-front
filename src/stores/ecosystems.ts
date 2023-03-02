@@ -14,7 +14,19 @@ export interface Ecosystem {
   length: Ref<number | null>;
   volumeManual: Ref<number | null>;
   volume: ComputedRef<number>;
+  fish: Ref<AquariumFish[]>;
+  plants: Ref<AquariumPlant[]>;
   analysis: Ref<EcosystemAnalysis[] | null>;
+}
+
+export interface AquariumFish {
+  name: string;
+  count: number;
+}
+
+export interface AquariumPlant {
+  name: string;
+  count: number;
 }
 
 export interface EcosystemAnalysis {
@@ -81,6 +93,9 @@ export const useEcosystemsStore = defineStore(
         (newValue) => (volumeManual.value = convertToInt(newValue))
       );
 
+      const fish = ref([] as AquariumFish[]);
+      const plants = ref([] as AquariumPlant[]);
+
       return {
         id,
         name,
@@ -89,6 +104,8 @@ export const useEcosystemsStore = defineStore(
         length,
         volume,
         volumeManual,
+        fish,
+        plants,
         analysis,
       };
     };
