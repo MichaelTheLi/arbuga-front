@@ -20,11 +20,22 @@ export interface Ecosystem {
 }
 
 export interface AquariumFish {
+  id: string;
   name: string;
   count: number;
 }
 
+export interface Fish {
+  id: string;
+  name: string;
+}
+
+export interface FishOption {
+  fish: Fish;
+}
+
 export interface AquariumPlant {
+  id: string;
   name: string;
   count: number;
 }
