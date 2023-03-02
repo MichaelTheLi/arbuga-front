@@ -128,7 +128,10 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
 
       if (!store.current) {
         store.changeCurrent(ecosystem);
+      } else if (ecosystem.id == store.current.id) {
+        store.changeCurrent(ecosystem);
       }
+
       store.addNew(ecosystem);
     });
   }
@@ -212,12 +215,8 @@ export const useLoginUser = () => {
     },
   });
 
-  const { refetch } = fetchUser();
-
   result.onDone(({ data }) => {
     localStorage.setItem("token", _.get(data, "login.token", ""));
-
-    refetch();
   });
 
   return {
