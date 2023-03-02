@@ -8,14 +8,21 @@ import { setContext } from "@apollo/client/link/context";
 
 const httpLink = createHttpLink({ uri: "http://localhost:8080/query" });
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem("token");
-  // return the headers to the context so httpLink can read them
+const authLink = setContext((request, { headers }) => {
+  let additionalHeaders = {};
+
+  if (request.operationName != "userLogin") {
+    const token = localStorage.getItem("token");
+
+    additionalHeaders = {
+      authorization: token ? `Bearer ${token}` : "",
+    };
+  }
+
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      ...additionalHeaders,
     },
   };
 });
