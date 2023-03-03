@@ -9,7 +9,9 @@ import {
   useEcosystemsStore,
 } from "../../stores/ecosystems";
 import _ from "lodash";
-import { nextTick } from "vue";
+import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
+
+installQuasar();
 
 describe("EcosystemInfo", () => {
   const buildEcosystem = (): Ecosystem => {
@@ -55,6 +57,10 @@ describe("EcosystemInfo", () => {
       },
     ];
     const defaultFishFinder = (input: string): FishOption[] => {
+      if (!input) {
+        return [];
+      }
+
       const strRegExPattern = `.*?${input}.*?`;
       const regex = new RegExp(strRegExPattern, "g");
       return _.filter(options, (option) => {
@@ -131,7 +137,7 @@ describe("EcosystemInfo", () => {
   it("renders empty fish", () => {
     const { wrapper } = buildComponent();
 
-    const list = wrapper.findAll('[data-testid="fish-item"]');
+    const list = wrapper.findAll('[data-testid="fish-option"]');
     expect(list).length(0);
   });
 
@@ -145,60 +151,24 @@ describe("EcosystemInfo", () => {
   it("fish selector options rendered", async () => {
     const { wrapper, fishFinder } = buildComponent();
 
-    const addFishButton = wrapper.get('[data-testid="add-fish"]');
-    expect(addFishButton.text()).contains("Add fish");
-
     await wrapper.get('[data-testid="fish-selector"]').setValue("Option");
+
     expect(wrapper.findAll('[data-testid="fish-option"]')).length(
       fishFinder("Option").length
     );
   });
 
-  it("fish selector options: single selected right away", async () => {
-    const { wrapper, fishFinder } = buildComponent();
-
-    await wrapper.get('[data-testid="fish-selector"]').setValue("Option 1");
-    await nextTick();
-    expect(wrapper.findAll('[data-testid="fish-option"]')).length(0);
-
-    // @ts-ignore
-    const value = wrapper.get('[data-testid="fish-selector-id"]').element[
-      "value"
-    ];
-    expect(value).toEqual(fishFinder("Option 1")[0].fish.id);
-  });
-
-  it("fish selector options selectable", async () => {
-    const { wrapper, fishFinder } = buildComponent();
-
-    const options = fishFinder("Option");
-    await wrapper.get('[data-testid="fish-selector"]').setValue("Option");
-    const index = 1;
-    const optionsElements = wrapper.findAll('[data-testid="fish-option"]');
-    await optionsElements[index].trigger("click");
-    await nextTick();
-
-    expect(wrapper.findAll('[data-testid="fish-option"]')).length(0);
-    const expectedFish = options[index].fish;
-    const fishSelectorId = wrapper.get('[data-testid="fish-selector-id"]');
-    // @ts-ignore
-    expect(fishSelectorId.element["value"]).toEqual(expectedFish.id);
-    const fishSelector = wrapper.get('[data-testid="fish-selector"]');
-    // @ts-ignore
-    expect(fishSelector.element["value"]).toEqual(expectedFish.name);
-  });
-
   it("can add fish", async () => {
-    const { wrapper } = buildComponent();
+    const { wrapper, fishFinder } = buildComponent();
 
-    const optionId = "123";
+    await wrapper.get('[data-testid="fish-selector"]').setValue("Option");
     const addFishButton = wrapper.get('[data-testid="add-fish"]');
-    await wrapper.get('[data-testid="fish-selector-id"]').setValue(optionId);
     await addFishButton.trigger("click");
 
     const loginEvent = wrapper.emitted("add");
     expect(loginEvent).toHaveLength(1);
     if (loginEvent) {
+      const optionId = fishFinder("Option")[0].fish.id;
       expect(loginEvent[0]).toEqual([optionId]);
     }
 

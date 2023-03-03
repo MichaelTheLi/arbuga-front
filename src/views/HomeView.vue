@@ -30,6 +30,10 @@ const options = [
   },
 ];
 const stubFishFinder = (input: string): FishOption[] => {
+  if (!input) {
+    return [];
+  }
+
   const strRegExPattern = `.*?${input}.*?`;
   const regex = new RegExp(strRegExPattern, "g");
   return _.filter(options, (option) => {
