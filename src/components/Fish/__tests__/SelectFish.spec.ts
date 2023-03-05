@@ -3,15 +3,14 @@ import { mount } from "@vue/test-utils";
 
 import _ from "lodash";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
-import SelectFish from "../SelectFish.vue";
+// @ts-ignore
+import SelectFish, { type FishFinder } from "../SelectFish.vue";
 import type { FishOption } from "../../../stores/ecosystems";
 
 installQuasar();
 
 describe("SelectFish", () => {
-  function buildComponent(
-    fishFinder?: (input: string) => Promise<FishOption[]>
-  ) {
+  function buildComponent(fishFinder?: FishFinder) {
     const options = [
       {
         fish: {

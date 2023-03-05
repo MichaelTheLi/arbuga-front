@@ -19,7 +19,7 @@ import { ref, watch } from "vue";
 import _ from "lodash";
 import FishOptionsList from "@/components/Fish/FishOptionsList.vue";
 
-type FishFinder = (input: string) => Promise<FishOption[]>;
+export type FishFinder = (input: string) => Promise<FishOption[]>;
 
 const props = defineProps<{
   fishFinder: FishFinder;
