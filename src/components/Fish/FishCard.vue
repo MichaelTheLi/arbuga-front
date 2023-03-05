@@ -12,8 +12,9 @@
 
     <q-card-actions>
       <q-btn
-        flat
-        color="dark"
+        color="primary"
+        size="sm"
+        padding="xs md"
         label="Add"
         data-testid="add-fish"
         @click="onAddClick"
