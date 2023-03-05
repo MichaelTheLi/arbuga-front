@@ -1,7 +1,7 @@
 <template>
   <q-card style="min-width: 350px" flat bordered>
     <q-card-section>
-      <div class="text-h6">Your address</div>
+      <div class="text-h6">Your credentials</div>
     </q-card-section>
 
     <q-card-section>
