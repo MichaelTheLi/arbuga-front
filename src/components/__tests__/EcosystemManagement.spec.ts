@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, beforeEach, it, expect, vi } from "vitest";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
 import { mount } from "@vue/test-utils";
 import EcosystemsManagement from "../EcosystemsManagement/EcosystemsManagement.vue";
@@ -7,16 +7,21 @@ import { createTestingPinia } from "@pinia/testing";
 import { useEcosystemsStore } from "@/stores/ecosystems";
 import { createRandomEcosystem } from "./utils";
 
+const pushMock = vi.fn();
 vi.mock("vue-router", () => ({
   useRoute: vi.fn(),
   useRouter: vi.fn(() => ({
-    push: () => {},
+    push: pushMock,
   })),
 }));
 
 installQuasar();
 
 describe("EcosystemList", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   const mountComponent = (initialState = {}) => {
     const testingPinia = createTestingPinia({
       createSpy: vi.fn,
@@ -92,12 +97,21 @@ describe("EcosystemList", () => {
     expect(
       wrapper.findAll('[data-testid="ecosystems-list-item"]')
     ).toHaveLength(1);
+
+    expect(pushMock).toBeCalledTimes(1);
+    expect(pushMock).toBeCalledWith("/");
   });
 
-  it.todo("select one works", async () => {
-    const wrapper = mountComponent({
-      ecosystems: { list: [] },
-    });
+  it("select one works", async () => {
     const store = useEcosystemsStore();
+    const list = [createRandomEcosystem(store)];
+    const wrapper = mountComponent({
+      ecosystems: { list },
+    });
+
+    await wrapper.get('[data-testid="ecosystems-list-item"]').trigger("click");
+
+    expect(pushMock).toBeCalledTimes(1);
+    expect(pushMock).toBeCalledWith("/");
   });
 });
