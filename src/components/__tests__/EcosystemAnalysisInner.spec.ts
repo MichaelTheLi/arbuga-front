@@ -118,6 +118,7 @@ describe("EcosystemAnalysis", () => {
 
     const icon = okMessage.find('[data-testid="message-icon"]');
     expect(icon.text()).toContain("check");
+    expect(icon.html()).toContain("teal-7");
   });
 
   it("renders bad message correctly", () => {
@@ -125,12 +126,12 @@ describe("EcosystemAnalysis", () => {
       props: { analysis: list },
     });
     const category = wrapper.findAll('[data-testid="analysis-category"]')[1];
-    const okMessage = category.find('[data-testid="analysis-message"]');
+    const warningMessage = category.find('[data-testid="analysis-message"]');
 
-    expect(okMessage.text()).toContain(list[1].messages[0].name);
-    expect(okMessage.text()).toContain(list[1].messages[0].description);
+    expect(warningMessage.text()).toContain(list[1].messages[0].name);
+    expect(warningMessage.text()).toContain(list[1].messages[0].description);
 
-    const icon = okMessage.find('[data-testid="message-icon"]');
+    const icon = warningMessage.find('[data-testid="message-icon"]');
     expect(icon.text()).toContain("warning");
   });
 });
