@@ -1,29 +1,22 @@
 <template>
-  <div class="q-pa-md row items-start q-gutter-md">
-    <FishCard
+  <div v-if="props.list">
+    <div
       v-for="(fish, index) in props.list"
       :key="index"
-      :fish="fish"
-      @add="onAdd(fish)"
-      data-testid="fish-option"
-    />
+      data-testid="fish-list-item"
+    >
+      {{ fish.count }} x {{ fish.name }}
+    </div>
   </div>
+  <div v-else>Add a fish</div>
 </template>
 
 <script setup lang="ts">
-import FishCard, { type FishCardData } from "@/components/Fish/FishCard.vue";
+import type { AquariumFish } from "@/stores/ecosystems";
 
 const props = defineProps<{
-  list: FishCardData[];
+  list: AquariumFish[];
 }>();
-
-const emit = defineEmits<{
-  (e: "add", selected: FishCardData): void;
-}>();
-
-const onAdd = (selected: FishCardData) => {
-  emit("add", selected);
-};
 </script>
 
 <style scoped></style>

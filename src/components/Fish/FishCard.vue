@@ -28,13 +28,14 @@
         dense
         :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
         @click="expanded = !expanded"
+        data-testid="show-more-info"
       />
     </q-card-actions>
 
     <q-slide-transition>
       <div v-show="expanded">
         <q-separator />
-        <q-card-section class="text-subitle2">
+        <q-card-section class="text-subitle2" data-testid="fish-description">
           {{ props.fish.description }}
         </q-card-section>
       </div>

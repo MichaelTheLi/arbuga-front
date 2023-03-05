@@ -28,8 +28,45 @@ const options = [
       name: "Option 3",
     },
   },
+  {
+    fish: {
+      id: "test4",
+      name: "Option 4",
+    },
+  },
+  {
+    fish: {
+      id: "test5",
+      name: "Option 5",
+    },
+  },
+  {
+    fish: {
+      id: "test6",
+      name: "Option 6",
+    },
+  },
+  {
+    fish: {
+      id: "test7",
+      name: "Option 7",
+    },
+  },
+  {
+    fish: {
+      id: "test8",
+      name: "Option 8",
+    },
+  },
+  {
+    fish: {
+      id: "test9",
+      name: "Option 9",
+    },
+  },
 ];
-const stubFishFinder = (input: string): FishOption[] => {
+
+const stubFishFinder = async (input: string): Promise<FishOption[]> => {
   if (!input) {
     return [];
   }
@@ -40,6 +77,20 @@ const stubFishFinder = (input: string): FishOption[] => {
     return !!option.fish.name.match(regex);
   });
 };
+
+const onFishAdd = (optionId: string) => {
+  const foundFish = _.find(options, { fish: { id: optionId } });
+  if (foundFish) {
+    const newFish = {
+      id: optionId,
+      name: foundFish.fish.name,
+      count: 1,
+    };
+    current.value?.fish.push(newFish);
+  } else {
+    console.error("Fish not found: " + optionId);
+  }
+};
 </script>
 
 <template>
@@ -47,7 +98,11 @@ const stubFishFinder = (input: string): FishOption[] => {
     <div v-if="current">
       <EditEcosystem :ecosystem="current" />
       <h5 class="q-my-md">Parameters</h5>
-      <EcosystemInfo :ecosystem="current" :fish-finder="stubFishFinder" />
+      <EcosystemInfo
+        :ecosystem="current"
+        :fish-finder="stubFishFinder"
+        @fishAdd="onFishAdd"
+      />
     </div>
     <div v-else>Select an ecosystem</div>
   </q-page>

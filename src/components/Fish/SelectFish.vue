@@ -1,26 +1,23 @@
 <template>
   <div class="select-fish">
     <q-input
-      class="col"
       filled
       v-model="search"
       label="Search"
       stack-label
-      dense
-      suffix="cm"
       data-testid="fish-selector"
     />
-    <FishList :list="list" @add="onAdd" data-testid="fish-options" />
+    <FishOptionsList :list="list" @add="onAdd" data-testid="fish-options" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { QInput } from "quasar";
-import FishList from "@/components/Fish/FishList.vue";
 import type { FishCardData } from "@/components/Fish/FishCard.vue";
 import { FishOption } from "@/stores/ecosystems";
 import { ref, watch } from "vue";
 import _ from "lodash";
+import FishOptionsList from "@/components/Fish/FishOptionsList.vue";
 
 type FishFinder = (input: string) => Promise<FishOption[]>;
 
