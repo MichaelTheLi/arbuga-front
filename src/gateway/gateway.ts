@@ -1,8 +1,8 @@
-import { useMutation, useQuery } from "@vue/apollo-composable";
+import { useLazyQuery, useMutation, useQuery } from "@vue/apollo-composable";
 import _ from "lodash";
 import { gql } from "@/__generated__";
-import { type Ref, unref, watch } from "vue";
-import { useEcosystemsStore } from "@/stores/ecosystems";
+import { computed, isRef, reactive, type Ref, unref, watch } from "vue";
+import { type FishOption, useEcosystemsStore } from "@/stores/ecosystems";
 import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
 
@@ -35,6 +35,27 @@ export const LOAD_USER = gql(/* GraphQL */ `
             status
           }
         }
+      }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const SEARCH_FISH = gql(/* GraphQL */ `
+  query SearchFish($substring: String) {
+    fishList(substring: $substring, first: 100) {
+      edges {
+        cursor
+        node {
+          id
+          name
+          description
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
       }
     }
   }
@@ -164,6 +185,64 @@ export const fetchUser = () => {
   });
 
   return { loading, error, refetch };
+};
+
+export const searchFish = (
+  substring: string | Ref<string>,
+  debounce: number
+) => {
+  const variables = reactive({
+    substring: "test",
+    first: 1000,
+    after: "",
+  });
+
+  if (isRef(substring)) {
+    watch(substring, (newValue) => {
+      variables.substring = newValue;
+    });
+  }
+
+  const { loading, error, result, load } = useLazyQuery(
+    SEARCH_FISH,
+    variables,
+    {
+      fetchPolicy: "network-only",
+      debounce: debounce ? debounce : undefined,
+    }
+  );
+
+  return { result, loading, error, load };
+};
+
+export const useFishSearch = (
+  input: string | Ref<string>,
+  debounce: number
+) => {
+  const { result, load } = searchFish(input, debounce);
+
+  const options = computed(() => {
+    if (!result.value) {
+      return [];
+    }
+
+    return result.value.fishList.edges
+      .filter((edge) => {
+        return edge.node;
+      })
+      .map(({ node }): FishOption => {
+        return {
+          fish: {
+            // @ts-ignore
+            id: node.id,
+            // @ts-ignore
+            name: node.name,
+          },
+        };
+      });
+  });
+
+  return { options, load };
 };
 
 export const useSaveEcosystem = () => {
