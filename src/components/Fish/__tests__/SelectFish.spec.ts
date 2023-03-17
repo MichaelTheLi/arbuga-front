@@ -1,53 +1,71 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, vi, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 
 import _ from "lodash";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
 // @ts-ignore
-import SelectFish, { type FishFinder } from "../SelectFish.vue";
+import SelectFish from "../SelectFish.vue";
 import type { FishOption } from "../../../stores/ecosystems";
+import { computed, nextTick, ref, type Ref, unref } from "vue";
 
 installQuasar();
 
+const options = [
+  {
+    fish: {
+      id: "test1",
+      name: "Option 1",
+    },
+  },
+  {
+    fish: {
+      id: "test2",
+      name: "Option 2",
+    },
+  },
+  {
+    fish: {
+      id: "test3",
+      name: "Option 3",
+    },
+  },
+];
+
+const defaultFishFinder = (input: string): FishOption[] => {
+  if (!input) {
+    return [];
+  }
+
+  const strRegExPattern = `.*?${input}.*?`;
+  const regex = new RegExp(strRegExPattern, "g");
+  return _.filter(options, (option) => {
+    return !!option.fish.name.match(regex);
+  });
+};
+
+vi.mock("@/gateway/gateway", () => {
+  return {
+    useFishSearch: (inputSubstring: string | Ref<string>) => {
+      const localInput = ref("");
+
+      return {
+        options: computed(() => {
+          return defaultFishFinder(unref(localInput));
+        }),
+        load: () => {
+          localInput.value = unref(inputSubstring);
+        },
+      };
+    },
+  };
+});
+
 describe("SelectFish", () => {
-  function buildComponent(fishFinder?: FishFinder) {
-    const options = [
-      {
-        fish: {
-          id: "test1",
-          name: "Option 1",
-        },
-      },
-      {
-        fish: {
-          id: "test2",
-          name: "Option 2",
-        },
-      },
-      {
-        fish: {
-          id: "test3",
-          name: "Option 3",
-        },
-      },
-    ];
-    const defaultFishFinder = async (input: string): Promise<FishOption[]> => {
-      if (!input) {
-        return [];
-      }
-
-      const strRegExPattern = `.*?${input}.*?`;
-      const regex = new RegExp(strRegExPattern, "g");
-      return _.filter(options, (option) => {
-        return !!option.fish.name.match(regex);
-      });
-    };
-    fishFinder = fishFinder || defaultFishFinder;
-
+  function buildComponent() {
     const wrapper = mount(SelectFish, {
-      props: { fishFinder, debounceTimeout: 0 },
+      props: { debounceTimeout: 0 },
     });
-    return { wrapper, fishFinder };
+    return { wrapper, fishFinder: defaultFishFinder };
   }
 
   it("renders input", () => {
@@ -59,6 +77,7 @@ describe("SelectFish", () => {
     const { wrapper, fishFinder } = buildComponent();
 
     await wrapper.get('[data-testid="fish-selector"]').setValue("Option");
+    await nextTick();
 
     const options = await fishFinder("Option");
     expect(wrapper.findAll('[data-testid="fish-option"]')).length(
