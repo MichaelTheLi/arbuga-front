@@ -4,23 +4,21 @@ import { useEcosystemsStore } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import { QPage } from "quasar";
 import EditEcosystem from "@/components/EditEcosystem.vue";
+import { useAddFish } from "@/gateway/gateway";
 const store = useEcosystemsStore();
 
+const { addFish } = useAddFish();
 let { current } = storeToRefs(store);
 
 const onFishAdd = (optionId: string) => {
-  console.log(optionId);
-  // const foundFish = _.find(options, { fish: { id: optionId } });
-  // if (foundFish) {
-  //   const newFish = {
-  //     id: optionId,
-  //     name: foundFish.fish.name,
-  //     count: 1,
-  //   };
-  //   current.value?.fish.push(newFish);
-  // } else {
-  //   console.error("Fish not found: " + optionId);
-  // }
+  if (store.current) {
+    addFish({
+      ecosystemId: store.current.id,
+      fishId: optionId,
+    });
+  } else {
+    console.error("Cannot add, select ecosystem");
+  }
 };
 </script>
 

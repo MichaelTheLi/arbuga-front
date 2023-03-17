@@ -35,6 +35,11 @@ export const LOAD_USER = gql(/* GraphQL */ `
             status
           }
         }
+        fish {
+          id
+          name
+          description
+        }
       }
     }
   }
@@ -131,6 +136,22 @@ export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
   }
 `);
 
+// noinspection GraphQLUnresolvedReference
+export const ADD_FISH = gql(/* GraphQL */ `
+  mutation AddFish($ecosystemId: ID!, $fishId: ID!) {
+    addFishToEcosystem(ecosystemId: $ecosystemId, fishId: $fishId) {
+      ecosystem {
+        id
+        fish {
+          id
+          name
+          description
+        }
+      }
+    }
+  }
+`);
+
 export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
   const store = useEcosystemsStore();
 
@@ -146,6 +167,8 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
       if (ecosystemData.analysis) {
         ecosystem.analysis.value = ecosystemData.analysis;
       }
+
+      ecosystem.fish.value = ecosystemData.fish;
 
       if (!store.current) {
         store.changeCurrent(ecosystem);
@@ -282,6 +305,12 @@ export const useSaveEcosystem = () => {
   return {
     execute: result.mutate,
   };
+};
+
+export const useAddFish = () => {
+  const { mutate: addFish } = useMutation(ADD_FISH);
+
+  return { addFish };
 };
 
 export const useLoginUser = () => {
