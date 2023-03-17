@@ -36,7 +36,7 @@
     <q-slide-transition>
       <div v-show="expanded">
         <q-separator />
-        <q-card-section class="text-subitle2" data-testid="fish-description">
+        <q-card-section class="text-subtitle2" data-testid="fish-description">
           {{ props.fish.description }}
         </q-card-section>
       </div>

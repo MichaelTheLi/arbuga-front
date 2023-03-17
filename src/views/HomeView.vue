@@ -29,6 +29,7 @@ const onFishAdd = (optionId: string) => {
     <div v-if="current">
       <EditEcosystem :ecosystem="current" />
       <h5 class="q-my-md">Parameters</h5>
+      <!--suppress JSValidateTypes -->
       <EcosystemInfo :ecosystem="current" @fishAdd="onFishAdd" />
     </div>
     <div v-else>Select an ecosystem</div>

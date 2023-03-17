@@ -44,6 +44,7 @@ const defaultFishFinder = (input: string): FishOption[] => {
 };
 
 vi.mock("@/gateway/gateway", () => {
+  // noinspection JSUnusedGlobalSymbols
   return {
     useFishSearch: (inputSubstring: Ref<string>) => {
       const localInput = ref("");
@@ -79,7 +80,7 @@ describe("SelectFish", () => {
     await wrapper.get('[data-testid="fish-selector"]').setValue("Option");
     await nextTick();
 
-    const options = await fishFinder("Option");
+    const options = fishFinder("Option");
     expect(wrapper.findAll('[data-testid="fish-option"]')).length(
       options.length
     );
@@ -88,7 +89,7 @@ describe("SelectFish", () => {
   it("trigger add", async () => {
     const { wrapper, fishFinder } = buildComponent();
 
-    const options = await fishFinder("Option 1");
+    const options = fishFinder("Option 1");
     await wrapper.get('[data-testid="fish-selector"]').setValue("Option 1");
     await wrapper.get('[data-testid="add-fish"]').trigger("click");
 
@@ -101,7 +102,7 @@ describe("SelectFish", () => {
   });
 
   it("reset to empty not searching for everything", async () => {
-    const { wrapper, fishFinder } = buildComponent();
+    const { wrapper } = buildComponent();
 
     await wrapper.get('[data-testid="fish-selector"]').setValue("Option 1");
 

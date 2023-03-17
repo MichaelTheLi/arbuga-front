@@ -7,6 +7,7 @@ installQuasar();
 
 const executeMock = vi.fn();
 vi.mock("@/gateway/gateway", () => {
+  // noinspection JSUnusedGlobalSymbols
   return {
     useLoginUser: () => ({ execute: executeMock }),
   };

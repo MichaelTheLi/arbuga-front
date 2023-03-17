@@ -187,10 +187,7 @@ export const fetchUser = () => {
   return { loading, error, refetch };
 };
 
-export const useFishSearch = (
-  input: Ref<string>,
-  debounce: number
-) => {
+export const useFishSearch = (input: Ref<string>, debounce: number) => {
   const { result, load } = searchFish(input, debounce);
 
   const options = computed(() => {
@@ -217,10 +214,7 @@ export const useFishSearch = (
   return { options, load };
 };
 
-export const searchFish = (
-  substring: Ref<string>,
-  debounce: number
-) => {
+export const searchFish = (substring: Ref<string>, debounce: number) => {
   const variables = reactive({
     substring: "",
     first: 1000,

@@ -12,6 +12,7 @@ import router from "./router";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import { apolloClient } from "@/gateway/client_apollo";
 
+// noinspection JSUnusedGlobalSymbols
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient);

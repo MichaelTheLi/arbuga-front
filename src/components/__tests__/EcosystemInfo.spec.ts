@@ -3,14 +3,8 @@ import { createTestingPinia } from "@pinia/testing";
 import { mount } from "@vue/test-utils";
 
 import EcosystemInfo from "../EcosystemInfo.vue";
-import {
-  type Ecosystem,
-  type FishOption,
-  useEcosystemsStore,
-} from "../../stores/ecosystems";
-import _ from "lodash";
+import { type Ecosystem, useEcosystemsStore } from "../../stores/ecosystems";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
-import SelectFish from "../Fish/SelectFish.vue";
 import FishList from "../Fish/FishList.vue";
 import PlantsList from "../Plants/PlantsList.vue";
 
@@ -56,49 +50,13 @@ describe("EcosystemInfo", () => {
     return ecosystem;
   };
 
-  function buildComponent(
-    ecosystem?: Ecosystem,
-    fishFinder?: (input: string) => FishOption[]
-  ) {
+  function buildComponent(ecosystem?: Ecosystem) {
     ecosystem = ecosystem || buildEcosystem();
-    const options = [
-      {
-        fish: {
-          id: "test1",
-          name: "Option 1",
-        },
-      },
-      {
-        fish: {
-          id: "test2",
-          name: "Option 2",
-        },
-      },
-      {
-        fish: {
-          id: "test3",
-          name: "Option 3",
-        },
-      },
-    ];
-    const defaultFishFinder = (input: string): FishOption[] => {
-      if (!input) {
-        return [];
-      }
-
-      const strRegExPattern = `.*?${input}.*?`;
-      const regex = new RegExp(strRegExPattern, "g");
-      return _.filter(options, (option) => {
-        return !!option.fish.name.match(regex);
-      });
-    };
-    fishFinder = fishFinder || defaultFishFinder;
-
     const wrapper = mount(EcosystemInfo, {
-      props: { ecosystem: ecosystem, fishFinder: fishFinder },
+      props: { ecosystem: ecosystem },
       shallow: true,
     });
-    return { ecosystem, wrapper, fishFinder };
+    return { ecosystem, wrapper };
   }
 
   it("renders volume", () => {
@@ -127,26 +85,6 @@ describe("EcosystemInfo", () => {
 
     expect(wrapper.getComponent(PlantsList).props("list")).toHaveLength(
       ecosystem.plants.value.length
-    );
-  });
-
-  it("trigger add fish", async () => {
-    const { wrapper, fishFinder } = buildComponent();
-
-    await wrapper.getComponent(SelectFish).trigger("add", {
-      id: "test1",
-    });
-
-    const loginEvent = wrapper.emitted("fishAdd");
-    expect(loginEvent).toHaveLength(1);
-    if (loginEvent) {
-      const optionId = fishFinder("Option")[0].fish.id;
-      expect(loginEvent[0]).toEqual([optionId]);
-    }
-
-    expect(wrapper.findAll('[data-testid="fish-option"]')).length(
-      0,
-      "Options cleared"
     );
   });
 });
