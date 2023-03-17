@@ -187,36 +187,8 @@ export const fetchUser = () => {
   return { loading, error, refetch };
 };
 
-export const searchFish = (
-  substring: string | Ref<string>,
-  debounce: number
-) => {
-  const variables = reactive({
-    substring: "test",
-    first: 1000,
-    after: "",
-  });
-
-  if (isRef(substring)) {
-    watch(substring, (newValue) => {
-      variables.substring = newValue;
-    });
-  }
-
-  const { loading, error, result, load } = useLazyQuery(
-    SEARCH_FISH,
-    variables,
-    {
-      fetchPolicy: "network-only",
-      debounce: debounce ? debounce : undefined,
-    }
-  );
-
-  return { result, loading, error, load };
-};
-
 export const useFishSearch = (
-  input: string | Ref<string>,
+  input: Ref<string>,
   debounce: number
 ) => {
   const { result, load } = searchFish(input, debounce);
@@ -243,6 +215,44 @@ export const useFishSearch = (
   });
 
   return { options, load };
+};
+
+export const searchFish = (
+  substring: Ref<string>,
+  debounce: number
+) => {
+  const variables = reactive({
+    substring: "",
+    first: 1000,
+    after: "",
+  });
+
+  const haveSubstring = computed(() => {
+    return !!variables.substring;
+  });
+
+  if (isRef(substring)) {
+    watch(substring, (newValue) => {
+      variables.substring = newValue;
+    });
+  }
+
+  const { loading, error, result, load } = useLazyQuery(
+    SEARCH_FISH,
+    variables,
+    () => ({
+      fetchPolicy: "network-only",
+      debounce: debounce ? debounce : undefined,
+      enabled: haveSubstring.value,
+    })
+  );
+
+  return {
+    result,
+    loading,
+    error,
+    load,
+  };
 };
 
 export const useSaveEcosystem = () => {

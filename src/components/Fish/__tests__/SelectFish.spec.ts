@@ -45,7 +45,7 @@ const defaultFishFinder = (input: string): FishOption[] => {
 
 vi.mock("@/gateway/gateway", () => {
   return {
-    useFishSearch: (inputSubstring: string | Ref<string>) => {
+    useFishSearch: (inputSubstring: Ref<string>) => {
       const localInput = ref("");
 
       return {
@@ -53,7 +53,7 @@ vi.mock("@/gateway/gateway", () => {
           return defaultFishFinder(unref(localInput));
         }),
         load: () => {
-          localInput.value = unref(inputSubstring);
+          localInput.value = inputSubstring.value;
         },
       };
     },
@@ -98,6 +98,16 @@ describe("SelectFish", () => {
       // @ts-ignore
       expect(addEvent[0][0].id).toEqual(options[0].fish.id);
     }
+  });
+
+  it("reset to empty not searching for everything", async () => {
+    const { wrapper, fishFinder } = buildComponent();
+
+    await wrapper.get('[data-testid="fish-selector"]').setValue("Option 1");
+
+    expect(wrapper.findAll('[data-testid="fish-option"]')).length(1);
+
+    await wrapper.get('[data-testid="fish-selector"]').setValue("");
 
     expect(wrapper.findAll('[data-testid="fish-option"]')).length(
       0,

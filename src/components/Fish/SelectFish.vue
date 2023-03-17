@@ -32,8 +32,13 @@ const list = ref([] as FishCardData[]);
 const { options, load } = useFishSearch(search, props.debounceTimeout);
 
 watch(search, () => {
-  load();
+  if (search.value) {
+    load();
+  } else {
+    list.value = [];
+  }
 });
+
 watch(options, (newOptions) => {
   list.value = _.map(newOptions, (option) => {
     return {
@@ -48,7 +53,6 @@ watch(options, (newOptions) => {
 
 const onAdd = (selected: FishCardData) => {
   emit("add", selected);
-  search.value = "";
 };
 </script>
 
