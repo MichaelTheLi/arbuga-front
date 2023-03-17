@@ -3,7 +3,11 @@ import { createTestingPinia } from "@pinia/testing";
 import { mount } from "@vue/test-utils";
 
 import EcosystemInfo from "../EcosystemInfo.vue";
-import { type Ecosystem, useEcosystemsStore } from "../../stores/ecosystems";
+import {
+  type AquariumFish,
+  type Ecosystem,
+  useEcosystemsStore,
+} from "../../stores/ecosystems";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
 import FishList from "../Fish/FishList.vue";
 import PlantsList from "../Plants/PlantsList.vue";
@@ -13,16 +17,22 @@ installQuasar();
 describe("EcosystemInfo", () => {
   const stubFishList = [
     {
-      id: "test1",
-      name: "Harlequin rasbora",
+      fish: {
+        id: "test1",
+        name: "Harlequin rasbora",
+        description: "something",
+      },
       count: 85812,
     },
     {
-      id: "test2",
-      name: "July corydoras",
+      fish: {
+        id: "test2",
+        name: "July corydoras",
+        description: "To the bottom we go",
+      },
       count: 51233,
     },
-  ];
+  ] as AquariumFish[];
   const stubPlantsList = [
     {
       id: "test1",

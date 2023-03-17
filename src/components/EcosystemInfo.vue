@@ -5,12 +5,12 @@
 
       <div>
         <SelectFish :debounce-timeout="300" @add="onAddList" />
-        <!--suppress JSValidateTypes -->
+        <!--suppress JSValidateTypes, JSUnresolvedVariable -->
         <FishList :list="ecosystem.fish" />
       </div>
 
       <div>
-        <!--suppress JSValidateTypes -->
+        <!--suppress JSValidateTypes, JSUnresolvedVariable -->
         <PlantsList :list="ecosystem.plants" />
       </div>
     </div>

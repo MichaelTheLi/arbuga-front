@@ -36,9 +36,12 @@ export const LOAD_USER = gql(/* GraphQL */ `
           }
         }
         fish {
-          id
-          name
-          description
+          fish {
+            id
+            name
+            description
+          }
+          count
         }
       }
     }
@@ -97,6 +100,14 @@ export const LOGIN_USER = gql(/* GraphQL */ `
               status
             }
           }
+          fish {
+            fish {
+              id
+              name
+              description
+            }
+            count
+          }
         }
       }
     }
@@ -129,6 +140,14 @@ export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
             status
           }
         }
+        fish {
+          fish {
+            id
+            name
+            description
+          }
+          count
+        }
       }
       success
       error
@@ -142,10 +161,14 @@ export const ADD_FISH = gql(/* GraphQL */ `
     addFishToEcosystem(ecosystemId: $ecosystemId, fishId: $fishId) {
       ecosystem {
         id
+
         fish {
-          id
-          name
-          description
+          fish {
+            id
+            name
+            description
+          }
+          count
         }
       }
     }
@@ -168,7 +191,9 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
         ecosystem.analysis.value = ecosystemData.analysis;
       }
 
-      ecosystem.fish.value = ecosystemData.fish;
+      if (ecosystemData.fish) {
+        ecosystem.fish.value = ecosystemData.fish;
+      }
 
       if (!store.current) {
         store.changeCurrent(ecosystem);
@@ -229,6 +254,8 @@ export const useFishSearch = (input: Ref<string>, debounce: number) => {
             id: node.id,
             // @ts-ignore
             name: node.name,
+            // @ts-ignore
+            description: node.description,
           },
         };
       });

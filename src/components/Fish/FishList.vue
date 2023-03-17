@@ -5,7 +5,7 @@
       :key="index"
       data-testid="fish-list-item"
     >
-      {{ fish.count }} x {{ fish.name }}
+      {{ fish.count }} x {{ fish.fish.name }}
     </div>
   </div>
   <div v-else>Add a fish</div>

@@ -20,14 +20,14 @@ export interface Ecosystem {
 }
 
 export interface AquariumFish {
-  id: string;
-  name: string;
+  fish: Fish;
   count: number;
 }
 
 export interface Fish {
   id: string;
   name: string;
+  description: string;
 }
 
 export interface FishOption {
