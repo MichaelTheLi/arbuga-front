@@ -81,6 +81,32 @@ describe("EcosystemList", () => {
     expect(elements[0].text()).toContain(expectedFirstVolume);
   });
 
+  it("renders all items properly", () => {
+    const store = useEcosystemsStore();
+    const list = [
+      createRandomEcosystem(store),
+      createRandomEcosystem(store),
+      createRandomEcosystem(store),
+    ];
+    const wrapper = mountComponent({
+      ecosystems: { list },
+    });
+
+    useEcosystemsStore();
+
+    const elements = wrapper.findAll('[data-testid="ecosystems-list-item"]');
+
+    elements.forEach((element, index) => {
+      const item = list[index];
+      expect(element.text()).toContain(item.name);
+      const expectedFirstDimensions = `${item.length}x${item.width}x${item.height}`;
+      expect(element.text()).toContain(expectedFirstDimensions);
+      const { volume } = useEcosystemDynamicVolume(item);
+      const expectedFirstVolume = `${volume.value} L`;
+      expect(element.text()).toContain(expectedFirstVolume);
+    });
+  });
+
   it("create new works", async () => {
     const wrapper = mountComponent({
       ecosystems: { list: [] },
