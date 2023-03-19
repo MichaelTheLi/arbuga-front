@@ -6,7 +6,8 @@ import {
 import typeDefs from "@/gateway/schema";
 import { setContext } from "@apollo/client/link/context";
 
-const httpLink = createHttpLink({ uri: "http://localhost:8080/query" });
+// TODO Move backend url to the configuration
+const httpLink = createHttpLink({ uri: "http://localhost:7878/query" });
 
 const authLink = setContext((request, { headers }) => {
   let additionalHeaders = {};
