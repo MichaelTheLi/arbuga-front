@@ -22,6 +22,7 @@ import type { FishCardData } from "@/components/Fish/FishCard.vue";
 import FishList from "@/components/Fish/FishList.vue";
 import PlantsList from "@/components/Plants/PlantsList.vue";
 import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
+import { toRef } from "vue";
 
 const props = defineProps<{
   ecosystem: Ecosystem;
@@ -34,7 +35,9 @@ const onAddList = (selected: FishCardData) => {
   emit("fishAdd", selected.id);
 };
 
-const { volume } = useEcosystemDynamicVolume(props.ecosystem);
+const ecosystemForVolume = toRef(props, "ecosystem");
+
+const { volume } = useEcosystemDynamicVolume(ecosystemForVolume);
 </script>
 
 <style scoped></style>

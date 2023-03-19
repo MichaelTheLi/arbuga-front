@@ -72,14 +72,18 @@ export interface EcosystemState {
 export const useEcosystemDynamicVolume = (
   _ecosystem: Ref<Ecosystem> | Ecosystem
 ) => {
-  const ecosystem = unref(_ecosystem);
+  const ecosystem = computed(() => unref(_ecosystem));
 
   const volumeCubicCm = computed(
     () =>
-      (ecosystem.width || 0) * (ecosystem.height || 0) * (ecosystem.length || 0)
+      (ecosystem.value.width || 0) *
+      (ecosystem.value.height || 0) *
+      (ecosystem.value.length || 0)
   );
   const volumeLiters = computed(() => volumeCubicCm.value / 1000);
-  const volume = computed(() => ecosystem.volumeManual || volumeLiters.value);
+  const volume = computed(() => {
+    return ecosystem.value.volumeManual || volumeLiters.value;
+  });
 
   return {
     volume,

@@ -12,6 +12,7 @@ import {
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
 import FishList from "../Fish/FishList.vue";
 import PlantsList from "../Plants/PlantsList.vue";
+import { faker } from "@faker-js/faker";
 
 installQuasar();
 
@@ -55,9 +56,9 @@ describe("EcosystemInfo", () => {
     );
 
     const ecosystem = store.createNew("Test name");
-    ecosystem.width = 11;
-    ecosystem.height = 12;
-    ecosystem.length = 13;
+    ecosystem.width = faker.datatype.number({ min: 10, max: 100 });
+    ecosystem.height = faker.datatype.number({ min: 10, max: 100 });
+    ecosystem.length = faker.datatype.number({ min: 10, max: 100 });
     return ecosystem;
   };
 
@@ -75,6 +76,19 @@ describe("EcosystemInfo", () => {
 
     const { volume } = useEcosystemDynamicVolume(ecosystem);
     expect(wrapper.text()).toContain(`Actual volume: ${volume.value}l`);
+  });
+
+  it("renders volume after props change", async () => {
+    const { wrapper, ecosystem: originalEcosystem } = buildComponent();
+
+    const { volume: origVolume } = useEcosystemDynamicVolume(originalEcosystem);
+    expect(wrapper.text()).toContain(`Actual volume: ${origVolume.value}l`);
+
+    const ecosystem = buildEcosystem();
+    await wrapper.setProps({ ecosystem });
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
+    expect(wrapper.text()).toContain(`Actual volume: ${volume.value}l`);
+    expect(volume.value).not.eq(origVolume.value);
   });
 
   it("renders fish list", () => {
