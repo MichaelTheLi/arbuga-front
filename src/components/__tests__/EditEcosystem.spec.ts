@@ -2,7 +2,11 @@ import { describe, it, expect, vi } from "vitest";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
 import { mount } from "@vue/test-utils";
 import EditEcosystem from "@/components/EditEcosystem.vue";
-import { type Ecosystem, useEcosystemsStore } from "../../stores/ecosystems";
+import {
+  type Ecosystem,
+  useEcosystemDynamicVolume,
+  useEcosystemsStore,
+} from "../../stores/ecosystems";
 import { createTestingPinia } from "@pinia/testing";
 import { createRandomEcosystem, elementValue } from "./utils";
 
@@ -38,21 +42,16 @@ describe("EditEcosystem", () => {
     const wrapper = mountComponent(ecosystem);
 
     expect(elementValue(wrapper, "name")).toEqual(ecosystem.name);
-    expect(elementValue(wrapper, "width")).toEqual(
-      String(ecosystem.width.value)
-    );
-    expect(elementValue(wrapper, "height")).toEqual(
-      String(ecosystem.height.value)
-    );
-    expect(elementValue(wrapper, "length")).toEqual(
-      String(ecosystem.length.value)
-    );
+    expect(elementValue(wrapper, "width")).toEqual(String(ecosystem.width));
+    expect(elementValue(wrapper, "height")).toEqual(String(ecosystem.height));
+    expect(elementValue(wrapper, "length")).toEqual(String(ecosystem.length));
     expect(elementValue(wrapper, "volume")).toEqual("");
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
     expect(
       wrapper
         .get('[data-testid="edit-ecosystem-volume"]')
         .attributes("placeholder")
-    ).toEqual(String(ecosystem.volume.value));
+    ).toEqual(String(volume.value));
   });
 
   it("renders manual volume", () => {
@@ -63,12 +62,11 @@ describe("EditEcosystem", () => {
       })
     );
     const ecosystem = createRandomEcosystem(store);
-    ecosystem.volumeManual.value = 123.45;
+    ecosystem.volumeManual = 123.45;
     const wrapper = mountComponent(ecosystem);
 
-    expect(elementValue(wrapper, "volume")).toEqual(
-      String(ecosystem.volume.value)
-    );
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
+    expect(elementValue(wrapper, "volume")).toEqual(String(volume.value));
   });
 
   it("change input changes global state manual volume", () => {
@@ -79,7 +77,7 @@ describe("EditEcosystem", () => {
       })
     );
     const ecosystem = createRandomEcosystem(store);
-    ecosystem.volumeManual.value = 123.45;
+    ecosystem.volumeManual = 123.45;
     const wrapper = mountComponent(ecosystem);
 
     wrapper
@@ -91,10 +89,12 @@ describe("EditEcosystem", () => {
     wrapper.get('[data-testid="edit-ecosystem-volume"]').setValue(101.23);
 
     expect(ecosystem.name).toEqual("Test changed name");
-    expect(ecosystem.width.value).toEqual(77.77);
-    expect(ecosystem.height.value).toEqual(88.88);
-    expect(ecosystem.length.value).toEqual(99.99);
-    expect(ecosystem.volume.value).toEqual(101.23);
+    expect(ecosystem.width).toEqual(77.77);
+    expect(ecosystem.height).toEqual(88.88);
+    expect(ecosystem.length).toEqual(99.99);
+
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
+    expect(volume.value).toEqual(101.23);
   });
 
   it("resetting manual volume restores original volume", () => {
@@ -105,18 +105,19 @@ describe("EditEcosystem", () => {
       })
     );
     const ecosystem = createRandomEcosystem(store);
-    ecosystem.volumeManual.value = 123.45;
+    ecosystem.volumeManual = 123.45;
     const wrapper = mountComponent(ecosystem);
 
     wrapper.get('[data-testid="edit-ecosystem-volume"]').setValue("");
 
-    expect(ecosystem.volumeManual.value).toEqual("");
+    expect(ecosystem.volumeManual).toEqual("");
     const volumeExpected =
-      (ecosystem.width?.value || 0) *
-      (ecosystem.height?.value || 0) *
-      (ecosystem.length?.value || 0);
+      (ecosystem.width || 0) *
+      (ecosystem.height || 0) *
+      (ecosystem.length || 0);
 
-    expect(ecosystem.volume.value).toBeCloseTo(
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
+    expect(volume.value).toBeCloseTo(
       volumeExpected / 1000 // In liters
     );
   });

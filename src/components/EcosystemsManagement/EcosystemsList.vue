@@ -15,7 +15,7 @@
       </q-item-section>
 
       <q-item-section side top>
-        <q-item-label caption>{{ ecosystem.volume }} L</q-item-label>
+        <q-item-label caption>{{ volume(ecosystem) }} L</q-item-label>
         <q-item-label>
           {{ ecosystem.length }}x{{ ecosystem.width }}x{{ ecosystem.height }}
         </q-item-label>
@@ -25,8 +25,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useEcosystemsStore } from "@/stores/ecosystems";
 import type { Ecosystem } from "@/stores/ecosystems";
+import {
+  useEcosystemDynamicVolume,
+  useEcosystemsStore,
+} from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
 import { QItem, QItemLabel, QItemSection, QList } from "quasar";
@@ -44,6 +47,10 @@ const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
 
 const isActive = (ecosystem: UnwrapRef<Ecosystem>) => {
   return store.current === ecosystem;
+};
+
+const volume = (ecosystem: Ecosystem) => {
+  return useEcosystemDynamicVolume(ecosystem).volume;
 };
 </script>
 

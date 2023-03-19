@@ -23,7 +23,7 @@ const props = defineProps<{
   debounceTimeout: number;
 }>();
 const emit = defineEmits<{
-  (e: "add", option_id: string): void;
+  (e: "add", selected: FishCardData): void;
 }>();
 
 const search = ref("");

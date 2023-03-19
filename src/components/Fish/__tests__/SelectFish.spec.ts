@@ -15,18 +15,21 @@ const options = [
     fish: {
       id: "test1",
       name: "Option 1",
+      description: "Desc 1",
     },
   },
   {
     fish: {
       id: "test2",
       name: "Option 2",
+      description: "Desc 2",
     },
   },
   {
     fish: {
       id: "test3",
       name: "Option 3",
+      description: "Desc 3",
     },
   },
 ];

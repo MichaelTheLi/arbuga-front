@@ -184,15 +184,15 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
 
       ecosystem.id = ecosystemData.id;
       ecosystem.name = ecosystemData.name;
-      ecosystem.width.value = ecosystemData.aquarium.dimensions.width;
-      ecosystem.length.value = ecosystemData.aquarium.dimensions.length;
-      ecosystem.height.value = ecosystemData.aquarium.dimensions.height;
+      ecosystem.width = ecosystemData.aquarium.dimensions.width;
+      ecosystem.length = ecosystemData.aquarium.dimensions.length;
+      ecosystem.height = ecosystemData.aquarium.dimensions.height;
       if (ecosystemData.analysis) {
-        ecosystem.analysis.value = ecosystemData.analysis;
+        ecosystem.analysis = ecosystemData.analysis;
       }
 
       if (ecosystemData.fish) {
-        ecosystem.fish.value = ecosystemData.fish;
+        ecosystem.fish = ecosystemData.fish;
       }
 
       if (!store.current) {

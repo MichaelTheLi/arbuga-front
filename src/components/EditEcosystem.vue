@@ -45,7 +45,7 @@
         filled
         type="number"
         v-model.number="ecosystemData.volumeManual"
-        :placeholder="ecosystemData.volume"
+        :placeholder="volume"
         hint="Volume calculated based on the dimensions. Manually enter the volume if required"
         dense
         data-testid="edit-ecosystem-volume"
@@ -57,6 +57,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import { QForm, QInput } from "quasar";
+import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
 
 export default defineComponent({
   name: "EditEcosystem",
@@ -73,8 +74,11 @@ export default defineComponent({
       }
     );
 
+    const { volume } = useEcosystemDynamicVolume(ecosystemData);
+
     return {
       ecosystemData,
+      volume,
     };
   },
   methods: {

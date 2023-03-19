@@ -6,6 +6,7 @@ import EcosystemInfo from "../EcosystemInfo.vue";
 import {
   type AquariumFish,
   type Ecosystem,
+  useEcosystemDynamicVolume,
   useEcosystemsStore,
 } from "../../stores/ecosystems";
 import { installQuasar } from "@quasar/quasar-app-extension-testing-unit-vitest";
@@ -54,9 +55,9 @@ describe("EcosystemInfo", () => {
     );
 
     const ecosystem = store.createNew("Test name");
-    ecosystem.width.value = 11;
-    ecosystem.height.value = 12;
-    ecosystem.length.value = 13;
+    ecosystem.width = 11;
+    ecosystem.height = 12;
+    ecosystem.length = 13;
     return ecosystem;
   };
 
@@ -71,30 +72,30 @@ describe("EcosystemInfo", () => {
 
   it("renders volume", () => {
     const { ecosystem, wrapper } = buildComponent();
-    expect(wrapper.text()).toContain(
-      `Actual volume: ${ecosystem.volume.value}l`
-    );
+
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
+    expect(wrapper.text()).toContain(`Actual volume: ${volume.value}l`);
   });
 
   it("renders fish list", () => {
     const ecosystem = buildEcosystem();
-    ecosystem.fish.value = stubFishList;
+    ecosystem.fish = stubFishList;
 
     const { wrapper } = buildComponent(ecosystem);
 
     expect(wrapper.getComponent(FishList).props("list")).toHaveLength(
-      ecosystem.fish.value.length
+      ecosystem.fish.length
     );
   });
 
   it("renders plants list", () => {
     const ecosystem = buildEcosystem();
-    ecosystem.plants.value = stubPlantsList;
+    ecosystem.plants = stubPlantsList;
 
     const { wrapper } = buildComponent(ecosystem);
 
     expect(wrapper.getComponent(PlantsList).props("list")).toHaveLength(
-      ecosystem.plants.value.length
+      ecosystem.plants.length
     );
   });
 });

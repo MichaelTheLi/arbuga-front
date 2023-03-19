@@ -11,9 +11,9 @@ export const createRandomEcosystem = (
 
   if (!empty) {
     item.name = faker.random.words(2);
-    item.width.value = faker.datatype.number({ min: 20, max: 100 });
-    item.height.value = faker.datatype.number({ min: 20, max: 100 });
-    item.length.value = faker.datatype.number({ min: 20, max: 100 });
+    item.width = faker.datatype.number({ min: 20, max: 100 });
+    item.height = faker.datatype.number({ min: 20, max: 100 });
+    item.length = faker.datatype.number({ min: 20, max: 100 });
   }
 
   return item;

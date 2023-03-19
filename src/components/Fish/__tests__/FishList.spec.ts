@@ -11,8 +11,11 @@ installQuasar();
 describe("FishList", () => {
   function buildStubFish() {
     return {
-      id: faker.datatype.uuid(),
-      name: faker.random.words(2),
+      fish: {
+        id: faker.datatype.uuid(),
+        name: faker.random.words(2),
+        description: faker.random.words(10),
+      },
       count: faker.datatype.number({ min: 1, max: 100 }),
     };
   }
@@ -38,10 +41,10 @@ describe("FishList", () => {
   });
 
   it("renders item correctly", () => {
-    const stubPlant = buildStubFish();
-    const { wrapper } = buildComponent([stubPlant]);
+    const stubFish = buildStubFish();
+    const { wrapper } = buildComponent([stubFish]);
 
-    expect(wrapper.text()).toContain(stubPlant.name);
-    expect(wrapper.text()).toContain(stubPlant.count);
+    expect(wrapper.text()).toContain(stubFish.fish.name);
+    expect(wrapper.text()).toContain(stubFish.count);
   });
 });

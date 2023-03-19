@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { ComputedRef, Ref, UnwrapRef } from "vue";
+import type { Ref, UnwrapRef } from "vue";
 import { computed, ref, unref, watch } from "vue";
 import _ from "lodash";
 import { useSaveEcosystem } from "@/gateway/gateway";
@@ -9,14 +9,13 @@ import { deepUnref } from "vue-deepunref";
 export interface Ecosystem {
   id: string;
   name: string;
-  width: Ref<number | null>;
-  height: Ref<number | null>;
-  length: Ref<number | null>;
-  volumeManual: Ref<number | null>;
-  volume: ComputedRef<number>;
-  fish: Ref<AquariumFish[]>;
-  plants: Ref<AquariumPlant[]>;
-  analysis: Ref<EcosystemAnalysis[] | null>;
+  width: number | null;
+  height: number | null;
+  length: number | null;
+  volumeManual: number | null;
+  fish: AquariumFish[];
+  plants: AquariumPlant[];
+  analysis: EcosystemAnalysis[] | null;
 }
 
 export interface AquariumFish {
@@ -70,6 +69,23 @@ export interface EcosystemState {
   addNew: (newEcosystem: Ecosystem) => void;
 }
 
+export const useEcosystemDynamicVolume = (
+  _ecosystem: Ref<Ecosystem> | Ecosystem
+) => {
+  const ecosystem = unref(_ecosystem);
+
+  const volumeCubicCm = computed(
+    () =>
+      (ecosystem.width || 0) * (ecosystem.height || 0) * (ecosystem.length || 0)
+  );
+  const volumeLiters = computed(() => volumeCubicCm.value / 1000);
+  const volume = computed(() => ecosystem.volumeManual || volumeLiters.value);
+
+  return {
+    volume,
+  };
+};
+
 export const useEcosystemsStore = defineStore(
   "ecosystems",
   (): EcosystemState => {
@@ -77,35 +93,14 @@ export const useEcosystemsStore = defineStore(
       const name = nameProvided;
 
       const id = "";
-      const width = ref(null as number | null);
-      const height = ref(null as number | null);
-      const length = ref(null as number | null);
-      const analysis = ref(null);
-      const volumeManual = ref(null as number | null);
-      const volumeCubicCm = computed(
-        () => (width.value || 0) * (height.value || 0) * (length.value || 0)
-      );
-      const volumeLiters = computed(() => volumeCubicCm.value / 1000);
-      const volume = computed(() => volumeManual.value || volumeLiters.value);
+      const width = null as number | null;
+      const height = null as number | null;
+      const length = null as number | null;
+      const analysis = null;
+      const volumeManual = null as number | null;
 
-      const convertToInt = (value: number | string | null): number | null => {
-        if (typeof value === "string") {
-          value = parseFloat(value);
-        }
-
-        return value ? value : null;
-      };
-
-      watch(width, (newValue) => (width.value = convertToInt(newValue)));
-      watch(height, (newValue) => (height.value = convertToInt(newValue)));
-      watch(length, (newValue) => (length.value = convertToInt(newValue)));
-      watch(
-        volumeManual,
-        (newValue) => (volumeManual.value = convertToInt(newValue))
-      );
-
-      const fish = ref([] as AquariumFish[]);
-      const plants = ref([] as AquariumPlant[]);
+      const fish = [] as AquariumFish[];
+      const plants = [] as AquariumPlant[];
 
       return {
         id,
@@ -113,7 +108,6 @@ export const useEcosystemsStore = defineStore(
         width,
         height,
         length,
-        volume,
         volumeManual,
         fish,
         plants,

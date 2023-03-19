@@ -1,16 +1,14 @@
 <template>
   <div>
     <div class="text-body2">
-      <p>Actual volume: {{ props.ecosystem.volume }}l</p>
+      <p>Actual volume: {{ volume }}l</p>
 
       <div>
         <SelectFish :debounce-timeout="300" @add="onAddList" />
-        <!--suppress JSValidateTypes, JSUnresolvedVariable -->
         <FishList :list="ecosystem.fish" />
       </div>
 
       <div>
-        <!--suppress JSValidateTypes, JSUnresolvedVariable -->
         <PlantsList :list="ecosystem.plants" />
       </div>
     </div>
@@ -20,9 +18,10 @@
 <script setup lang="ts">
 import type { Ecosystem } from "@/stores/ecosystems";
 import SelectFish from "@/components/Fish/SelectFish.vue";
-import { type FishCardData } from "@/components/Fish/FishCard.vue";
+import type { FishCardData } from "@/components/Fish/FishCard.vue";
 import FishList from "@/components/Fish/FishList.vue";
 import PlantsList from "@/components/Plants/PlantsList.vue";
+import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
 
 const props = defineProps<{
   ecosystem: Ecosystem;
@@ -34,6 +33,8 @@ const emit = defineEmits<{
 const onAddList = (selected: FishCardData) => {
   emit("fishAdd", selected.id);
 };
+
+const { volume } = useEcosystemDynamicVolume(props.ecosystem);
 </script>
 
 <style scoped></style>

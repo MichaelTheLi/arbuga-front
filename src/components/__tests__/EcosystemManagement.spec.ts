@@ -6,6 +6,7 @@ import EcosystemsManagement from "../EcosystemsManagement/EcosystemsManagement.v
 import { createTestingPinia } from "@pinia/testing";
 import { useEcosystemsStore } from "@/stores/ecosystems";
 import { createRandomEcosystem } from "./utils";
+import { useEcosystemDynamicVolume } from "../../stores/ecosystems";
 
 const pushMock = vi.fn();
 vi.mock("vue-router", () => ({
@@ -73,9 +74,10 @@ describe("EcosystemList", () => {
     const elements = wrapper.findAll('[data-testid="ecosystems-list-item"]');
 
     expect(elements[0].text()).toContain(list[0].name);
-    const expectedFirstDimensions = `${list[0].length.value}x${list[0].width.value}x${list[0].height.value}`;
+    const expectedFirstDimensions = `${list[0].length}x${list[0].width}x${list[0].height}`;
     expect(elements[0].text()).toContain(expectedFirstDimensions);
-    const expectedFirstVolume = `${list[0].volume.value} L`;
+    const { volume } = useEcosystemDynamicVolume(list[0]);
+    const expectedFirstVolume = `${volume.value} L`;
     expect(elements[0].text()).toContain(expectedFirstVolume);
   });
 
