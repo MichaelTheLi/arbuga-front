@@ -20,7 +20,6 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-  VITE_BACKEND_URL: https://${{ env.MAIN_HOST }}:8080
   PORT: 80
 
 
