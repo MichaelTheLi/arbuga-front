@@ -87,7 +87,7 @@ jobs:
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: Vitests Tests
-          path: tests/src/tests.xml
+          path: tests/tests.xml
           reporter: jest-junit
 
       - name: Build and push Docker image

@@ -32,12 +32,12 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Tests
-        run: docker run --rm -v ${{ github.workspace }}:/build/output arbuga/tests:latest
+        run: docker run --rm -v ${{ github.workspace }}/tests:/build/output arbuga/tests:latest
 
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: Vitests Tests
-          path: tests.xml
+          path: tests/tests.xml
           reporter: jest-junit

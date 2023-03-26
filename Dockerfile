@@ -17,7 +17,7 @@ WORKDIR /build
 COPY --from=builder-dependencies /build/ /build
 COPY . .
 
-CMD yarn run test:unit --run --reporter=basic --reporter=junit --outputFile=tests.xml
+CMD yarn run test:unit --run --reporter=basic --reporter=junit --outputFile=/build/output/tests.xml
 
 FROM nginx:alpine as runner
 COPY .build/nginx.conf /etc/nginx/conf.d/configfile.template
