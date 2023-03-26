@@ -67,8 +67,29 @@ jobs:
           envkey_VITE_BACKEND_URL: http://${{ vars.MAIN_HOST }}:8080/query
           file_name: .env.production
           fail_on_empty: true
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
+
+      - name: Build tests docker image
+        id: build-for-tests
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          load: true
+          target: tester
+          tags: arbuga/tests:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Tests
+        run: docker run --rm -v ${{ github.workspace }}/tests:/build/output arbuga/tests:latest
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed
+        with:
+          name: Vitests Tests
+          path: tests/src/tests.xml
+          reporter: jest-junit
+
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
