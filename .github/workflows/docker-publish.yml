@@ -96,3 +96,14 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
+  trigger:
+    runs-on: ubuntu-latest
+    name: "Notify infra about new package"
+    steps:
+      - uses: passeidireto/trigger-external-workflow-action@main
+        env:
+          PAYLOAD_PACKAGE: front
+        with:
+          repository: MichaelTheLi/arbuga-infra
+          event: new_package
+          github_pat: ${{ secrets.INFRA_PAT }}
