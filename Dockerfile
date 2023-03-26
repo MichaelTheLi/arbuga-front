@@ -12,7 +12,14 @@ COPY . .
 RUN yarn run build && \
     yarn cache clean
 
-FROM nginx:alpine
+FROM node:lts-alpine as tester
+WORKDIR /build
+COPY --from=builder-dependencies /build/ /build
+COPY . .
+
+CMD yarn run test:unit --run --reporter=basic --reporter=junit --outputFile=tests.xml
+
+FROM nginx:alpine as runner
 COPY .build/nginx.conf /etc/nginx/conf.d/configfile.template
 COPY --from=builder /build/dist /usr/share/nginx/html
 EXPOSE $PORT
