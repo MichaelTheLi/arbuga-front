@@ -4,7 +4,7 @@ import typeDefs from "./src/gateway/schema";
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "http://localhost:8080/query",
+  schema: "http://localhost:7171/query",
   documents: ["src/**/*.vue", "src/**/*.ts"],
   generates: {
     "./src/__generated__/": {

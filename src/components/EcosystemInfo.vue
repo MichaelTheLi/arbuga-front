@@ -4,12 +4,10 @@
       <p>Actual volume: {{ volume }}l</p>
 
       <div>
-        <SelectFish :debounce-timeout="300" @add="onAddList" />
         <FishList :list="ecosystem.fish" />
-      </div>
-
-      <div>
         <PlantsList :list="ecosystem.plants" />
+        <SelectFish :debounce-timeout="300" @add="onAddFish" />
+        <SelectPlant :debounce-timeout="300" @add="onAddPlant" />
       </div>
     </div>
   </div>
@@ -23,16 +21,22 @@ import FishList from "@/components/Fish/FishList.vue";
 import PlantsList from "@/components/Plants/PlantsList.vue";
 import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
 import { toRef } from "vue";
+import SelectPlant from "@/components/Plants/SelectPlant.vue";
 
 const props = defineProps<{
   ecosystem: Ecosystem;
 }>();
 const emit = defineEmits<{
   (e: "fishAdd", option_id: string): void;
+  (e: "plantAdd", option_id: string): void;
 }>();
 
-const onAddList = (selected: FishCardData) => {
+const onAddFish = (selected: FishCardData) => {
   emit("fishAdd", selected.id);
+};
+
+const onAddPlant = (selected: FishCardData) => {
+  emit("plantAdd", selected.id);
 };
 
 const ecosystemForVolume = toRef(props, "ecosystem");

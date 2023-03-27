@@ -2,7 +2,11 @@ import { useLazyQuery, useMutation, useQuery } from "@vue/apollo-composable";
 import _ from "lodash";
 import { gql } from "@/__generated__";
 import { computed, isRef, reactive, type Ref, unref, watch } from "vue";
-import { type FishOption, useEcosystemsStore } from "@/stores/ecosystems";
+import {
+  type FishOption,
+  type PlantOption,
+  useEcosystemsStore,
+} from "@/stores/ecosystems";
 import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
 
@@ -43,6 +47,14 @@ export const LOAD_USER = gql(/* GraphQL */ `
           }
           count
         }
+        plants {
+          plant {
+            id
+            name
+            description
+          }
+          count
+        }
       }
     }
   }
@@ -52,6 +64,27 @@ export const LOAD_USER = gql(/* GraphQL */ `
 export const SEARCH_FISH = gql(/* GraphQL */ `
   query SearchFish($substring: String) {
     fishList(substring: $substring, first: 100) {
+      edges {
+        cursor
+        node {
+          id
+          name
+          description
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const SEARCH_PLANT = gql(/* GraphQL */ `
+  query SearchPlant($substring: String) {
+    plantList(substring: $substring, first: 100) {
       edges {
         cursor
         node {
@@ -108,6 +141,14 @@ export const LOGIN_USER = gql(/* GraphQL */ `
             }
             count
           }
+          plants {
+            plant {
+              id
+              name
+              description
+            }
+            count
+          }
         }
       }
     }
@@ -148,6 +189,14 @@ export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
           }
           count
         }
+        plants {
+          plant {
+            id
+            name
+            description
+          }
+          count
+        }
       }
       success
       error
@@ -164,6 +213,26 @@ export const ADD_FISH = gql(/* GraphQL */ `
 
         fish {
           fish {
+            id
+            name
+            description
+          }
+          count
+        }
+      }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const ADD_PLANT = gql(/* GraphQL */ `
+  mutation AddPlant($ecosystemId: ID!, $plantId: ID!) {
+    addPlantToEcosystem(ecosystemId: $ecosystemId, plantId: $plantId) {
+      ecosystem {
+        id
+
+        plants {
+          plant {
             id
             name
             description
@@ -193,6 +262,10 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
 
       if (ecosystemData.fish) {
         ecosystem.fish = ecosystemData.fish;
+      }
+
+      if (ecosystemData.plants) {
+        ecosystem.plants = ecosystemData.plants;
       }
 
       if (!store.current) {
@@ -299,6 +372,70 @@ export const searchFish = (substring: Ref<string>, debounce: number) => {
   };
 };
 
+export const usePlantSearch = (input: Ref<string>, debounce: number) => {
+  const { result, load } = searchPlant(input, debounce);
+
+  const options = computed(() => {
+    if (!result.value) {
+      return [];
+    }
+
+    return result.value.plantList.edges
+      .filter((edge) => {
+        return edge.node;
+      })
+      .map(({ node }): PlantOption => {
+        return {
+          plant: {
+            // @ts-ignore
+            id: node.id,
+            // @ts-ignore
+            name: node.name,
+            // @ts-ignore
+            description: node.description,
+          },
+        };
+      });
+  });
+
+  return { options, load };
+};
+
+export const searchPlant = (substring: Ref<string>, debounce: number) => {
+  const variables = reactive({
+    substring: "",
+    first: 1000,
+    after: "",
+  });
+
+  const haveSubstring = computed(() => {
+    return !!variables.substring;
+  });
+
+  if (isRef(substring)) {
+    watch(substring, (newValue) => {
+      variables.substring = newValue;
+    });
+  }
+
+  const { loading, error, result, load } = useLazyQuery(
+    SEARCH_PLANT,
+    variables,
+    () => ({
+      fetchPolicy: "network-only",
+      debounce: debounce ? debounce : undefined,
+      enabled: haveSubstring.value,
+    })
+  );
+
+  return {
+    result,
+    loading,
+    error,
+    load,
+  };
+};
+
 export const useSaveEcosystem = () => {
   const result = useMutation(SAVE_ECOSYSTEM, {
     update: (cache, { data }, options) => {
@@ -338,6 +475,12 @@ export const useAddFish = () => {
   const { mutate: addFish } = useMutation(ADD_FISH);
 
   return { addFish };
+};
+
+export const useAddPlant = () => {
+  const { mutate: addPlant } = useMutation(ADD_PLANT);
+
+  return { addPlant };
 };
 
 export const useLoginUser = () => {
