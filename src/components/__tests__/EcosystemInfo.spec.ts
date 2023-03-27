@@ -37,13 +37,17 @@ describe("EcosystemInfo", () => {
   ] as AquariumFish[];
   const stubPlantsList = [
     {
-      id: "test1",
-      name: "Anubias",
+      plant: {
+        id: "test1",
+        name: "Anubias",
+      },
       count: 16612621,
     },
     {
-      id: "test2",
-      name: "Valisneria",
+      plant: {
+        id: "test2",
+        name: "Valisneria",
+      },
       count: 96126091824,
     },
   ];
