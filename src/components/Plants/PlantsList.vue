@@ -1,11 +1,11 @@
 <template>
-  <div v-if="props.list">
+  <div v-if="list">
     <div
-      v-for="(plant, index) in props.list"
+      v-for="(element, index) in list"
       :key="index"
       data-testid="plant-list-item"
     >
-      {{ plant.count }} x {{ plant.name }}
+      {{ element.count }} x {{ element.plant.name }}
     </div>
   </div>
   <div v-else>Add a plant</div>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import type { AquariumPlant } from "@/stores/ecosystems";
 
-const props = defineProps<{
+defineProps<{
   list: AquariumPlant[];
 }>();
 </script>

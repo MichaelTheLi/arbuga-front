@@ -34,6 +34,11 @@ export interface FishOption {
 }
 
 export interface AquariumPlant {
+  plant: Plant;
+  count: number;
+}
+
+export interface Plant {
   id: string;
   name: string;
   count: number;

@@ -11,9 +11,12 @@ installQuasar();
 describe("PlantsList", () => {
   function buildStubPlant() {
     return {
-      id: faker.datatype.uuid(),
-      name: faker.random.words(2),
-      count: faker.datatype.number({ min: 1, max: 100 }),
+      plant: {
+        id: faker.datatype.uuid(),
+        name: faker.random.words(2),
+        count: faker.datatype.number({ min: 1, max: 100 }),
+      },
+      count: faker.datatype.number({ min: 1, max: 20 }),
     };
   }
 
@@ -37,6 +40,7 @@ describe("PlantsList", () => {
   it("renders correct count", () => {
     const { list, wrapper } = buildComponent();
 
+    expect(list.length).not.eq(0);
     expect(wrapper.findAll('[data-testid="plant-list-item"]')).toHaveLength(
       list.length
     );
@@ -46,7 +50,7 @@ describe("PlantsList", () => {
     const stubPlant = buildStubPlant();
     const { wrapper } = buildComponent([stubPlant]);
 
-    expect(wrapper.text()).toContain(stubPlant.name);
+    expect(wrapper.text()).toContain(stubPlant.plant.name);
     expect(wrapper.text()).toContain(stubPlant.count);
   });
 });
