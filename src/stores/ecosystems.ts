@@ -104,7 +104,7 @@ export const useEcosystemsStore = defineStore(
     const createNew = (nameProvided = ""): Ecosystem => {
       const name = nameProvided;
 
-      const id = "";
+      const id = "new_" + Date.now();
       const width = null as number | null;
       const height = null as number | null;
       const length = null as number | null;
@@ -174,7 +174,7 @@ export const useEcosystemsStore = defineStore(
           },
         };
 
-        if (ecosystem.id) {
+        if (!ecosystem.id.includes("new_")) {
           variables.id = ecosystem.id;
         }
 

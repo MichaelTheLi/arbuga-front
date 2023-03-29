@@ -21,6 +21,21 @@
         </q-item-label>
       </q-item-section>
     </q-item>
+    <q-item
+      @click="onCreated"
+      clickable
+      v-ripple
+      data-testid="create-ecosystem-button"
+    >
+      <q-item-section>
+        <q-icon
+          name="add"
+          class="full-width"
+          style="color: #4f7d82"
+          size="md"
+        />
+      </q-item-section>
+    </q-item>
   </q-list>
 </template>
 
@@ -32,12 +47,17 @@ import {
 } from "@/stores/ecosystems";
 import { storeToRefs } from "pinia";
 import type { UnwrapRef } from "vue";
-import { QItem, QItemLabel, QItemSection, QList } from "quasar";
+import { QIcon, QItem, QItemLabel, QItemSection, QList } from "quasar";
 import { useRouter } from "vue-router";
 
 const store = useEcosystemsStore();
 const router = useRouter();
 
+const emit = defineEmits(["created"]);
+
+const onCreated = function () {
+  emit("created");
+};
 const { list } = storeToRefs(store);
 
 const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
