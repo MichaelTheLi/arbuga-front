@@ -44,7 +44,7 @@ describe("EcosystemList", () => {
       wrapper.get('[data-testid="create-ecosystem-button"]').isVisible()
     ).toBeTruthy();
 
-    expect(wrapper.text()).toContain("Create new");
+    expect(wrapper.html()).toContain("add");
   });
 
   it("renders list", () => {

@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md row items-start q-col-gutter-md">
-    <div class="col-4" v-for="(fish, index) in props.list" :key="index">
+  <div class="q-pt-md col q-gutter-md">
+    <div v-for="(fish, index) in props.list" :key="index">
       <FishCard :fish="fish" @add="onAdd(fish)" data-testid="fish-option" />
     </div>
   </div>

@@ -2,12 +2,41 @@
   <div>
     <div class="text-body2">
       <p>Actual volume: {{ volume }}l</p>
+      <q-btn flat label="Show analysis" @click="onFullAnalysisClicked" />
 
       <div>
-        <FishList :list="ecosystem.fish" />
-        <PlantsList :list="ecosystem.plants" />
-        <SelectFish :debounce-timeout="300" @add="onAddFish" />
-        <SelectPlant :debounce-timeout="300" @add="onAddPlant" />
+        <div class="row q-col-gutter-md">
+          <div class="col">
+            <h4 class="q-my-md">
+              <span>Fish</span>
+              <q-btn
+                class="q-ml-md"
+                dense
+                flat
+                round
+                icon="add"
+                color="primary"
+                @click="onAddFishClicked"
+              />
+            </h4>
+            <FishList :list="ecosystem.fish" />
+          </div>
+          <div class="col">
+            <h4 class="q-my-md">
+              <span>Plants</span>
+              <q-btn
+                class="q-ml-md"
+                dense
+                flat
+                round
+                icon="add"
+                color="primary"
+                @click="onAddPlantsClicked"
+              />
+            </h4>
+            <PlantsList :list="ecosystem.plants" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -15,28 +44,29 @@
 
 <script setup lang="ts">
 import type { Ecosystem } from "@/stores/ecosystems";
-import SelectFish from "@/components/Fish/SelectFish.vue";
-import type { FishCardData } from "@/components/Fish/FishCard.vue";
 import FishList from "@/components/Fish/FishList.vue";
 import PlantsList from "@/components/Plants/PlantsList.vue";
 import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
 import { toRef } from "vue";
-import SelectPlant from "@/components/Plants/SelectPlant.vue";
+import { useRouter } from "vue-router";
+import { QBtn } from "quasar";
+
+const router = useRouter();
 
 const props = defineProps<{
   ecosystem: Ecosystem;
 }>();
-const emit = defineEmits<{
-  (e: "fishAdd", option_id: string): void;
-  (e: "plantAdd", option_id: string): void;
-}>();
 
-const onAddFish = (selected: FishCardData) => {
-  emit("fishAdd", selected.id);
+const onFullAnalysisClicked = () => {
+  router.push("/");
 };
 
-const onAddPlant = (selected: FishCardData) => {
-  emit("plantAdd", selected.id);
+const onAddFishClicked = () => {
+  router.push("add_fish");
+};
+
+const onAddPlantsClicked = () => {
+  router.push("add_plants");
 };
 
 const ecosystemForVolume = toRef(props, "ecosystem");

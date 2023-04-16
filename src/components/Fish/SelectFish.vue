@@ -2,6 +2,7 @@
   <div class="select-fish">
     <q-input
       filled
+      dense
       v-model="search"
       label="Search"
       stack-label

@@ -1,37 +1,40 @@
 <template>
   <q-card class="my-card" flat bordered>
-    <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
+    <q-card-section horizontal>
+      <q-card-section class="q-pt-xs col-grow">
+        <div class="text-overline text-orange-9">{{ props.fish.status }}</div>
+        <div class="text-h5 q-mt-sm q-mb-xs">{{ props.fish.title }}</div>
+        <div class="text-caption text-grey">
+          {{ props.fish.shortDescription }}
+        </div>
 
-    <q-card-section>
-      <div class="text-overline text-orange-9">{{ props.fish.status }}</div>
-      <div class="text-h5 q-mt-sm q-mb-xs">{{ props.fish.title }}</div>
-      <div class="text-caption text-grey">
-        {{ props.fish.shortDescription }}
-      </div>
+        <q-card-actions align="between" class="q-py-sm q-px-none">
+          <q-btn
+            color="primary"
+            size="sm"
+            padding="xs md"
+            label="Add"
+            data-testid="add-fish"
+            @click="onAddClick"
+          />
+          <q-btn
+            size="sm"
+            padding="xs md"
+            flat
+            label="More info"
+            data-testid="show-more-info"
+            @click="expanded = !expanded"
+          />
+        </q-card-actions>
+      </q-card-section>
+
+      <q-card-section class="col-5 flex flex-center">
+        <q-img
+          class="rounded-borders"
+          src="https://cdn.quasar.dev/img/parallax2.jpg"
+        />
+      </q-card-section>
     </q-card-section>
-
-    <q-card-actions>
-      <q-btn
-        color="primary"
-        size="sm"
-        padding="xs md"
-        label="Add"
-        data-testid="add-fish"
-        @click="onAddClick"
-      />
-
-      <q-space />
-
-      <q-btn
-        color="grey"
-        round
-        flat
-        dense
-        :icon="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-        @click="expanded = !expanded"
-        data-testid="show-more-info"
-      />
-    </q-card-actions>
 
     <q-slide-transition>
       <div v-show="expanded">
@@ -53,7 +56,6 @@ import {
   QImg,
   QSeparator,
   QSlideTransition,
-  QSpace,
 } from "quasar";
 import { ref } from "vue";
 

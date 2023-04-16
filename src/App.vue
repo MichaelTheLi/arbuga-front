@@ -16,7 +16,6 @@ import {
   QToolbarTitle,
 } from "quasar";
 import { fetchUser } from "@/gateway/gateway";
-import EcosystemAnalysisWrap from "@/components/EcosystemAnalysis/EcosystemAnalysis.vue";
 import AccountMenu from "@/components/Account/AccountMenu.vue";
 
 const leftDrawerOpen = ref(false);
@@ -33,6 +32,9 @@ const toggleRightDrawer = () => {
 const onTitleClick = () => {
   router.push("/");
 };
+
+// TODO Open right drawer on routes what needs it. Remove manual open?
+// router.
 
 fetchUser();
 </script>
@@ -55,7 +57,7 @@ fetchUser();
         <q-space />
 
         <AccountMenu />
-        <q-btn dense flat round icon="rule" @click="toggleRightDrawer" />
+        <q-btn dense flat round icon="list" @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
@@ -66,7 +68,6 @@ fetchUser();
       side="left"
       :width="250"
     >
-      <h5 class="q-my-sm q-pa-sm">Ecosystems</h5>
       <EcosystemsManagement />
     </q-drawer>
 
@@ -77,7 +78,7 @@ fetchUser();
       class="q-pa-sm"
       :width="400"
     >
-      <EcosystemAnalysisWrap />
+      <RouterView name="rightDrawer" />
     </q-drawer>
 
     <q-page-container>

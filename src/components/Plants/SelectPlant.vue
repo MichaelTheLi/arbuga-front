@@ -4,6 +4,7 @@
       filled
       v-model="search"
       label="Search"
+      dense
       stack-label
       data-testid="plant-selector"
     />
