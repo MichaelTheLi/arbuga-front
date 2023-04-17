@@ -19,6 +19,18 @@ export const seedEcosystems: Ecosystem[] = [
       },
       glassThickness: 6,
     },
+    waterReplacement: {
+      waterParameters: {
+        ph: faker.datatype.number(),
+        gh: faker.datatype.number(),
+        kh: faker.datatype.number(),
+      },
+    },
+    equipment: {
+      filters: [{ flow: 100 }],
+      heaters: [{ power: 100 }],
+      lightingItems: [{ lux: 100 }],
+    },
     analysis: [
       {
         id: faker.datatype.uuid(),
@@ -83,6 +95,18 @@ export const seedEcosystemsAnother: Ecosystem[] = [
       },
       glassThickness: 6,
     },
+    waterReplacement: {
+      waterParameters: {
+        ph: faker.datatype.number(),
+        gh: faker.datatype.number(),
+        kh: faker.datatype.number(),
+      },
+    },
+    equipment: {
+      filters: [{ flow: 100 }],
+      heaters: [{ power: 100 }],
+      lightingItems: [{ lux: 100 }],
+    },
     analysis: [
       {
         id: faker.datatype.uuid(),
@@ -131,6 +155,18 @@ export const seedEcosystemsAnother: Ecosystem[] = [
         length: faker.datatype.number({ min: 20, max: 100 }),
       },
       glassThickness: 8,
+    },
+    waterReplacement: {
+      waterParameters: {
+        ph: faker.datatype.number(),
+        gh: faker.datatype.number(),
+        kh: faker.datatype.number(),
+      },
+    },
+    equipment: {
+      filters: [{ flow: 100 }],
+      heaters: [{ power: 100 }],
+      lightingItems: [{ lux: 100 }],
     },
     analysis: [
       {
