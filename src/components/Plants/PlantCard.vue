@@ -1,14 +1,14 @@
 <template>
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
-      <q-card-section class="q-pt-xs col-grow">
+      <q-card-section class="q-pt-xs col">
         <div class="text-overline text-orange-9">{{ props.plant.status }}</div>
         <div class="text-h5 q-mt-sm q-mb-xs">{{ props.plant.title }}</div>
         <div class="text-caption text-grey">
           {{ props.plant.shortDescription }}
         </div>
 
-        <q-card-actions align="between" class="q-py-sm q-px-none">
+        <q-card-actions align="between" class="q-py-sm q-px-none col">
           <q-btn
             color="primary"
             size="sm"

@@ -1,7 +1,7 @@
 <template>
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
-      <q-card-section class="q-pt-xs col-grow">
+      <q-card-section class="q-pt-xs col">
         <div class="text-overline text-orange-9">{{ props.fish.status }}</div>
         <div class="text-h5 q-mt-sm q-mb-xs">{{ props.fish.title }}</div>
         <div class="text-caption text-grey">

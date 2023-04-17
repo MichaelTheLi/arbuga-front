@@ -9,9 +9,7 @@ import {
   QHeader,
   QLayout,
   QPageContainer,
-  QRouteTab,
   QSpace,
-  QTabs,
   QToolbar,
   QToolbarTitle,
 } from "quasar";
@@ -51,9 +49,6 @@ fetchUser();
           </q-avatar>
           Arbuga
         </q-toolbar-title>
-        <q-tabs>
-          <q-route-tab to="/about" label="About" />
-        </q-tabs>
         <q-space />
 
         <AccountMenu />
@@ -75,7 +70,7 @@ fetchUser();
       show-if-above
       v-model="rightDrawerOpen"
       side="right"
-      class="q-pa-sm"
+      class="q-pa-sm right-drawer"
       :width="400"
     >
       <RouterView name="rightDrawer" />
@@ -87,4 +82,9 @@ fetchUser();
   </q-layout>
 </template>
 
-<style scoped></style>
+<!--suppress CssUnusedSymbol -->
+<style>
+.q-drawer--right {
+  max-width: 90vw;
+}
+</style>
