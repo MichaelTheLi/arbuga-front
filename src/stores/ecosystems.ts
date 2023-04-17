@@ -13,9 +13,29 @@ export interface Ecosystem {
   height: number | null;
   length: number | null;
   volumeManual: number | null;
+
+  waterReplacement: WaterReplacement;
+  equipment: Equipment;
+
   fish: AquariumFish[];
   plants: AquariumPlant[];
   analysis: EcosystemAnalysis[] | null;
+}
+
+export interface Equipment {
+  filtersFlow: number | null;
+  heatersPower: number | null;
+  lightingLux: number | null;
+}
+
+export interface WaterReplacement {
+  waterParameters: WaterParameters;
+}
+
+export interface WaterParameters {
+  ph: number | null;
+  gh: number | null;
+  kh: number | null;
 }
 
 export interface AquariumFish {
@@ -113,6 +133,18 @@ export const useEcosystemsStore = defineStore(
 
       const fish = [] as AquariumFish[];
       const plants = [] as AquariumPlant[];
+      const waterReplacement = {
+        waterParameters: {
+          ph: null,
+          gh: null,
+          kh: null,
+        },
+      };
+      const equipment = {
+        filtersFlow: null,
+        heatersPower: null,
+        lightingLux: null,
+      };
 
       return {
         id,
@@ -124,6 +156,8 @@ export const useEcosystemsStore = defineStore(
         fish,
         plants,
         analysis,
+        waterReplacement,
+        equipment,
       };
     };
 
@@ -170,6 +204,18 @@ export const useEcosystemsStore = defineStore(
                 height: unref(ecosystem.height) || 0,
                 length: unref(ecosystem.length) || 0,
               },
+            },
+            waterReplacement: {
+              waterParameters: {
+                ph: ecosystem.waterReplacement?.waterParameters?.ph,
+                gh: ecosystem.waterReplacement?.waterParameters?.gh,
+                kh: ecosystem.waterReplacement?.waterParameters?.kh,
+              },
+            },
+            equipment: {
+              filters: [{ flow: ecosystem.equipment?.filtersFlow }],
+              heaters: [{ power: ecosystem.equipment?.heatersPower }],
+              lightingItems: [{ lux: ecosystem.equipment?.lightingLux }],
             },
           },
         };

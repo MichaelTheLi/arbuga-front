@@ -9,37 +9,40 @@
         dense
         data-testid="edit-ecosystem-name"
       />
-      <div class="row q-col-gutter-x-sm">
-        <q-input
-          class="col"
-          filled
-          v-model.number="ecosystemData.width"
-          label="Width"
-          stack-label
-          dense
-          suffix="cm"
-          data-testid="edit-ecosystem-width"
-        />
-        <q-input
-          class="col"
-          filled
-          v-model.number="ecosystemData.height"
-          label="Height"
-          stack-label
-          dense
-          suffix="cm"
-          data-testid="edit-ecosystem-height"
-        />
-        <q-input
-          class="col"
-          filled
-          v-model.number="ecosystemData.length"
-          label="Length"
-          stack-label
-          dense
-          suffix="cm"
-          data-testid="edit-ecosystem-length"
-        />
+      <div>
+        <h5 class="q-my-sm q-pa-sm">Water parameters</h5>
+        <div class="row q-col-gutter-x-sm">
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.width"
+            label="Width"
+            stack-label
+            dense
+            suffix="cm"
+            data-testid="edit-ecosystem-width"
+          />
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.height"
+            label="Height"
+            stack-label
+            dense
+            suffix="cm"
+            data-testid="edit-ecosystem-height"
+          />
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.length"
+            label="Length"
+            stack-label
+            dense
+            suffix="cm"
+            data-testid="edit-ecosystem-length"
+          />
+        </div>
       </div>
       <q-input
         filled
@@ -50,6 +53,75 @@
         dense
         data-testid="edit-ecosystem-volume"
       />
+
+      <div>
+        <h5 class="q-my-sm q-pa-sm">Equipment</h5>
+        <div class="row q-col-gutter-x-sm">
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.equipment.filtersFlow"
+            label="Filter flow"
+            stack-label
+            dense
+            suffix="liters/hour"
+            data-testid="edit-ecosystem-filters-flow"
+          />
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.equipment.heatersPower"
+            label="Heater power"
+            stack-label
+            dense
+            suffix="watts"
+            data-testid="edit-ecosystem-heaters-power"
+          />
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.equipment.lightingLux"
+            label="Lighting power"
+            stack-label
+            dense
+            suffix="lux"
+            data-testid="edit-ecosystem-lighting-lux"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h5 class="q-my-sm q-pa-sm">Water parameters</h5>
+        <div class="row q-col-gutter-x-sm">
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.waterReplacement.waterParameters.ph"
+            label="PH"
+            stack-label
+            dense
+            data-testid="edit-ecosystem-ph"
+          />
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.waterReplacement.waterParameters.gh"
+            label="GH"
+            stack-label
+            dense
+            data-testid="edit-ecosystem-gh"
+          />
+          <q-input
+            class="col"
+            filled
+            v-model.number="ecosystemData.waterReplacement.waterParameters.kh"
+            label="KH"
+            stack-label
+            dense
+            data-testid="edit-ecosystem-kh"
+          />
+        </div>
+      </div>
     </q-form>
   </div>
 </template>
@@ -59,6 +131,7 @@ import { defineComponent, ref, watch } from "vue";
 import { QForm, QInput } from "quasar";
 import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
 
+// TODO Rewrite in setup-style
 export default defineComponent({
   name: "EditEcosystem",
   components: { QForm, QInput },

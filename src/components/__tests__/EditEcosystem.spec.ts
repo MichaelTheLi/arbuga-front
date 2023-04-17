@@ -46,27 +46,33 @@ describe("EditEcosystem", () => {
     expect(elementValue(wrapper, "height")).toEqual(String(ecosystem.height));
     expect(elementValue(wrapper, "length")).toEqual(String(ecosystem.length));
     expect(elementValue(wrapper, "volume")).toEqual("");
+
+    expect(elementValue(wrapper, "ph")).toEqual(
+      String(ecosystem.waterReplacement.waterParameters.ph)
+    );
+    expect(elementValue(wrapper, "gh")).toEqual(
+      String(ecosystem.waterReplacement.waterParameters.gh)
+    );
+    expect(elementValue(wrapper, "kh")).toEqual(
+      String(ecosystem.waterReplacement.waterParameters.kh)
+    );
+
+    expect(elementValue(wrapper, "filters-flow")).toEqual(
+      String(ecosystem.equipment.filtersFlow)
+    );
+    expect(elementValue(wrapper, "heaters-power")).toEqual(
+      String(ecosystem.equipment.heatersPower)
+    );
+    expect(elementValue(wrapper, "lighting-lux")).toEqual(
+      String(ecosystem.equipment.lightingLux)
+    );
+
     const { volume } = useEcosystemDynamicVolume(ecosystem);
     expect(
       wrapper
         .get('[data-testid="edit-ecosystem-volume"]')
         .attributes("placeholder")
     ).toEqual(String(volume.value));
-  });
-
-  it("renders manual volume", () => {
-    const store = useEcosystemsStore(
-      createTestingPinia({
-        createSpy: vi.fn,
-        stubActions: false,
-      })
-    );
-    const ecosystem = createRandomEcosystem(store);
-    ecosystem.volumeManual = 123.45;
-    const wrapper = mountComponent(ecosystem);
-
-    const { volume } = useEcosystemDynamicVolume(ecosystem);
-    expect(elementValue(wrapper, "volume")).toEqual(String(volume.value));
   });
 
   it("change input changes global state manual volume", () => {
@@ -88,13 +94,44 @@ describe("EditEcosystem", () => {
     wrapper.get('[data-testid="edit-ecosystem-length"]').setValue(99.99);
     wrapper.get('[data-testid="edit-ecosystem-volume"]').setValue(101.23);
 
+    wrapper.get('[data-testid="edit-ecosystem-ph"]').setValue(11.23);
+    wrapper.get('[data-testid="edit-ecosystem-gh"]').setValue(11.24);
+    wrapper.get('[data-testid="edit-ecosystem-kh"]').setValue(11.25);
+
+    wrapper.get('[data-testid="edit-ecosystem-filters-flow"]').setValue(1.23);
+    wrapper.get('[data-testid="edit-ecosystem-heaters-power"]').setValue(1.24);
+    wrapper.get('[data-testid="edit-ecosystem-lighting-lux"]').setValue(1.25);
+
     expect(ecosystem.name).toEqual("Test changed name");
     expect(ecosystem.width).toEqual(77.77);
     expect(ecosystem.height).toEqual(88.88);
     expect(ecosystem.length).toEqual(99.99);
 
+    expect(ecosystem.waterReplacement.waterParameters.ph).toEqual(11.23);
+    expect(ecosystem.waterReplacement.waterParameters.gh).toEqual(11.24);
+    expect(ecosystem.waterReplacement.waterParameters.kh).toEqual(11.25);
+
+    expect(ecosystem.equipment.filtersFlow).toEqual(1.23);
+    expect(ecosystem.equipment.heatersPower).toEqual(1.24);
+    expect(ecosystem.equipment.lightingLux).toEqual(1.25);
+
     const { volume } = useEcosystemDynamicVolume(ecosystem);
     expect(volume.value).toEqual(101.23);
+  });
+
+  it("renders manual volume", () => {
+    const store = useEcosystemsStore(
+      createTestingPinia({
+        createSpy: vi.fn,
+        stubActions: false,
+      })
+    );
+    const ecosystem = createRandomEcosystem(store);
+    ecosystem.volumeManual = 123.45;
+    const wrapper = mountComponent(ecosystem);
+
+    const { volume } = useEcosystemDynamicVolume(ecosystem);
+    expect(elementValue(wrapper, "volume")).toEqual(String(volume.value));
   });
 
   it("resetting manual volume restores original volume", () => {

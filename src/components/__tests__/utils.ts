@@ -14,6 +14,18 @@ export const createRandomEcosystem = (
     item.width = faker.datatype.number({ min: 20, max: 100 });
     item.height = faker.datatype.number({ min: 20, max: 100 });
     item.length = faker.datatype.number({ min: 20, max: 100 });
+    item.waterReplacement = {
+      waterParameters: {
+        ph: faker.datatype.number({ min: 1, max: 10 }),
+        gh: faker.datatype.number({ min: 1, max: 10 }),
+        kh: faker.datatype.number({ min: 1, max: 10 }),
+      },
+    };
+    item.equipment = {
+      filtersFlow: faker.datatype.number({ min: 100, max: 5000 }),
+      heatersPower: faker.datatype.number({ min: 10, max: 1000 }),
+      lightingLux: faker.datatype.number({ min: 100, max: 50000 }),
+    };
   }
 
   return item;

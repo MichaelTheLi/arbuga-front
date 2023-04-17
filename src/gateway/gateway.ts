@@ -55,6 +55,24 @@ export const LOAD_USER = gql(/* GraphQL */ `
           }
           count
         }
+        waterReplacement {
+          waterParameters {
+            ph
+            gh
+            kh
+          }
+        }
+        equipment {
+          filters {
+            flow
+          }
+          heaters {
+            power
+          }
+          lightingItems {
+            lux
+          }
+        }
       }
     }
   }
@@ -149,6 +167,24 @@ export const LOGIN_USER = gql(/* GraphQL */ `
             }
             count
           }
+          waterReplacement {
+            waterParameters {
+              ph
+              gh
+              kh
+            }
+          }
+          equipment {
+            filters {
+              flow
+            }
+            heaters {
+              power
+            }
+            lightingItems {
+              lux
+            }
+          }
         }
       }
     }
@@ -196,6 +232,24 @@ export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
             description
           }
           count
+        }
+        waterReplacement {
+          waterParameters {
+            ph
+            gh
+            kh
+          }
+        }
+        equipment {
+          filters {
+            flow
+          }
+          heaters {
+            power
+          }
+          lightingItems {
+            lux
+          }
         }
       }
       success
@@ -266,6 +320,41 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
 
       if (ecosystemData.plants) {
         ecosystem.plants = ecosystemData.plants;
+      }
+
+      if (
+        ecosystemData.waterReplacement &&
+        ecosystemData.waterReplacement.waterParameters
+      ) {
+        ecosystem.waterReplacement = {
+          waterParameters: {
+            ph: parseFloat(
+              ecosystemData.waterReplacement.waterParameters.ph.toFixed(1)
+            ),
+            gh: ecosystemData.waterReplacement.waterParameters.gh,
+            kh: ecosystemData.waterReplacement.waterParameters.kh,
+          },
+        };
+      }
+
+      if (ecosystemData.equipment) {
+        ecosystem.equipment = {
+          filtersFlow: _.reduce(
+            ecosystemData.equipment.filters,
+            (sum, { flow }) => sum + flow,
+            0
+          ),
+          heatersPower: _.reduce(
+            ecosystemData.equipment.heaters,
+            (sum, { power }) => sum + power,
+            0
+          ),
+          lightingLux: _.reduce(
+            ecosystemData.equipment.lightingItems,
+            (sum, { lux }) => sum + lux,
+            0
+          ),
+        };
       }
 
       if (!store.current) {
