@@ -16,6 +16,14 @@ import { faker } from "@faker-js/faker";
 
 installQuasar();
 
+const pushMock = vi.fn();
+vi.mock("vue-router", () => ({
+  useRoute: vi.fn(),
+  useRouter: vi.fn(() => ({
+    push: pushMock,
+  })),
+}));
+
 describe("EcosystemInfo", () => {
   const stubFishList = [
     {

@@ -24,6 +24,7 @@ export default defineConfig({
     },
   },
   test: {
+    setupFiles: "src/components/__tests__/vitest.setup.ts",
     coverage: {
       provider: "istanbul", // or 'c8',
       exclude: ["**/*.spec.js", "__generated__"],
