@@ -1,127 +1,136 @@
 <template>
   <div>
-    <q-form @submit="onSubmit" class="q-gutter-y-sm">
-      <q-input
-        filled
-        v-model="ecosystemData.name"
-        :label="$t('ecosystem.fields.name')"
-        stack-label
-        dense
-        data-testid="edit-ecosystem-name"
-      />
+    <q-form @submit="onSubmit">
       <div>
-        <h5 class="q-my-sm q-pa-sm">{{ $t("ecosystem.dimensions_header") }}</h5>
-        <div class="row q-col-gutter-x-sm">
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.width"
-            :label="$t('ecosystem.fields.width')"
-            stack-label
-            dense
-            :suffix="$t('ecosystem.fields.dim_suffix')"
-            data-testid="edit-ecosystem-width"
-          />
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.height"
-            :label="$t('ecosystem.fields.height')"
-            stack-label
-            dense
-            :suffix="$t('ecosystem.fields.dim_suffix')"
-            data-testid="edit-ecosystem-height"
-          />
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.length"
-            :label="$t('ecosystem.fields.length')"
-            stack-label
-            dense
-            :suffix="$t('ecosystem.fields.dim_suffix')"
-            data-testid="edit-ecosystem-length"
-          />
-        </div>
+        <q-input
+          filled
+          v-model="ecosystemData.name"
+          :label="$t('ecosystem.fields.name')"
+          stack-label
+          dense
+          data-testid="edit-ecosystem-name"
+        />
       </div>
-      <q-input
-        filled
-        type="number"
-        v-model.number="ecosystemData.volumeManual"
-        :placeholder="volume"
-        :hint="$t('ecosystem.fields.volume.hint')"
-        dense
-        data-testid="edit-ecosystem-volume"
-      />
-
-      <div>
-        <h5 class="q-my-sm q-pa-sm">{{ $t("ecosystem.equipment_header") }}</h5>
-        <div class="row q-col-gutter-x-sm">
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.equipment.filtersFlow"
-            :label="$t('ecosystem.fields.filter_flow')"
-            stack-label
-            dense
-            :suffix="$t('ecosystem.fields.filter_flow_suffix')"
-            data-testid="edit-ecosystem-filters-flow"
-          />
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.equipment.heatersPower"
-            :label="$t('ecosystem.fields.heater_power')"
-            stack-label
-            dense
-            :suffix="$t('ecosystem.fields.heater_suffix')"
-            data-testid="edit-ecosystem-heaters-power"
-          />
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.equipment.lightingLux"
-            :label="$t('ecosystem.fields.lighting_power')"
-            stack-label
-            dense
-            :suffix="$t('ecosystem.fields.lighting_suffix')"
-            data-testid="edit-ecosystem-lighting-lux"
-          />
+      <div class="row q-gutter-x-md">
+        <div class="col">
+          <h6 class="q-my-sm q-pa-sm">
+            {{ $t("ecosystem.dimensions_header") }}
+          </h6>
+          <div class="q-gutter-y-sm column">
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.width"
+              :label="$t('ecosystem.fields.width')"
+              stack-label
+              dense
+              :suffix="$t('ecosystem.fields.dim_suffix')"
+              data-testid="edit-ecosystem-width"
+            />
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.height"
+              :label="$t('ecosystem.fields.height')"
+              stack-label
+              dense
+              :suffix="$t('ecosystem.fields.dim_suffix')"
+              data-testid="edit-ecosystem-height"
+            />
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.length"
+              :label="$t('ecosystem.fields.length')"
+              stack-label
+              dense
+              :suffix="$t('ecosystem.fields.dim_suffix')"
+              data-testid="edit-ecosystem-length"
+            />
+            <q-input
+              filled
+              type="number"
+              v-model.number="ecosystemData.volumeManual"
+              :placeholder="volume"
+              :hint="$t('ecosystem.fields.volume.hint')"
+              dense
+              data-testid="edit-ecosystem-volume"
+              class="q-mb-lg"
+            />
+          </div>
         </div>
-      </div>
 
-      <div>
-        <h5 class="q-my-sm q-pa-sm">
-          {{ $t("ecosystem.water_params_header") }}
-        </h5>
-        <div class="row q-col-gutter-x-sm">
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.waterReplacement.waterParameters.ph"
-            :label="$t('ecosystem.fields.ph')"
-            stack-label
-            dense
-            data-testid="edit-ecosystem-ph"
-          />
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.waterReplacement.waterParameters.gh"
-            :label="$t('ecosystem.fields.gh')"
-            stack-label
-            dense
-            data-testid="edit-ecosystem-gh"
-          />
-          <q-input
-            class="col"
-            filled
-            v-model.number="ecosystemData.waterReplacement.waterParameters.kh"
-            :label="$t('ecosystem.fields.kh')"
-            stack-label
-            dense
-            data-testid="edit-ecosystem-kh"
-          />
+        <div class="col">
+          <h6 class="q-my-sm q-pa-sm">
+            {{ $t("ecosystem.equipment_header") }}
+          </h6>
+          <div class="q-gutter-y-sm column">
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.equipment.filtersFlow"
+              :label="$t('ecosystem.fields.filter_flow')"
+              stack-label
+              dense
+              :suffix="$t('ecosystem.fields.filter_flow_suffix')"
+              data-testid="edit-ecosystem-filters-flow"
+            />
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.equipment.heatersPower"
+              :label="$t('ecosystem.fields.heater_power')"
+              stack-label
+              dense
+              :suffix="$t('ecosystem.fields.heater_suffix')"
+              data-testid="edit-ecosystem-heaters-power"
+            />
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.equipment.lightingLux"
+              :label="$t('ecosystem.fields.lighting_power')"
+              stack-label
+              dense
+              :suffix="$t('ecosystem.fields.lighting_suffix')"
+              data-testid="edit-ecosystem-lighting-lux"
+            />
+          </div>
+        </div>
+
+        <div class="col">
+          <h6 class="q-my-sm q-pa-sm">
+            {{ $t("ecosystem.water_params_header") }}
+          </h6>
+          <div class="q-gutter-y-sm column">
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.waterReplacement.waterParameters.ph"
+              :label="$t('ecosystem.fields.ph')"
+              stack-label
+              dense
+              data-testid="edit-ecosystem-ph"
+            />
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.waterReplacement.waterParameters.gh"
+              :label="$t('ecosystem.fields.gh')"
+              stack-label
+              dense
+              data-testid="edit-ecosystem-gh"
+            />
+            <q-input
+              class="col"
+              filled
+              v-model.number="ecosystemData.waterReplacement.waterParameters.kh"
+              :label="$t('ecosystem.fields.kh')"
+              stack-label
+              dense
+              data-testid="edit-ecosystem-kh"
+            />
+          </div>
         </div>
       </div>
     </q-form>
