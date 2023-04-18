@@ -4,42 +4,42 @@
       <q-input
         filled
         v-model="ecosystemData.name"
-        label="Name"
+        :label="$t('ecosystem.fields.name')"
         stack-label
         dense
         data-testid="edit-ecosystem-name"
       />
       <div>
-        <h5 class="q-my-sm q-pa-sm">Water parameters</h5>
+        <h5 class="q-my-sm q-pa-sm">{{ $t("ecosystem.dimensions_header") }}</h5>
         <div class="row q-col-gutter-x-sm">
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.width"
-            label="Width"
+            :label="$t('ecosystem.fields.width')"
             stack-label
             dense
-            suffix="cm"
+            :suffix="$t('ecosystem.fields.dim_suffix')"
             data-testid="edit-ecosystem-width"
           />
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.height"
-            label="Height"
+            :label="$t('ecosystem.fields.height')"
             stack-label
             dense
-            suffix="cm"
+            :suffix="$t('ecosystem.fields.dim_suffix')"
             data-testid="edit-ecosystem-height"
           />
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.length"
-            label="Length"
+            :label="$t('ecosystem.fields.length')"
             stack-label
             dense
-            suffix="cm"
+            :suffix="$t('ecosystem.fields.dim_suffix')"
             data-testid="edit-ecosystem-length"
           />
         </div>
@@ -49,55 +49,57 @@
         type="number"
         v-model.number="ecosystemData.volumeManual"
         :placeholder="volume"
-        hint="Volume calculated based on the dimensions. Manually enter the volume if required"
+        :hint="$t('ecosystem.fields.volume.hint')"
         dense
         data-testid="edit-ecosystem-volume"
       />
 
       <div>
-        <h5 class="q-my-sm q-pa-sm">Equipment</h5>
+        <h5 class="q-my-sm q-pa-sm">{{ $t("ecosystem.equipment_header") }}</h5>
         <div class="row q-col-gutter-x-sm">
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.equipment.filtersFlow"
-            label="Filter flow"
+            :label="$t('ecosystem.fields.filter_flow')"
             stack-label
             dense
-            suffix="liters/hour"
+            :suffix="$t('ecosystem.fields.filter_flow_suffix')"
             data-testid="edit-ecosystem-filters-flow"
           />
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.equipment.heatersPower"
-            label="Heater power"
+            :label="$t('ecosystem.fields.heater_power')"
             stack-label
             dense
-            suffix="watts"
+            :suffix="$t('ecosystem.fields.heater_suffix')"
             data-testid="edit-ecosystem-heaters-power"
           />
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.equipment.lightingLux"
-            label="Lighting power"
+            :label="$t('ecosystem.fields.lighting_power')"
             stack-label
             dense
-            suffix="lux"
+            :suffix="$t('ecosystem.fields.lighting_suffix')"
             data-testid="edit-ecosystem-lighting-lux"
           />
         </div>
       </div>
 
       <div>
-        <h5 class="q-my-sm q-pa-sm">Water parameters</h5>
+        <h5 class="q-my-sm q-pa-sm">
+          {{ $t("ecosystem.water_params_header") }}
+        </h5>
         <div class="row q-col-gutter-x-sm">
           <q-input
             class="col"
             filled
             v-model.number="ecosystemData.waterReplacement.waterParameters.ph"
-            label="PH"
+            :label="$t('ecosystem.fields.ph')"
             stack-label
             dense
             data-testid="edit-ecosystem-ph"
@@ -106,7 +108,7 @@
             class="col"
             filled
             v-model.number="ecosystemData.waterReplacement.waterParameters.gh"
-            label="GH"
+            :label="$t('ecosystem.fields.gh')"
             stack-label
             dense
             data-testid="edit-ecosystem-gh"
@@ -115,7 +117,7 @@
             class="col"
             filled
             v-model.number="ecosystemData.waterReplacement.waterParameters.kh"
-            label="KH"
+            :label="$t('ecosystem.fields.kh')"
             stack-label
             dense
             data-testid="edit-ecosystem-kh"

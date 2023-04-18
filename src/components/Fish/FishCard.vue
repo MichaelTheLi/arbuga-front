@@ -13,7 +13,7 @@
             color="primary"
             size="sm"
             padding="xs md"
-            label="Add"
+            :label="$t('fish.add_action')"
             data-testid="add-fish"
             @click="onAddClick"
           />
@@ -21,7 +21,7 @@
             size="sm"
             padding="xs md"
             flat
-            label="More info"
+            :label="$t('fish.more_info')"
             data-testid="show-more-info"
             @click="expanded = !expanded"
           />

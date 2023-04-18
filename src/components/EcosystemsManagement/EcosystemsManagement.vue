@@ -20,7 +20,7 @@ const onCreated = () => {
 <template>
   <div class="q-pa-sm">
     <h5 class="q-my-md">
-      <span>Ecosystems</span>
+      <span>{{ $t("ecosystem.list_header") }}</span>
       <q-btn
         class="q-ml-md"
         dense

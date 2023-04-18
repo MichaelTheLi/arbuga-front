@@ -9,10 +9,10 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
       children: [
         {
           path: "",
+          name: "home",
           components: {
             default: HomeView,
             rightDrawer: AnalysisView,
@@ -20,6 +20,7 @@ const router = createRouter({
         },
         {
           path: "add_fish",
+          name: "add_fish",
           components: {
             default: HomeView,
             rightDrawer: AddFishView,
@@ -27,6 +28,7 @@ const router = createRouter({
         },
         {
           path: "add_plants",
+          name: "add_plants",
           components: {
             default: HomeView,
             rightDrawer: AddPlantsView,

@@ -1,7 +1,7 @@
 <template>
   <q-list>
     <div class="q-pa-sm">
-      <h5 class="q-my-md">Your progress</h5>
+      <h5 class="q-my-md">{{ $t("ecosystem.analysis.your_progress") }}</h5>
       <q-linear-progress
         data-testid="analysis-progress"
         rounded

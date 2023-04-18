@@ -8,7 +8,7 @@
       {{ element.count }} x {{ element.fish.name }}
     </div>
   </div>
-  <div v-else>Add a fish</div>
+  <div v-else>{{ $t("ecosystem.fish.empty") }}</div>
 </template>
 
 <script setup lang="ts">

@@ -20,6 +20,6 @@ const onAddFish = (selectedFish: FishCardData) => {
 </script>
 
 <template>
-  <h5 class="q-my-sm q-pa-sm">Add fish</h5>
+  <h5 class="q-my-sm q-pa-sm">{{ $t("ecosystem.fish.add_header") }}</h5>
   <SelectFish :debounce-timeout="300" @add="onAddFish" />
 </template>

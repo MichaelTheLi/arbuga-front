@@ -1,14 +1,18 @@
 <template>
   <div>
     <div class="text-body2">
-      <p>Actual volume: {{ volume }}l</p>
-      <q-btn flat label="Show analysis" @click="onFullAnalysisClicked" />
+      <p>{{ $t("ecosystem.actual_volume", { volume }) }}</p>
+      <q-btn
+        flat
+        :label="$t('ecosystem.analysis.show_analysis')"
+        @click="onFullAnalysisClicked"
+      />
 
       <div>
         <div class="row q-col-gutter-md">
           <div class="col">
             <h4 class="q-my-md">
-              <span>Fish</span>
+              <span>{{ $t("ecosystem.fish_list") }}</span>
               <q-btn
                 class="q-ml-md"
                 dense
@@ -23,7 +27,7 @@
           </div>
           <div class="col">
             <h4 class="q-my-md">
-              <span>Plants</span>
+              <span>{{ $t("ecosystem.plants_list") }}</span>
               <q-btn
                 class="q-ml-md"
                 dense

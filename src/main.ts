@@ -1,5 +1,6 @@
 import { createApp, h, provide } from "vue";
 import { createPinia } from "pinia";
+import { createI18n } from "vue-i18n";
 
 import { Quasar } from "quasar";
 import "@quasar/extras/material-icons/material-icons.css";
@@ -12,6 +13,16 @@ import router from "./router";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import { apolloClient } from "@/gateway/client_apollo";
 
+import { i18nMessages } from "./config";
+
+const i18n = createI18n({
+  legacy: true,
+  locale: navigator.language,
+  fallbackLocale: "en-US",
+  formatFallbackMessages: true,
+  messages: i18nMessages,
+});
+
 // noinspection JSUnusedGlobalSymbols
 const app = createApp({
   setup() {
@@ -21,6 +32,7 @@ const app = createApp({
   render: () => h(App),
 });
 
+app.use(i18n);
 app.use(createPinia());
 app.use(router);
 app.use(Quasar, {

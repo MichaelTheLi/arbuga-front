@@ -1,14 +1,14 @@
 <template>
   <q-card style="min-width: 350px" flat bordered>
     <q-card-section>
-      <div class="text-h6">Your credentials</div>
+      <div class="text-h6">{{ $t("account.your_credentials") }}</div>
     </q-card-section>
 
     <q-card-section>
       <q-form class="q-col-gutter-sm">
         <q-input
           filled
-          label="Login"
+          :label="$t('account.login')"
           stack-label
           dense
           v-model="userCredentials.login"
@@ -18,7 +18,7 @@
         />
         <q-input
           filled
-          label="Password"
+          :label="$t('account.password')"
           stack-label
           dense
           v-model="userCredentials.password"
@@ -32,13 +32,13 @@
     <q-card-actions align="around" class="text-primary">
       <q-btn
         flat
-        label="Log-in"
+        :label="$t('account.login_action')"
         @click="onLogin"
         data-testid="login-actual-button"
       />
       <q-btn
         flat
-        label="Sign-on"
+        :label="$t('account.signon_action')"
         @click="onSignOn"
         data-testid="signon-actual-button"
       />

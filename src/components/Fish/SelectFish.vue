@@ -4,7 +4,7 @@
       filled
       dense
       v-model="search"
-      label="Search"
+      :label="$t('fish.search')"
       stack-label
       data-testid="fish-selector"
     />

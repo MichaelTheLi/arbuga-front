@@ -1,6 +1,8 @@
 <template>
-  <div v-if="!current">Please select or create an ecosystem</div>
-  <div v-else-if="!current.analysis">Not enough data for the analysis</div>
+  <div v-if="!current">{{ $t("ecosystem.please_select") }}</div>
+  <div v-else-if="!current.analysis">
+    {{ $t("ecosystem.analysis.not_available") }}
+  </div>
   <div v-else><EcosystemAnalysis :analysis="current.analysis" /></div>
 </template>
 

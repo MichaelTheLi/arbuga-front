@@ -14,9 +14,9 @@ let { current } = storeToRefs(store);
   <q-page padding>
     <div v-if="current">
       <EditEcosystem :ecosystem="current" />
-      <h5 class="q-my-md">Parameters</h5>
+      <h5 class="q-my-md">{{ $t("ecosystem.parameters") }}</h5>
       <EcosystemInfo :ecosystem="current" />
     </div>
-    <div v-else>Select an ecosystem</div>
+    <div v-else>{{ $t("ecosystem.please_select") }}</div>
   </q-page>
 </template>

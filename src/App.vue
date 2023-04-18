@@ -47,7 +47,7 @@ fetchUser();
           <q-avatar>
             <img alt="Vue logo" class="logo" src="@/assets/logo.svg" />
           </q-avatar>
-          Arbuga
+          {{ $t("project.name") }}
         </q-toolbar-title>
         <q-space />
 

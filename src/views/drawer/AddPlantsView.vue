@@ -20,6 +20,6 @@ const onAddPlant = (selectPlant: PlantCardData) => {
 </script>
 
 <template>
-  <h5 class="q-my-sm q-pa-sm">Add plants</h5>
+  <h5 class="q-my-sm q-pa-sm">{{ $t("ecosystem.plants.add_header") }}</h5>
   <SelectPlant :debounce-timeout="300" @add="onAddPlant" />
 </template>

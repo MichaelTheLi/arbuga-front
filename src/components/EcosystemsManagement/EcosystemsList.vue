@@ -11,11 +11,15 @@
       data-testid="ecosystems-list-item"
     >
       <q-item-section>
-        <q-item-label>{{ ecosystem.name || "New" }}</q-item-label>
+        <q-item-label>{{
+          ecosystem.name || $t("ecosystem.new_name")
+        }}</q-item-label>
       </q-item-section>
 
       <q-item-section side top>
-        <q-item-label caption>{{ volume(ecosystem) }} L</q-item-label>
+        <q-item-label caption>{{
+          $t("ecosystem.volume_param", { volume: volume(ecosystem).value })
+        }}</q-item-label>
         <q-item-label>
           {{ ecosystem.length }}x{{ ecosystem.width }}x{{ ecosystem.height }}
         </q-item-label>

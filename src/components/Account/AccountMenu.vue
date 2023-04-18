@@ -1,7 +1,7 @@
 <template>
   <div class="q-mx-md">
     <div v-if="isLogged">
-      <span>Hello, {{ user?.name }}</span>
+      <span>{{ $t("account.greeting", { name: user?.name }) }}</span>
     </div>
     <div v-else>
       <LoginButton />

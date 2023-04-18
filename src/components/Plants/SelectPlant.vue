@@ -3,7 +3,7 @@
     <q-input
       filled
       v-model="search"
-      label="Search"
+      :label="$t('plants.search')"
       dense
       stack-label
       data-testid="plant-selector"
