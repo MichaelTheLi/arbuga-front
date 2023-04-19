@@ -11,8 +11,8 @@
           data-testid="edit-ecosystem-name"
         />
       </div>
-      <div class="row q-gutter-x-md">
-        <div class="col">
+      <div class="row q-col-gutter-x-md">
+        <div class="col-12 col-md-6 col-lg">
           <h6 class="q-my-sm q-pa-sm">
             {{ $t("ecosystem.dimensions_header") }}
           </h6>
@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-12 col-md-6 col-lg">
           <h6 class="q-my-sm q-pa-sm">
             {{ $t("ecosystem.equipment_header") }}
           </h6>
@@ -98,7 +98,7 @@
           </div>
         </div>
 
-        <div class="col">
+        <div class="col-12 col-md-12 col-lg">
           <h6 class="q-my-sm q-pa-sm">
             {{ $t("ecosystem.water_params_header") }}
           </h6>
