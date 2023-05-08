@@ -29,7 +29,7 @@
       </q-form>
     </q-card-section>
 
-    <q-card-actions align="around" class="text-primary">
+    <q-card-actions align="evenly" class="text-primary">
       <q-btn
         flat
         :label="$t('account.login_action')"

@@ -2,7 +2,7 @@
   <div>
     <q-btn
       flat
-      label="Login"
+      :label="$t('account.login_action')"
       @click="onLoginRequested"
       data-testid="login-button"
     />
