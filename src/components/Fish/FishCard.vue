@@ -8,13 +8,14 @@
           {{ props.fish.shortDescription }}
         </div>
 
-        <q-card-actions align="between" class="q-py-sm q-px-none">
+        <q-card-actions align="between" class="q-py-sm q-px-none no-wrap">
           <q-btn
             color="primary"
             size="sm"
             padding="xs md"
             :label="$t('fish.add_action')"
             data-testid="add-fish"
+            class="col-6"
             @click="onAddClick"
           />
           <q-btn
@@ -22,6 +23,7 @@
             padding="xs md"
             flat
             :label="$t('fish.more_info')"
+            class="col-6"
             data-testid="show-more-info"
             @click="expanded = !expanded"
           />

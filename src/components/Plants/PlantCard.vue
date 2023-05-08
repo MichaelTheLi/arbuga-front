@@ -8,12 +8,13 @@
           {{ props.plant.shortDescription }}
         </div>
 
-        <q-card-actions align="between" class="q-py-sm q-px-none col">
+        <q-card-actions align="between" class="q-py-sm q-px-none no-wrap">
           <q-btn
             color="primary"
             size="sm"
             padding="xs md"
-            label="Add"
+            :label="$t('plants.add_action')"
+            class="col-6"
             data-testid="add-plant"
             @click="onAddClick"
           />
@@ -21,7 +22,8 @@
             size="sm"
             padding="xs md"
             flat
-            label="More info"
+            :label="$t('plants.more_info')"
+            class="col-6"
             data-testid="show-more-info"
             @click="expanded = !expanded"
           />
