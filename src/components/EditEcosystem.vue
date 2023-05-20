@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit">
-      <div>
+      <div class="row q-gutter-x-xs">
         <q-input
           filled
           v-model="ecosystemData.name"
@@ -9,6 +9,14 @@
           stack-label
           dense
           data-testid="edit-ecosystem-name"
+          class="col-grow"
+        />
+        <q-btn
+          @click="onRemoveClick"
+          dense
+          stack
+          icon="delete"
+          :title="$t('ecosystem.remove')"
         />
       </div>
       <div class="row q-col-gutter-x-md">
@@ -137,59 +145,80 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from "vue";
-import { QForm, QInput } from "quasar";
-import { useEcosystemDynamicVolume } from "@/stores/ecosystems";
+<script lang="ts" setup>
+import { ref, watch } from "vue";
+import { QBtn, QForm, QInput } from "quasar";
+import {
+  type Ecosystem,
+  useEcosystemDynamicVolume,
+  useEcosystemsStore,
+} from "@/stores/ecosystems";
+import { useRemoveEcosystem } from "@/gateway/gateway";
+import _ from "lodash";
 
-// TODO Rewrite in setup-style
-export default defineComponent({
-  name: "EditEcosystem",
-  components: { QForm, QInput },
-  emits: ["save"],
-  props: ["ecosystem"],
-  setup(props) {
-    const ecosystemData = ref(props.ecosystem);
+const { execute: removeEcosystem } = useRemoveEcosystem();
 
-    watch(
-      () => props.ecosystem,
-      (newValue) => {
-        ecosystemData.value = newValue;
-      }
-    );
+const props = defineProps<{
+  ecosystem: Ecosystem;
+}>();
 
-    const { volume } = useEcosystemDynamicVolume(ecosystemData);
+const emit = defineEmits<{
+  (e: "save", selected: Ecosystem): void;
+}>();
 
-    return {
-      ecosystemData,
-      volume,
-    };
-  },
-  methods: {
-    onSubmit(e: Event) {
-      if (this.validate()) {
-        this.save();
-      }
+const ecosystemData = ref(props.ecosystem);
 
-      e.preventDefault();
-    },
-    validate(): boolean {
-      return (this.ecosystemData.name &&
-        this.fullDimensions() &&
-        this.ecosystemData.volume > 0) as boolean;
-    },
-    fullDimensions: function () {
-      return (
-        this.ecosystemData.width > 0 &&
-        this.ecosystemData.height > 0 &&
-        this.ecosystemData.length > 0
-      );
-    },
-    save() {
-      this.$emit("save", this.ecosystemData);
-    },
-  },
-});
+watch(
+  () => props.ecosystem,
+  (newValue) => {
+    ecosystemData.value = newValue;
+  }
+);
+
+const { volume } = useEcosystemDynamicVolume(ecosystemData);
+
+const areDimensionsFull = (): boolean => {
+  const ecosystem = ecosystemData.value;
+  if (!ecosystem) {
+    return false;
+  }
+
+  return (ecosystem.width &&
+    ecosystem.height &&
+    ecosystem.length &&
+    ecosystem.width > 0 &&
+    ecosystem.height > 0 &&
+    ecosystem.length > 0) as boolean;
+};
+
+const validate = (): boolean => {
+  return (ecosystemData.value.name &&
+    areDimensionsFull() &&
+    volume.value > 0) as boolean;
+};
+
+const onSubmit = (e: Event) => {
+  if (validate()) {
+    emit("save", ecosystemData.value);
+  }
+
+  e.preventDefault();
+};
+
+const ecosystemsStore = useEcosystemsStore();
+const onRemoveClick = () => {
+  const index = _.findIndex(ecosystemsStore.list, (ecosystem) => {
+    return ecosystem === ecosystemData.value;
+  });
+
+  if (index !== -1) {
+    ecosystemsStore.list.splice(index, 1);
+  }
+
+  if (ecosystemData.value.id && !ecosystemData.value.id.startsWith("new_")) {
+    removeEcosystem({ id: ecosystemData.value.id });
+  }
+
+  ecosystemsStore.changeCurrent(ecosystemsStore.list[0] || null);
+};
 </script>
-
-<style scoped></style>

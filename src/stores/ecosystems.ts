@@ -68,7 +68,6 @@ export interface PlantOption {
 }
 
 export interface EcosystemAnalysis {
-  id: string;
   name: string;
   description: string;
   status: string /* enum actually */;
@@ -76,7 +75,6 @@ export interface EcosystemAnalysis {
 }
 
 export interface EcosystemAnalysisMessage {
-  id: string;
   name: string;
   description: string;
   status: string /* enum actually */;

@@ -13,7 +13,7 @@
     </div>
     <div
       v-for="(category, index) of props.analysis"
-      :key="category.id"
+      :key="category.name"
       data-testid="analysis-category"
     >
       <q-item-label header data-testid="analysis-category-status">
@@ -33,7 +33,7 @@
 
       <q-item
         v-for="message of category.messages"
-        :key="message.id"
+        :key="message.name"
         data-testid="analysis-message"
       >
         <q-item-section>

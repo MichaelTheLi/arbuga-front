@@ -13,6 +13,7 @@ export const i18nMessages = {
     },
     ecosystem: {
       new_name: "New",
+      remove: "Remove",
       list_header: "Ecosystems",
       dimensions_header: "Dimensions",
       equipment_header: "Equipment",
@@ -81,6 +82,7 @@ export const i18nMessages = {
     },
     ecosystem: {
       new_name: "Новая",
+      remove: "Удалить",
       list_header: "Экосистемы",
       dimensions_header: "Размеры",
       equipment_header: "Оборудование",

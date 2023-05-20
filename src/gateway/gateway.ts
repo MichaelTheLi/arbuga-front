@@ -28,12 +28,10 @@ export const LOAD_USER = gql(/* GraphQL */ `
           }
         }
         analysis {
-          id
           name
           description
           status
           messages {
-            id
             name
             description
             status
@@ -192,6 +190,77 @@ export const LOGIN_USER = gql(/* GraphQL */ `
 `);
 
 // noinspection GraphQLUnresolvedReference
+export const REGISTER_USER = gql(/* GraphQL */ `
+  mutation userRegister($login: String!, $password: String!, $name: String!) {
+    register(login: $login, password: $password, name: $name) {
+      token
+      user {
+        id
+        login
+        name
+        ecosystems {
+          id
+          name
+          aquarium {
+            dimensions {
+              width
+              height
+              length
+            }
+          }
+          analysis {
+            id
+            name
+            description
+            status
+            messages {
+              id
+              name
+              description
+              status
+            }
+          }
+          fish {
+            fish {
+              id
+              name
+              description
+            }
+            count
+          }
+          plants {
+            plant {
+              id
+              name
+              description
+            }
+            count
+          }
+          waterReplacement {
+            waterParameters {
+              ph
+              gh
+              kh
+            }
+          }
+          equipment {
+            filters {
+              flow
+            }
+            heaters {
+              power
+            }
+            lightingItems {
+              lux
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
 export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
   mutation SAVE_ECOSYSTEM($id: ID, $ecosystem: EcosystemInput!) {
     saveEcosystem(id: $id, ecosystem: $ecosystem) {
@@ -255,6 +324,13 @@ export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
       success
       error
     }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const REMOVE_ECOSYSTEM = gql(/* GraphQL */ `
+  mutation REMOVE_ECOSYSTEM($id: ID!) {
+    removeEcosystem(id: $id)
   }
 `);
 
@@ -560,6 +636,41 @@ export const useSaveEcosystem = () => {
   };
 };
 
+export const useRemoveEcosystem = () => {
+  const result = useMutation(REMOVE_ECOSYSTEM, {
+    update: (cache, { data }, options) => {
+      if (!data || !data.removeEcosystem) {
+        return;
+      }
+      const currentCache = cache.readQuery({ query: LOAD_USER });
+
+      const currentCacheEcosystems = currentCache?.me?.ecosystems;
+
+      let ecosystems: typeof currentCacheEcosystems = [];
+      if (currentCacheEcosystems) {
+        ecosystems = [...currentCacheEcosystems];
+      }
+
+      _.remove(ecosystems, (ecosystem) => {
+        return options.variables?.id === ecosystem.id;
+      });
+
+      const newCache = {
+        ...currentCache,
+        me: {
+          ...currentCache?.me,
+          ecosystems: ecosystems,
+        } as UserQueryQuery["me"],
+      };
+      cache.writeQuery({ query: LOAD_USER, data: newCache });
+    },
+  });
+
+  return {
+    execute: result.mutate,
+  };
+};
+
 export const useAddFish = () => {
   const { mutate: addFish } = useMutation(ADD_FISH);
 
@@ -581,6 +692,27 @@ export const useLoginUser = () => {
       data = {
         ...data,
         me: originalData?.data?.login?.user,
+      };
+      cache.writeQuery({ query: LOAD_USER, data });
+    },
+  });
+
+  result.onDone(({ data }) => {
+    localStorage.setItem("token", _.get(data, "login.token", ""));
+  });
+
+  return {
+    execute: result.mutate,
+  };
+};
+
+export const useRegisterUser = () => {
+  const result = useMutation(REGISTER_USER, {
+    update: (cache, originalData) => {
+      let data = cache.readQuery({ query: LOAD_USER });
+      data = {
+        ...data,
+        me: originalData?.data?.register?.user,
       };
       cache.writeQuery({ query: LOAD_USER, data });
     },
