@@ -5,11 +5,13 @@ import LoginButton from "../Account/LoginButton.vue";
 
 installQuasar();
 
-const executeMock = vi.fn();
+const loginMock = vi.fn();
+const registerMock = vi.fn();
 vi.mock("@/gateway/gateway", () => {
   // noinspection JSUnusedGlobalSymbols
   return {
-    useLoginUser: () => ({ execute: executeMock }),
+    useLoginUser: () => ({ execute: loginMock }),
+    useRegisterUser: () => ({ execute: registerMock }),
   };
 });
 
@@ -45,8 +47,8 @@ describe("LoginButton", () => {
 
     await wrapper.get('[data-testid="test-login-inner"]').trigger("testlogin");
 
-    expect(executeMock).toBeCalledTimes(1);
-    expect(executeMock).toBeCalledWith({ test: 2 });
+    expect(loginMock).toBeCalledTimes(1);
+    expect(loginMock).toBeCalledWith({ test: 2 });
   });
 
   it("signon event routed", async () => {
@@ -54,7 +56,7 @@ describe("LoginButton", () => {
 
     await wrapper.get('[data-testid="test-login-inner"]').trigger("testsignon");
 
-    expect(executeMock).toBeCalledTimes(1);
-    expect(executeMock).toBeCalledWith({ test: 3 });
+    expect(registerMock).toBeCalledTimes(1);
+    expect(registerMock).toBeCalledWith({ name: "New user", test: 3 });
   });
 });
