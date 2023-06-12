@@ -9,6 +9,9 @@ WORKDIR /build
 COPY --from=builder-dependencies /build/ /build
 COPY . .
 
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL $VITE_BACKEND_URL
+
 RUN yarn run build && \
     yarn cache clean
 
