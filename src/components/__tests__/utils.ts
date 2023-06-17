@@ -19,6 +19,7 @@ export const createRandomEcosystem = (
         ph: faker.datatype.number({ min: 1, max: 10 }),
         gh: faker.datatype.number({ min: 1, max: 10 }),
         kh: faker.datatype.number({ min: 1, max: 10 }),
+        temperature: faker.datatype.number({ min: 10, max: 30 }),
       },
     };
     item.equipment = {

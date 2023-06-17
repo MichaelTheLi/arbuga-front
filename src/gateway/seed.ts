@@ -20,10 +20,16 @@ export const seedEcosystems: Ecosystem[] = [
       glassThickness: 6,
     },
     waterReplacement: {
-      waterParameters: {
-        ph: faker.datatype.number(),
-        gh: faker.datatype.number(),
-        kh: faker.datatype.number(),
+      water: {
+        chemical: {
+          ph: faker.datatype.number(),
+          gh: faker.datatype.number(),
+          kh: faker.datatype.number(),
+          ammonia: faker.datatype.number(),
+          nitrate: faker.datatype.number(),
+          nitrite: faker.datatype.number(),
+        },
+        temperature: faker.datatype.number(),
       },
     },
     equipment: {
@@ -96,10 +102,16 @@ export const seedEcosystemsAnother: Ecosystem[] = [
       glassThickness: 6,
     },
     waterReplacement: {
-      waterParameters: {
-        ph: faker.datatype.number(),
-        gh: faker.datatype.number(),
-        kh: faker.datatype.number(),
+      water: {
+        chemical: {
+          ph: faker.datatype.number(),
+          gh: faker.datatype.number(),
+          kh: faker.datatype.number(),
+          ammonia: faker.datatype.number(),
+          nitrate: faker.datatype.number(),
+          nitrite: faker.datatype.number(),
+        },
+        temperature: faker.datatype.number(),
       },
     },
     equipment: {
@@ -157,10 +169,16 @@ export const seedEcosystemsAnother: Ecosystem[] = [
       glassThickness: 8,
     },
     waterReplacement: {
-      waterParameters: {
-        ph: faker.datatype.number(),
-        gh: faker.datatype.number(),
-        kh: faker.datatype.number(),
+      water: {
+        chemical: {
+          ph: faker.datatype.number(),
+          gh: faker.datatype.number(),
+          kh: faker.datatype.number(),
+          ammonia: faker.datatype.number(),
+          nitrate: faker.datatype.number(),
+          nitrite: faker.datatype.number(),
+        },
+        temperature: faker.datatype.number(),
       },
     },
     equipment: {
@@ -205,12 +223,12 @@ export const anonymousUser: UserQueryQuery["me"] = {
   id: faker.datatype.uuid(),
   login: null,
   name: "Mario",
-  ecosystems: seedEcosystems,
+  // ecosystems: useFragment(EcosystemFragment, seedEcosystems),
 };
 
 export const loggedUser: UserQueryQuery["me"] = {
   id: faker.datatype.uuid(),
   login: "alive",
   name: "MichaelAlive",
-  ecosystems: seedEcosystemsAnother,
+  // ecosystems: seedEcosystemsAnother,
 };

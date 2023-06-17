@@ -56,6 +56,9 @@ describe("EditEcosystem", () => {
     expect(elementValue(wrapper, "kh")).toEqual(
       String(ecosystem.waterReplacement.waterParameters.kh)
     );
+    expect(elementValue(wrapper, "temperature")).toEqual(
+      String(ecosystem.waterReplacement.waterParameters.temperature)
+    );
 
     expect(elementValue(wrapper, "filters-flow")).toEqual(
       String(ecosystem.equipment.filtersFlow)
@@ -97,6 +100,7 @@ describe("EditEcosystem", () => {
     wrapper.get('[data-testid="edit-ecosystem-ph"]').setValue(11.23);
     wrapper.get('[data-testid="edit-ecosystem-gh"]').setValue(11.24);
     wrapper.get('[data-testid="edit-ecosystem-kh"]').setValue(11.25);
+    wrapper.get('[data-testid="edit-ecosystem-temperature"]').setValue(26.78);
 
     wrapper.get('[data-testid="edit-ecosystem-filters-flow"]').setValue(1.23);
     wrapper.get('[data-testid="edit-ecosystem-heaters-power"]').setValue(1.24);
@@ -110,6 +114,9 @@ describe("EditEcosystem", () => {
     expect(ecosystem.waterReplacement.waterParameters.ph).toEqual(11.23);
     expect(ecosystem.waterReplacement.waterParameters.gh).toEqual(11.24);
     expect(ecosystem.waterReplacement.waterParameters.kh).toEqual(11.25);
+    expect(ecosystem.waterReplacement.waterParameters.temperature).toEqual(
+      26.78
+    );
 
     expect(ecosystem.equipment.filtersFlow).toEqual(1.23);
     expect(ecosystem.equipment.heatersPower).toEqual(1.24);

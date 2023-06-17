@@ -36,6 +36,7 @@ export interface WaterParameters {
   ph: number | null;
   gh: number | null;
   kh: number | null;
+  temperature: number | null;
 }
 
 export interface AquariumFish {
@@ -136,6 +137,7 @@ export const useEcosystemsStore = defineStore(
           ph: null,
           gh: null,
           kh: null,
+          temperature: null,
         },
       };
       const equipment = {
@@ -192,6 +194,7 @@ export const useEcosystemsStore = defineStore(
       const variablesFromEcosystem = (
         ecosystem: UnwrapRef<Ecosystem> | Ecosystem
       ) => {
+        const waterParameters = ecosystem.waterReplacement?.waterParameters;
         const variables = {
           id: undefined as string | undefined,
           ecosystem: {
@@ -204,10 +207,13 @@ export const useEcosystemsStore = defineStore(
               },
             },
             waterReplacement: {
-              waterParameters: {
-                ph: ecosystem.waterReplacement?.waterParameters?.ph,
-                gh: ecosystem.waterReplacement?.waterParameters?.gh,
-                kh: ecosystem.waterReplacement?.waterParameters?.kh,
+              water: {
+                chemical: {
+                  ph: waterParameters?.ph,
+                  gh: waterParameters?.gh,
+                  kh: waterParameters?.kh,
+                },
+                temperature: waterParameters?.temperature,
               },
             },
             equipment: {

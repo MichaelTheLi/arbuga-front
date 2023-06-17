@@ -50,6 +50,7 @@ export const i18nMessages = {
         ph: "ph",
         gh: "gh",
         kh: "kh",
+        temperature: "Temperature",
       },
       analysis: {
         not_available: "Not enough data for the analysis",
@@ -121,6 +122,7 @@ export const i18nMessages = {
         ph: "ph",
         gh: "gh",
         kh: "kh",
+        temperature: "Температура",
       },
       analysis: {
         not_available: "Недостаточно данных для анализа",

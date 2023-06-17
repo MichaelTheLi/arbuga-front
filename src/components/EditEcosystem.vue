@@ -138,6 +138,18 @@
               dense
               data-testid="edit-ecosystem-kh"
             />
+
+            <q-input
+              class="col"
+              filled
+              v-model.number="
+                ecosystemData.waterReplacement.waterParameters.temperature
+              "
+              :label="$t('ecosystem.fields.temperature')"
+              stack-label
+              dense
+              data-testid="edit-ecosystem-temperature"
+            />
           </div>
         </div>
       </div>

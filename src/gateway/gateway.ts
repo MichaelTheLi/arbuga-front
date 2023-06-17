@@ -1,6 +1,6 @@
 import { useLazyQuery, useMutation, useQuery } from "@vue/apollo-composable";
 import _ from "lodash";
-import { gql } from "@/__generated__";
+import { gql, useFragment } from "@/__generated__";
 import { computed, isRef, reactive, type Ref, unref, watch } from "vue";
 import {
   type FishOption,
@@ -10,6 +10,70 @@ import {
 import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
 
+export const EcosystemFragment = gql(/* GraphQL */ `
+  fragment FullEcosystem on Ecosystem {
+    id
+    name
+    aquarium {
+      dimensions {
+        width
+        height
+        length
+      }
+    }
+    analysis {
+      name
+      description
+      status
+      messages {
+        name
+        description
+        status
+      }
+    }
+    fish {
+      fish {
+        id
+        name
+        description
+      }
+      count
+    }
+    plants {
+      plant {
+        id
+        name
+        description
+      }
+      count
+    }
+    waterReplacement {
+      water {
+        chemical {
+          ph
+          gh
+          kh
+          ammonia
+          nitrite
+          nitrate
+        }
+        temperature
+      }
+    }
+    equipment {
+      filters {
+        flow
+      }
+      heaters {
+        power
+      }
+      lightingItems {
+        lux
+      }
+    }
+  }
+`);
+
 // noinspection GraphQLUnresolvedReference
 export const LOAD_USER = gql(/* GraphQL */ `
   query userQuery {
@@ -18,59 +82,7 @@ export const LOAD_USER = gql(/* GraphQL */ `
       login
       name
       ecosystems {
-        id
-        name
-        aquarium {
-          dimensions {
-            width
-            height
-            length
-          }
-        }
-        analysis {
-          name
-          description
-          status
-          messages {
-            name
-            description
-            status
-          }
-        }
-        fish {
-          fish {
-            id
-            name
-            description
-          }
-          count
-        }
-        plants {
-          plant {
-            id
-            name
-            description
-          }
-          count
-        }
-        waterReplacement {
-          waterParameters {
-            ph
-            gh
-            kh
-          }
-        }
-        equipment {
-          filters {
-            flow
-          }
-          heaters {
-            power
-          }
-          lightingItems {
-            lux
-          }
-        }
+        ...FullEcosystem
       }
     }
   }
@@ -128,61 +140,7 @@ export const LOGIN_USER = gql(/* GraphQL */ `
         login
         name
         ecosystems {
-          id
-          name
-          aquarium {
-            dimensions {
-              width
-              height
-              length
-            }
-          }
-          analysis {
-            id
-            name
-            description
-            status
-            messages {
-              id
-              name
-              description
-              status
-            }
-          }
-          fish {
-            fish {
-              id
-              name
-              description
-            }
-            count
-          }
-          plants {
-            plant {
-              id
-              name
-              description
-            }
-            count
-          }
-          waterReplacement {
-            waterParameters {
-              ph
-              gh
-              kh
-            }
-          }
-          equipment {
-            filters {
-              flow
-            }
-            heaters {
-              power
-            }
-            lightingItems {
-              lux
-            }
-          }
+          ...FullEcosystem
         }
       }
     }
@@ -199,61 +157,7 @@ export const REGISTER_USER = gql(/* GraphQL */ `
         login
         name
         ecosystems {
-          id
-          name
-          aquarium {
-            dimensions {
-              width
-              height
-              length
-            }
-          }
-          analysis {
-            id
-            name
-            description
-            status
-            messages {
-              id
-              name
-              description
-              status
-            }
-          }
-          fish {
-            fish {
-              id
-              name
-              description
-            }
-            count
-          }
-          plants {
-            plant {
-              id
-              name
-              description
-            }
-            count
-          }
-          waterReplacement {
-            waterParameters {
-              ph
-              gh
-              kh
-            }
-          }
-          equipment {
-            filters {
-              flow
-            }
-            heaters {
-              power
-            }
-            lightingItems {
-              lux
-            }
-          }
+          ...FullEcosystem
         }
       }
     }
@@ -265,61 +169,7 @@ export const SAVE_ECOSYSTEM = gql(/* GraphQL */ `
   mutation SAVE_ECOSYSTEM($id: ID, $ecosystem: EcosystemInput!) {
     saveEcosystem(id: $id, ecosystem: $ecosystem) {
       ecosystem {
-        id
-        name
-        aquarium {
-          dimensions {
-            width
-            height
-            length
-          }
-        }
-        analysis {
-          id
-          name
-          description
-          status
-          messages {
-            id
-            name
-            description
-            status
-          }
-        }
-        fish {
-          fish {
-            id
-            name
-            description
-          }
-          count
-        }
-        plants {
-          plant {
-            id
-            name
-            description
-          }
-          count
-        }
-        waterReplacement {
-          waterParameters {
-            ph
-            gh
-            kh
-          }
-        }
-        equipment {
-          filters {
-            flow
-          }
-          heaters {
-            power
-          }
-          lightingItems {
-            lux
-          }
-        }
+        ...FullEcosystem
       }
       success
       error
@@ -378,7 +228,8 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
   const store = useEcosystemsStore();
 
   if (me && me.ecosystems) {
-    me.ecosystems.forEach((ecosystemData) => {
+    me.ecosystems.forEach((ecosystemDataRaw) => {
+      const ecosystemData = useFragment(EcosystemFragment, ecosystemDataRaw);
       const ecosystem = store.createNew();
 
       ecosystem.id = ecosystemData.id;
@@ -400,15 +251,16 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
 
       if (
         ecosystemData.waterReplacement &&
-        ecosystemData.waterReplacement.waterParameters
+        ecosystemData.waterReplacement.water
       ) {
+        const water = ecosystemData.waterReplacement.water;
+
         ecosystem.waterReplacement = {
           waterParameters: {
-            ph: parseFloat(
-              ecosystemData.waterReplacement.waterParameters.ph.toFixed(1)
-            ),
-            gh: ecosystemData.waterReplacement.waterParameters.gh,
-            kh: ecosystemData.waterReplacement.waterParameters.kh,
+            ph: parseFloat(water.chemical.ph.toFixed(1)),
+            gh: water.chemical.gh,
+            kh: water.chemical.kh,
+            temperature: parseFloat(water.temperature.toFixed(1)),
           },
         };
       }
@@ -616,7 +468,10 @@ export const useSaveEcosystem = () => {
         ecosystems = [...currentCacheEcosystems];
       }
 
-      const { ecosystem } = data.saveEcosystem;
+      const ecosystem = useFragment(
+        EcosystemFragment,
+        data.saveEcosystem.ecosystem
+      );
       options.context?.idUpdate(ecosystem.id);
       ecosystems.splice(options.context?.index, 1);
 
@@ -651,7 +506,8 @@ export const useRemoveEcosystem = () => {
         ecosystems = [...currentCacheEcosystems];
       }
 
-      _.remove(ecosystems, (ecosystem) => {
+      _.remove(ecosystems, (ecosystemRaw) => {
+        const ecosystem = useFragment(EcosystemFragment, ecosystemRaw);
         return options.variables?.id === ecosystem.id;
       });
 
