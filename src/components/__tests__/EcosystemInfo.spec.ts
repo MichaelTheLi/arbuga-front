@@ -31,6 +31,9 @@ describe("EcosystemInfo", () => {
         id: "test1",
         name: "Harlequin rasbora",
         description: "something",
+        scientific: {
+          species: "rasbora",
+        },
       },
       count: 85812,
     },
@@ -39,6 +42,9 @@ describe("EcosystemInfo", () => {
         id: "test2",
         name: "July corydoras",
         description: "To the bottom we go",
+        scientific: {
+          species: "July corydoras",
+        },
       },
       count: 51233,
     },
@@ -48,6 +54,10 @@ describe("EcosystemInfo", () => {
       plant: {
         id: "test1",
         name: "Anubias",
+        description: "Test desc 1",
+        scientific: {
+          species: "Anubias species",
+        },
       },
       count: 16612621,
     },
@@ -55,6 +65,10 @@ describe("EcosystemInfo", () => {
       plant: {
         id: "test2",
         name: "Valisneria",
+        description: "Test desc 2",
+        scientific: {
+          species: "Valisneria species",
+        },
       },
       count: 96126091824,
     },

@@ -16,6 +16,9 @@ const options = [
       id: "test1",
       name: "Option 1",
       description: "Desc 1",
+      scientific: {
+        species: "Species 1",
+      },
     },
   },
   {
@@ -23,6 +26,9 @@ const options = [
       id: "test2",
       name: "Option 2",
       description: "Desc 2",
+      scientific: {
+        species: "Species 2",
+      },
     },
   },
   {
@@ -30,6 +36,9 @@ const options = [
       id: "test3",
       name: "Option 3",
       description: "Desc 3",
+      scientific: {
+        species: "Species 3",
+      },
     },
   },
 ];

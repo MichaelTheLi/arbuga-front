@@ -47,6 +47,7 @@ export interface AquariumFish {
 export interface Fish {
   id: string;
   name: string;
+  scientific: Scientific;
   description: string;
 }
 
@@ -62,6 +63,12 @@ export interface AquariumPlant {
 export interface Plant {
   id: string;
   name: string;
+  scientific: Scientific;
+  description: string;
+}
+
+export interface Scientific {
+  species: string;
 }
 
 export interface PlantOption {

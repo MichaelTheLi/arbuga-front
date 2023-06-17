@@ -35,6 +35,9 @@ export const EcosystemFragment = gql(/* GraphQL */ `
       fish {
         id
         name
+        scientific {
+          species
+        }
         description
       }
       count
@@ -43,6 +46,9 @@ export const EcosystemFragment = gql(/* GraphQL */ `
       plant {
         id
         name
+        scientific {
+          species
+        }
         description
       }
       count
@@ -97,6 +103,9 @@ export const SEARCH_FISH = gql(/* GraphQL */ `
         node {
           id
           name
+          scientific {
+            species
+          }
           description
         }
       }
@@ -118,6 +127,9 @@ export const SEARCH_PLANT = gql(/* GraphQL */ `
         node {
           id
           name
+          scientific {
+            species
+          }
           description
         }
       }
@@ -386,13 +398,16 @@ export const useFishSearch = (input: Ref<string>, debounce: number) => {
         return edge.node;
       })
       .map(({ node }): FishOption => {
+        if (!node) {
+          // @ts-ignore
+          return null;
+        }
+
         return {
           fish: {
-            // @ts-ignore
             id: node.id,
-            // @ts-ignore
             name: node.name,
-            // @ts-ignore
+            scientific: node.scientific,
             description: node.description,
           },
         };
@@ -450,13 +465,15 @@ export const usePlantSearch = (input: Ref<string>, debounce: number) => {
         return edge.node;
       })
       .map(({ node }): PlantOption => {
+        if (!node) {
+          // @ts-ignore
+          return null;
+        }
         return {
           plant: {
-            // @ts-ignore
             id: node.id,
-            // @ts-ignore
             name: node.name,
-            // @ts-ignore
+            scientific: node.scientific,
             description: node.description,
           },
         };

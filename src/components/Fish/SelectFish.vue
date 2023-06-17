@@ -45,8 +45,8 @@ watch(options, (newOptions) => {
     return {
       id: option.fish.id,
       title: option.fish.name,
-      shortDescription: "temp",
-      description: "temp long",
+      shortDescription: option.fish.scientific.species,
+      description: option.fish.description,
       status: "compatible",
     };
   });

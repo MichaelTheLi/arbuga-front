@@ -15,6 +15,9 @@ describe("FishList", () => {
         id: faker.datatype.uuid(),
         name: faker.random.words(2),
         description: faker.random.words(10),
+        scientific: {
+          species: faker.random.words(2),
+        },
       },
       count: faker.datatype.number({ min: 1, max: 100 }),
     };

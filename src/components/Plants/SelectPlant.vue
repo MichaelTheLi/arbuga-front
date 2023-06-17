@@ -45,8 +45,8 @@ watch(options, (newOptions) => {
     return {
       id: option.plant.id,
       title: option.plant.name,
-      shortDescription: "temp",
-      description: "temp long",
+      shortDescription: option.plant.scientific.species,
+      description: option.plant.description,
       status: "compatible",
     };
   });
