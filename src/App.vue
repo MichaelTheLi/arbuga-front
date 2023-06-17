@@ -6,6 +6,7 @@ import {
   QAvatar,
   QBtn,
   QDrawer,
+  QFooter,
   QHeader,
   QLayout,
   QPageContainer,
@@ -15,6 +16,7 @@ import {
 } from "quasar";
 import { fetchUser } from "@/gateway/gateway";
 import AccountMenu from "@/components/Account/AccountMenu.vue";
+import CopyrightComponent from "@/components/CopyrightComponent.vue";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
@@ -38,7 +40,7 @@ fetchUser();
 </script>
 
 <template>
-  <q-layout view="lhh LpR fFf">
+  <q-layout view="lhh LpR lfr">
     <q-header class="bg-primary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat round icon="list" @click="toggleLeftDrawer" />
@@ -79,6 +81,10 @@ fetchUser();
     <q-page-container>
       <RouterView />
     </q-page-container>
+
+    <q-footer class="bg-transparent text-white flex flex-center">
+      <copyright-component />
+    </q-footer>
   </q-layout>
 </template>
 
