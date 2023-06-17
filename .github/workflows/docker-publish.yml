@@ -68,8 +68,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          build-args:
-            VITE_BACKEND_URL: http://${{ vars.MAIN_HOST }}:8080/query
           load: true
           target: tester
           tags: arbuga/tests:latest
@@ -92,6 +90,8 @@ jobs:
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
           context: .
+          build-args: |
+            VITE_BACKEND_URL:http://${{ vars.MAIN_HOST }}:8080/query
           push: true
           target: runner
           tags: ${{ steps.meta.outputs.tags }}
