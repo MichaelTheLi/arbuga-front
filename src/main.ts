@@ -16,7 +16,7 @@ import { apolloClient } from "@/gateway/client_apollo";
 import { i18nMessages } from "./config";
 
 const i18n = createI18n({
-  legacy: true,
+  legacy: false,
   locale: navigator.language,
   fallbackLocale: "en-US",
   formatFallbackMessages: true,
@@ -52,7 +52,7 @@ app.use(Quasar, {
       warning: "#F2C037",
     },
   },
-  plugins: {},
+  plugins: ["Meta"],
 });
 
 app.mount("#app");

@@ -1,6 +1,6 @@
 <template>
   <div class="copyright text-blue-grey-13 q-pa-lg">
-    © 2023–{{ currentYear }}, Werel
+    {{ $t("project.name") }} © 2023–{{ currentYear }}
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 export const i18nMessages = {
   "en-US": {
     project: {
-      name: "Arbuga",
+      name: "Werel",
     },
     account: {
       greeting: "Hello, {name}",
@@ -70,7 +70,7 @@ export const i18nMessages = {
   },
   "ru-RU": {
     project: {
-      name: "Arbuga",
+      name: "Werel",
     },
     account: {
       greeting: "Здравствуйте, {name}",

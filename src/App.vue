@@ -13,10 +13,12 @@ import {
   QSpace,
   QToolbar,
   QToolbarTitle,
+  useMeta,
 } from "quasar";
 import { fetchUser } from "@/gateway/gateway";
 import AccountMenu from "@/components/Account/AccountMenu.vue";
 import CopyrightComponent from "@/components/CopyrightComponent.vue";
+import { useI18n } from "vue-i18n";
 
 const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
@@ -37,6 +39,24 @@ const onTitleClick = () => {
 // router.
 
 fetchUser();
+
+const i18n = useI18n();
+const projectName = i18n.t("project.name");
+useMeta({
+  title: projectName,
+  titleTemplate: (title) => `${title} Home`,
+
+  meta: {
+    description: {
+      name: "description",
+      content: "Home page of " + projectName,
+    },
+    equiv: {
+      "http-equiv": "Content-Type",
+      content: "text/html; charset=UTF-8",
+    },
+  },
+});
 </script>
 
 <template>
