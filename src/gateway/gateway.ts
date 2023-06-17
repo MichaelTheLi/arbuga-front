@@ -205,9 +205,57 @@ export const ADD_FISH = gql(/* GraphQL */ `
 `);
 
 // noinspection GraphQLUnresolvedReference
+export const UPDATE_FISH = gql(/* GraphQL */ `
+  mutation updateFish($ecosystemId: ID!, $fishId: ID!, $count: Int!) {
+    updateFishInEcosystem(
+      ecosystemId: $ecosystemId
+      fishId: $fishId
+      count: $count
+    ) {
+      ecosystem {
+        id
+
+        fish {
+          fish {
+            id
+            name
+            description
+          }
+          count
+        }
+      }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
 export const ADD_PLANT = gql(/* GraphQL */ `
   mutation AddPlant($ecosystemId: ID!, $plantId: ID!) {
     addPlantToEcosystem(ecosystemId: $ecosystemId, plantId: $plantId) {
+      ecosystem {
+        id
+
+        plants {
+          plant {
+            id
+            name
+            description
+          }
+          count
+        }
+      }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const UPDATE_PLANT = gql(/* GraphQL */ `
+  mutation UpdatePlant($ecosystemId: ID!, $plantId: ID!, $count: Int!) {
+    updatePlantInEcosystem(
+      ecosystemId: $ecosystemId
+      plantId: $plantId
+      count: $count
+    ) {
       ecosystem {
         id
 
@@ -537,6 +585,18 @@ export const useAddPlant = () => {
   const { mutate: addPlant } = useMutation(ADD_PLANT);
 
   return { addPlant };
+};
+
+export const useUpdateFish = () => {
+  const { mutate: updateFish } = useMutation(UPDATE_FISH);
+
+  return { updateFish };
+};
+
+export const useUpdatePlant = () => {
+  const { mutate: updatePlant } = useMutation(UPDATE_PLANT);
+
+  return { updatePlant };
 };
 
 export const useLoginUser = () => {

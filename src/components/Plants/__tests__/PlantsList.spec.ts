@@ -51,6 +51,37 @@ describe("PlantsList", () => {
     const { wrapper } = buildComponent([stubPlant]);
 
     expect(wrapper.text()).toContain(stubPlant.plant.name);
-    expect(wrapper.text()).toContain(stubPlant.count);
+    const data = wrapper.get('[data-testid="plant-count-input"]');
+    // @ts-ignore
+    const realValue = data.element.value;
+    expect(realValue).toEqual(stubPlant.count.toString());
+  });
+
+  it("emits remove event with plant on remove click", async () => {
+    const stubPlant = buildStubPlant();
+    const { wrapper } = buildComponent([stubPlant]);
+
+    await wrapper.get('[data-testid="plant-remove-button"]').trigger("click");
+
+    expect(wrapper.emitted()).toHaveProperty("remove");
+    const removeEvent = wrapper.emitted("remove");
+    expect(removeEvent).toHaveLength(1);
+    if (removeEvent) {
+      expect(removeEvent[0]).toEqual([stubPlant]);
+    }
+  });
+
+  it("emits update event with plant and count on update click", async () => {
+    const stubPlant = buildStubPlant();
+    const { wrapper } = buildComponent([stubPlant]);
+
+    await wrapper.get('[data-testid="plant-count-input"]').setValue(312);
+
+    expect(wrapper.emitted()).toHaveProperty("updateCount");
+    const updateEvent = wrapper.emitted("updateCount");
+    expect(updateEvent).toHaveLength(1);
+    if (updateEvent) {
+      expect(updateEvent[0]).toEqual([stubPlant, 312]);
+    }
   });
 });

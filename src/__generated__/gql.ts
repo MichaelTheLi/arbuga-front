@@ -22,7 +22,9 @@ const documents = {
     "\n  mutation SAVE_ECOSYSTEM($id: ID, $ecosystem: EcosystemInput!) {\n    saveEcosystem(id: $id, ecosystem: $ecosystem) {\n      ecosystem {\n        ...FullEcosystem\n      }\n      success\n      error\n    }\n  }\n": types.Save_EcosystemDocument,
     "\n  mutation REMOVE_ECOSYSTEM($id: ID!) {\n    removeEcosystem(id: $id)\n  }\n": types.Remove_EcosystemDocument,
     "\n  mutation AddFish($ecosystemId: ID!, $fishId: ID!) {\n    addFishToEcosystem(ecosystemId: $ecosystemId, fishId: $fishId) {\n      ecosystem {\n        id\n\n        fish {\n          fish {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n": types.AddFishDocument,
+    "\n  mutation updateFish($ecosystemId: ID!, $fishId: ID!, $count: Int!) {\n    updateFishInEcosystem(\n      ecosystemId: $ecosystemId\n      fishId: $fishId\n      count: $count\n    ) {\n      ecosystem {\n        id\n\n        fish {\n          fish {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n": types.UpdateFishDocument,
     "\n  mutation AddPlant($ecosystemId: ID!, $plantId: ID!) {\n    addPlantToEcosystem(ecosystemId: $ecosystemId, plantId: $plantId) {\n      ecosystem {\n        id\n\n        plants {\n          plant {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n": types.AddPlantDocument,
+    "\n  mutation UpdatePlant($ecosystemId: ID!, $plantId: ID!, $count: Int!) {\n    updatePlantInEcosystem(\n      ecosystemId: $ecosystemId\n      plantId: $plantId\n      count: $count\n    ) {\n      ecosystem {\n        id\n\n        plants {\n          plant {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n": types.UpdatePlantDocument,
 };
 
 /**
@@ -78,7 +80,15 @@ export function gql(source: "\n  mutation AddFish($ecosystemId: ID!, $fishId: ID
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  mutation updateFish($ecosystemId: ID!, $fishId: ID!, $count: Int!) {\n    updateFishInEcosystem(\n      ecosystemId: $ecosystemId\n      fishId: $fishId\n      count: $count\n    ) {\n      ecosystem {\n        id\n\n        fish {\n          fish {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation updateFish($ecosystemId: ID!, $fishId: ID!, $count: Int!) {\n    updateFishInEcosystem(\n      ecosystemId: $ecosystemId\n      fishId: $fishId\n      count: $count\n    ) {\n      ecosystem {\n        id\n\n        fish {\n          fish {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  mutation AddPlant($ecosystemId: ID!, $plantId: ID!) {\n    addPlantToEcosystem(ecosystemId: $ecosystemId, plantId: $plantId) {\n      ecosystem {\n        id\n\n        plants {\n          plant {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation AddPlant($ecosystemId: ID!, $plantId: ID!) {\n    addPlantToEcosystem(ecosystemId: $ecosystemId, plantId: $plantId) {\n      ecosystem {\n        id\n\n        plants {\n          plant {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation UpdatePlant($ecosystemId: ID!, $plantId: ID!, $count: Int!) {\n    updatePlantInEcosystem(\n      ecosystemId: $ecosystemId\n      plantId: $plantId\n      count: $count\n    ) {\n      ecosystem {\n        id\n\n        plants {\n          plant {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation UpdatePlant($ecosystemId: ID!, $plantId: ID!, $count: Int!) {\n    updatePlantInEcosystem(\n      ecosystemId: $ecosystemId\n      plantId: $plantId\n      count: $count\n    ) {\n      ecosystem {\n        id\n\n        plants {\n          plant {\n            id\n            name\n            description\n          }\n          count\n        }\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

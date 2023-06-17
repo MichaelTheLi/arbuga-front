@@ -45,6 +45,37 @@ describe("FishList", () => {
     const { wrapper } = buildComponent([stubFish]);
 
     expect(wrapper.text()).toContain(stubFish.fish.name);
-    expect(wrapper.text()).toContain(stubFish.count);
+    const data = wrapper.get('[data-testid="fish-count-input"]');
+    // @ts-ignore
+    const realValue = data.element.value;
+    expect(realValue).toEqual(stubFish.count.toString());
+  });
+
+  it("emits remove event with fish on remove click", async () => {
+    const stubFish = buildStubFish();
+    const { wrapper } = buildComponent([stubFish]);
+
+    await wrapper.get('[data-testid="fish-remove-button"]').trigger("click");
+
+    expect(wrapper.emitted()).toHaveProperty("remove");
+    const removeEvent = wrapper.emitted("remove");
+    expect(removeEvent).toHaveLength(1);
+    if (removeEvent) {
+      expect(removeEvent[0]).toEqual([stubFish]);
+    }
+  });
+
+  it("emits update event with fish and count on update click", async () => {
+    const stubFish = buildStubFish();
+    const { wrapper } = buildComponent([stubFish]);
+
+    await wrapper.get('[data-testid="fish-count-input"]').setValue(312);
+
+    expect(wrapper.emitted()).toHaveProperty("updateCount");
+    const updateEvent = wrapper.emitted("updateCount");
+    expect(updateEvent).toHaveLength(1);
+    if (updateEvent) {
+      expect(updateEvent[0]).toEqual([stubFish, 312]);
+    }
   });
 });
