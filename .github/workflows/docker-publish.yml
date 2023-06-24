@@ -91,7 +91,7 @@ jobs:
         with:
           context: .
           build-args: |
-            VITE_BACKEND_URL=http://${{ vars.MAIN_HOST }}:8080/query
+            VITE_BACKEND_URL=${{ vars.API_URL }}
           push: true
           target: runner
           tags: ${{ steps.meta.outputs.tags }}
