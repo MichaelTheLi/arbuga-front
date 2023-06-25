@@ -9,6 +9,7 @@ import {
 } from "@/stores/ecosystems";
 import { useUserStore } from "@/stores/user";
 import type { UserQueryQuery } from "@/__generated__/graphql";
+import { useApolloClient } from "@vue/apollo-composable";
 
 export const EcosystemFragment = gql(/* GraphQL */ `
   fragment FullEcosystem on Ecosystem {
@@ -381,13 +382,25 @@ export const fetchUser = () => {
     }
   );
 
+  const ecosystemsStore = useEcosystemsStore();
+  const userStore = useUserStore();
+
+  const clearStores = () => {
+    ecosystemsStore.list = [];
+    ecosystemsStore.current = null;
+    userStore.user = null;
+  };
   watch(result, (queryResult: Ref<UserQueryQuery | undefined>) => {
     if (queryResult) {
       const queryResultRaw = unref(queryResult);
       if (queryResultRaw && queryResultRaw.me) {
         propagateEcosystems(queryResultRaw.me);
         propagateUser(queryResultRaw.me);
+      } else {
+        clearStores();
       }
+    } else {
+      clearStores();
     }
   });
 
@@ -645,6 +658,19 @@ export const useLoginUser = () => {
 
   return {
     execute: result.mutate,
+  };
+};
+
+export const useLogoutUser = () => {
+  const { resolveClient } = useApolloClient();
+
+  return {
+    execute: () => {
+      localStorage.removeItem("token");
+      const client = resolveClient();
+      // noinspection JSIgnoredPromiseFromCall
+      client.resetStore();
+    },
   };
 };
 
