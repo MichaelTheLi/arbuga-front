@@ -615,25 +615,33 @@ export const useRemoveEcosystem = () => {
 };
 
 export const useAddFish = () => {
-  const { mutate: addFish } = useMutation(ADD_FISH);
+  const { mutate: addFish } = useMutation(ADD_FISH, {
+    refetchQueries: [{ query: LOAD_USER }],
+  });
 
   return { addFish };
 };
 
 export const useAddPlant = () => {
-  const { mutate: addPlant } = useMutation(ADD_PLANT);
+  const { mutate: addPlant } = useMutation(ADD_PLANT, {
+    refetchQueries: [{ query: LOAD_USER }],
+  });
 
   return { addPlant };
 };
 
 export const useUpdateFish = () => {
-  const { mutate: updateFish } = useMutation(UPDATE_FISH);
+  const { mutate: updateFish } = useMutation(UPDATE_FISH, {
+    refetchQueries: [{ query: LOAD_USER }],
+  });
 
   return { updateFish };
 };
 
 export const useUpdatePlant = () => {
-  const { mutate: updatePlant } = useMutation(UPDATE_PLANT);
+  const { mutate: updatePlant } = useMutation(UPDATE_PLANT, {
+    refetchQueries: [{ query: LOAD_USER }],
+  });
 
   return { updatePlant };
 };
