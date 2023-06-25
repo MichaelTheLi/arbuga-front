@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { RouterView, useRouter } from "vue-router";
 import EcosystemsManagement from "./components/EcosystemsManagement/EcosystemsManagement.vue";
 import {
@@ -19,24 +18,29 @@ import { fetchUser } from "@/gateway/gateway";
 import AccountMenu from "@/components/Account/AccountMenu.vue";
 import CopyrightComponent from "@/components/CopyrightComponent.vue";
 import { useI18n } from "vue-i18n";
+import { useDrawersStore } from "@/stores/drawers";
 
-const leftDrawerOpen = ref(false);
-const rightDrawerOpen = ref(false);
+const drawers = useDrawersStore();
 const router = useRouter();
 
 const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+  drawers.left = !drawers.left;
 };
 
 const toggleRightDrawer = () => {
-  rightDrawerOpen.value = !rightDrawerOpen.value;
+  drawers.right = !drawers.right;
 };
+
+const rightDrawerNames = ["home", "add_fish", "add_plants"];
+router.afterEach((to) => {
+  if (to.name && rightDrawerNames.includes(String(to.name))) {
+    drawers.right = true;
+  }
+});
+
 const onTitleClick = () => {
   router.push("/");
 };
-
-// TODO Open right drawer on routes what needs it. Remove manual open?
-// router.
 
 fetchUser();
 
@@ -81,7 +85,7 @@ useMeta({
     <q-drawer
       bordered
       show-if-above
-      v-model="leftDrawerOpen"
+      v-model="drawers.left"
       side="left"
       :width="250"
     >
@@ -90,7 +94,7 @@ useMeta({
 
     <q-drawer
       show-if-above
-      v-model="rightDrawerOpen"
+      v-model="drawers.right"
       side="right"
       class="q-pa-sm right-drawer"
       :width="400"
