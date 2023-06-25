@@ -33,6 +33,10 @@ const toggleRightDrawer = () => {
 
 const rightDrawerNames = ["home", "add_fish", "add_plants"];
 router.afterEach((to) => {
+  // TODO Implement via plugin
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  ym(93933841, "hit", to.path);
   if (to.name && rightDrawerNames.includes(String(to.name))) {
     drawers.right = true;
   }
