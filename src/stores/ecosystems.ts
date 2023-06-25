@@ -91,6 +91,7 @@ export interface EcosystemAnalysisMessage {
 export interface EcosystemState {
   list: Ref<UnwrapRef<Ecosystem>[]>;
   createNew: (nameProvided?: string) => Ecosystem;
+  lastKnownCurrentId: string | null;
   current: Ref<UnwrapRef<Ecosystem> | null>;
   changeCurrent: (
     newCurrent:
@@ -182,6 +183,7 @@ export const useEcosystemsStore = defineStore(
         | null
     ) => {
       current.value = unref(newCurrent as Ref<UnwrapRef<Ecosystem>>);
+      localStorage.setItem("lastKnownEcosystemId", current.value.id);
     };
 
     const { execute: _executeSaveEcosystem } = useSaveEcosystem();
@@ -261,6 +263,7 @@ export const useEcosystemsStore = defineStore(
       list,
       createNew,
       current,
+      lastKnownCurrentId: localStorage.getItem("lastKnownEcosystemId"),
       changeCurrent,
       addNew,
     };

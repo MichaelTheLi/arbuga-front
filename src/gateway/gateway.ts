@@ -346,13 +346,22 @@ export const propagateEcosystems = (me: UserQueryQuery["me"]) => {
       }
 
       if (!store.current) {
-        store.changeCurrent(ecosystem);
+        if (
+          !store.lastKnownCurrentId ||
+          store.lastKnownCurrentId === ecosystem.id
+        ) {
+          store.changeCurrent(ecosystem);
+        }
       } else if (ecosystem.id == store.current.id) {
         store.changeCurrent(ecosystem);
       }
 
       store.addNew(ecosystem);
     });
+
+    if (!store.current && store.list[0]) {
+      store.changeCurrent(store.list[0]);
+    }
   }
 };
 
