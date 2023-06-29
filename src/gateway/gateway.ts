@@ -24,10 +24,17 @@ export const EcosystemFragment = gql(/* GraphQL */ `
     }
     analysis {
       name
+      serviceName
       description
       status
       messages {
         name
+        serviceName
+        parameters {
+          name
+          value
+          type
+        }
         description
         status
       }

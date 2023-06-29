@@ -3,9 +3,9 @@ import { createI18n } from "vue-i18n";
 import { i18nMessages } from "../../config";
 
 const i18n = createI18n({
-  legacy: true,
+  legacy: false,
   locale: "en-US",
-  formatFallbackMessages: true,
+  formatFallbackMessages: false,
   messages: i18nMessages,
 });
 

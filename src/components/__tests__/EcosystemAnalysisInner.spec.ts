@@ -9,43 +9,62 @@ installQuasar();
 describe("EcosystemAnalysis", () => {
   const list = [
     {
-      id: "test1",
-      name: "First name",
-      description: "First description",
+      serviceName: "temperature",
       status: "ok",
       messages: [
         {
-          id: "test11",
-          name: "First message",
-          description: "First message description",
+          serviceName: "temperature",
+          parameters: [
+            {
+              name: "min",
+              value: "11.11",
+              type: "float",
+            },
+            {
+              name: "max",
+              value: "99.99",
+              type: "float",
+            },
+            {
+              name: "current_value",
+              value: "55.55",
+              type: "float",
+            },
+          ],
           status: "ok",
         },
       ],
     },
     {
-      id: "test2",
-      name: "Another name",
-      description: "Another description",
+      serviceName: "equipment",
       status: "moderate",
       messages: [
         {
-          id: "test21",
-          name: "Another message",
-          description: "Another message description",
+          serviceName: "filtration_suboptimal",
+          parameters: [
+            {
+              name: "ideal_power",
+              value: "123",
+              type: "int",
+            },
+          ],
           status: "moderate",
         },
         {
-          id: "test22",
-          name: "Yet another name",
-          description: "Yet another description",
+          serviceName: "heating_low",
+          parameters: [
+            {
+              name: "ideal_power",
+              value: "123",
+              type: "int",
+            },
+          ],
           status: "bad",
         },
       ],
     },
     {
-      id: "test3",
-      name: "Is it even a name",
-      description: "Not really",
+      serviceName: "fish_count",
       status: "bad",
       messages: [],
     },
@@ -72,25 +91,32 @@ describe("EcosystemAnalysis", () => {
       props: { analysis: list },
     });
     const firstCategory = wrapper.find('[data-testid="analysis-category"]');
-    expect(firstCategory.text()).toContain(list[0].name);
+    expect(firstCategory.text()).toContain("temperature");
     expect(
       firstCategory.find('[data-testid="analysis-category-status"]').html()
     ).toContain("text-teal-7");
+  });
+
+  it("renders moderate category properly", () => {
+    const wrapper = mount(EcosystemAnalysisInner, {
+      props: { analysis: list },
+    });
+    const category = wrapper.findAll('[data-testid="analysis-category"]')[1];
+    expect(category.text()).toContain("Equipment");
+    const statusEl = category.find('[data-testid="analysis-category-status"]');
+    expect(statusEl.text()).toContain("moderate");
+    expect(statusEl.html()).toContain("text-amber-7");
   });
 
   it("renders bad category properly", () => {
     const wrapper = mount(EcosystemAnalysisInner, {
       props: { analysis: list },
     });
-    const firstCategory = wrapper.findAll(
-      '[data-testid="analysis-category"]'
-    )[1];
-    expect(firstCategory.text()).toContain(list[1].name);
-    const statusEl = firstCategory.find(
-      '[data-testid="analysis-category-status"]'
-    );
-    expect(statusEl.text()).toContain(list[1].status);
-    expect(statusEl.html()).toContain("text-amber-7");
+    const category = wrapper.findAll('[data-testid="analysis-category"]')[2];
+    expect(category.text()).toContain("Fish count");
+    const statusEl = category.find('[data-testid="analysis-category-status"]');
+    expect(statusEl.text()).toContain("bad");
+    expect(statusEl.html()).toContain("text-red-7");
   });
 
   it("renders all messages", () => {
@@ -113,12 +139,29 @@ describe("EcosystemAnalysis", () => {
     const category = wrapper.find('[data-testid="analysis-category"]');
     const okMessage = category.find('[data-testid="analysis-message"]');
 
-    expect(okMessage.text()).toContain(list[0].messages[0].name);
-    expect(okMessage.text()).toContain(list[0].messages[0].description);
+    expect(okMessage.text()).toContain("temperature");
+    expect(okMessage.text()).toContain("55.55");
+    expect(okMessage.text()).toContain("11.11");
+    expect(okMessage.text()).toContain("99.99");
 
     const icon = okMessage.find('[data-testid="message-icon"]');
     expect(icon.text()).toContain("check");
     expect(icon.html()).toContain("teal-7");
+  });
+
+  it("renders moderate message correctly", () => {
+    const wrapper = mount(EcosystemAnalysisInner, {
+      props: { analysis: list },
+    });
+    const category = wrapper.findAll('[data-testid="analysis-category"]')[1];
+    const warningMessage = category.find('[data-testid="analysis-message"]');
+
+    expect(warningMessage.text()).toContain("Filtration");
+    expect(warningMessage.text()).toContain("123");
+
+    const icon = warningMessage.find('[data-testid="message-icon"]');
+    expect(icon.text()).toContain("warning");
+    expect(icon.html()).toContain("amber-7");
   });
 
   it("renders bad message correctly", () => {
@@ -126,12 +169,13 @@ describe("EcosystemAnalysis", () => {
       props: { analysis: list },
     });
     const category = wrapper.findAll('[data-testid="analysis-category"]')[1];
-    const warningMessage = category.find('[data-testid="analysis-message"]');
+    const badMessage = category.findAll('[data-testid="analysis-message"]')[1];
 
-    expect(warningMessage.text()).toContain(list[1].messages[0].name);
-    expect(warningMessage.text()).toContain(list[1].messages[0].description);
+    expect(badMessage.text()).toContain("Heating");
+    expect(badMessage.text()).toContain("123");
 
-    const icon = warningMessage.find('[data-testid="message-icon"]');
-    expect(icon.text()).toContain("warning");
+    const icon = badMessage.find('[data-testid="message-icon"]');
+    expect(icon.text()).toContain("error");
+    expect(icon.html()).toContain("red-7");
   });
 });

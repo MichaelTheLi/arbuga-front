@@ -64,6 +64,128 @@ export const i18nMessages = {
         not_available: "Not enough data for the analysis",
         your_progress: "Your progress",
         show_analysis: "Show analysis",
+        category: {
+          equipment: {
+            name: "Equipment",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+            filtration_suboptimal: {
+              name: "Filtration can be better",
+              description:
+                "Ideal filters power is {ideal_power} @:ecosystem.fields.filter_flow_suffix",
+            },
+            filtration_low: {
+              name: "Filtration critically low",
+              description:
+                "Ideal filters power is {ideal_power} @:ecosystem.fields.filter_flow_suffix",
+            },
+            heating_suboptimal: {
+              name: "Heating can be better",
+              description:
+                "Ideal heater power is {ideal_power} @:ecosystem.fields.heater_suffix",
+            },
+            heating_low: {
+              name: "Heating critically low",
+              description:
+                "Ideal heater power is {ideal_power} @:ecosystem.fields.heater_suffix",
+            },
+          },
+          temperature: {
+            name: "Water temperature",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+            temperature: {
+              name: "{modifier} temperature for {animal_species}",
+              description:
+                "Optimal range for {animal_species} is {min}℃ - {max}℃, yours is {current_value}℃",
+            },
+            critically_low: "Low",
+            low: "A little low",
+            high: "A little high",
+            critically_high: "High",
+          },
+          chemical_params: {
+            name: "Chemical water parameters",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+            ph: {
+              name: "{modifier} PH for {animal_species}",
+              description:
+                "Optimal range for {animal_species} is {min} - {max}, yours is {current_value}",
+            },
+            gh: {
+              name: "{modifier} GH for {animal_species}",
+              description:
+                "Optimal range for {animal_species} is {min} - {max}, yours is {current_value}",
+            },
+            kh: {
+              name: "{modifier} KH for {animal_species}",
+              description:
+                "Optimal range for {animal_species} is {min} - {max}, yours is {current_value}",
+            },
+            critically_low: "Low",
+            low: "A little low",
+            high: "A little high",
+            critically_high: "High",
+          },
+          fish_count: {
+            name: "Fish count",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+          },
+          fish_size_compatibility: {
+            name: "Fish size compatibility",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+          },
+          plant_size_compatibility: {
+            name: "Plants size compatibility",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+          },
+          fish_compatibility: {
+            name: "Fish compatibility",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+          },
+          plants_compatibility: {
+            name: "Plants compatibility",
+            status: {
+              ok: "ok",
+              moderate: "moderate",
+              bad: "bad",
+              skipped: "skipped",
+            },
+          },
+        },
       },
     },
     fish: {
@@ -144,6 +266,128 @@ export const i18nMessages = {
         not_available: "Недостаточно данных для анализа",
         your_progress: "Ваш прогресс",
         show_analysis: "Показать результаты анализа",
+        category: {
+          equipment: {
+            name: "Оборудование",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+            filtration_suboptimal: {
+              name: "Фильтрации может быть недостаточно",
+              description:
+                "Идеальная мощность фильтра - {ideal_power} @:ecosystem.fields.filter_flow_suffix",
+            },
+            filtration_low: {
+              name: "Фильтрация слишком слабая",
+              description:
+                "Идеальная мощность фильтра - {ideal_power} @:ecosystem.fields.filter_flow_suffix",
+            },
+            heating_suboptimal: {
+              name: "Нагреватель может быть недостаточен",
+              description:
+                "Идеальная мощность нагревателя - {ideal_power} @:ecosystem.fields.heater_suffix",
+            },
+            heating_low: {
+              name: "Нагреватель слишком слабый",
+              description:
+                "Идеальная мощность нагревателя - {ideal_power} @:ecosystem.fields.heater_suffix",
+            },
+          },
+          temperature: {
+            name: "Температура воды",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+            temperature: {
+              name: "{modifier} температура для {animal_species}",
+              description:
+                "Оптимальный диапазон для {animal_species}: {min}℃ - {max}℃, ваша: {current_value}℃",
+            },
+            critically_low: "Очень низкая",
+            low: "Низкая",
+            high: "Высокая",
+            critically_high: "Очень высокая",
+          },
+          chemical_params: {
+            name: "Химические параметрый воды",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+            ph: {
+              name: "{modifier} PH для {animal_species}",
+              description:
+                "Оптимальный диапазон для {animal_species}: {min} - {max}, ваш: {current_value}",
+            },
+            gh: {
+              name: "{modifier} GH для {animal_species}",
+              description:
+                "Оптимальный диапазон для {animal_species}: {min} - {max}, ваш: {current_value}",
+            },
+            kh: {
+              name: "{modifier} KH для {animal_species}",
+              description:
+                "Оптимальный диапазон для {animal_species}: {min} - {max}, ваш: {current_value}",
+            },
+            critically_low: "Очень низкий",
+            low: "низкий",
+            high: "Высокий",
+            critically_high: "Очень высокий",
+          },
+          fish_count: {
+            name: "Количество рыбок",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+          },
+          fish_size_compatibility: {
+            name: "Совместимость рыбок с аквариумом",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+          },
+          plant_size_compatibility: {
+            name: "Совместимость растений с аквариумом",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+          },
+          fish_compatibility: {
+            name: "Совместимость рыбок друг с другом",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+          },
+          plants_compatibility: {
+            name: "Совместимость растений друг с другом",
+            status: {
+              ok: "отлично",
+              moderate: "средне",
+              bad: "плохо",
+              skipped: "пропущено",
+            },
+          },
+        },
       },
     },
     fish: {
