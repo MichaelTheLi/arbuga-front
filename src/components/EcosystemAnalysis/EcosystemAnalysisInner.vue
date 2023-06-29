@@ -12,7 +12,7 @@
       />
     </div>
     <div
-      v-for="(category, index) of preparedAnalysis"
+      v-for="(category, index) of props.analysis"
       :key="category.serviceName"
       data-testid="analysis-category"
     >
@@ -67,11 +67,10 @@ import {
   QSeparator,
 } from "quasar";
 import { computed } from "vue";
-import type { EcosystemAnalysis } from "@/stores/ecosystems";
-import { useI18n } from "vue-i18n";
+import type { EcosystemConvertedAnalysis } from "@/stores/ecosystems";
 
 const props = defineProps<{
-  analysis: EcosystemAnalysis[];
+  analysis: EcosystemConvertedAnalysis[];
 }>();
 
 const progress = computed(() => {
@@ -80,54 +79,6 @@ const progress = computed(() => {
   ).length;
   const total = props.analysis.length;
   return valid / total;
-});
-
-const i18n = useI18n();
-const preparedAnalysis = props.analysis.map((category) => {
-  let messages: any[];
-  messages = [];
-
-  const i18nKey = "ecosystem.analysis.category." + category.serviceName;
-
-  if (category.messages) {
-    messages = category.messages.map((message) => {
-      const i18nMessageKey = i18nKey + "." + message.serviceName;
-      let parameters: any = {};
-
-      message.parameters.forEach((param) => {
-        parameters[param.name] = param.value;
-      });
-
-      if (parameters["current_value"] < parameters["min"]) {
-        parameters["modifier"] = i18n.t(i18nKey + ".low");
-        if (parameters["current_value"] < parameters["bad_min"]) {
-          parameters["modifier"] = i18n.t(i18nKey + ".critically_low");
-        }
-      }
-
-      if (parameters["current_value"] > parameters["max"]) {
-        parameters["modifier"] = i18n.t(i18nKey + ".high");
-        if (parameters["current_value"] > parameters["bad_max"]) {
-          parameters["modifier"] = i18n.t(i18nKey + ".critically_high");
-        }
-      }
-      return {
-        serviceName: message.serviceName,
-        status: message.status,
-        statusName: i18n.t(i18nKey + ".status." + message.status),
-        name: i18n.t(i18nMessageKey + ".name", parameters),
-        description: i18n.t(i18nMessageKey + ".description", parameters),
-      };
-    });
-  }
-
-  return {
-    serviceName: category.serviceName,
-    status: category.status,
-    statusName: i18n.t(i18nKey + ".status." + category.status),
-    name: i18n.t(i18nKey + ".name"),
-    messages: messages,
-  };
 });
 
 const statusToColor = (status: string) => {

@@ -75,19 +75,32 @@ export interface PlantOption {
   plant: Plant;
 }
 
-export interface EcosystemAnalysis {
+export interface EcosystemConvertedAnalysis {
   name: string;
   serviceName: string;
   description: string;
   status: string /* enum actually */;
-  messages: EcosystemAnalysisMessage[] | [] | null | undefined;
+  statusName: string;
+  messages: EcosystemAnalysisConvertedMessage[] | null | undefined;
+}
+
+export interface EcosystemAnalysisConvertedMessage {
+  name: string;
+  serviceName: string;
+  description: string;
+  status: string /* enum actually */;
+  statusName: string;
+}
+
+export interface EcosystemAnalysis {
+  serviceName: string;
+  status: string /* enum actually */;
+  messages: EcosystemAnalysisMessage[] | null | undefined;
 }
 
 export interface EcosystemAnalysisMessage {
-  name: string;
   serviceName: string;
   parameters: EcosystemAnalysisMessageParameter[];
-  description: string;
   status: string /* enum actually */;
 }
 
