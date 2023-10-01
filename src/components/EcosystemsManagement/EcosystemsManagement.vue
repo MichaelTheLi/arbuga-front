@@ -12,7 +12,7 @@ const onCreated = () => {
   const newEcosystem = store.createNew("");
   store.addNew(newEcosystem);
 
-  router.push("/");
+  router.push("/ecosystem/");
   store.changeCurrent(newEcosystem);
 };
 </script>

@@ -46,7 +46,7 @@ const { list } = storeToRefs(store);
 
 const onEcosystemSelect = (ecosystem: UnwrapRef<Ecosystem>) => {
   store.changeCurrent(ecosystem);
-  router.push("/");
+  router.push("/ecosystem/");
 };
 
 const isActive = (ecosystem: UnwrapRef<Ecosystem>) => {

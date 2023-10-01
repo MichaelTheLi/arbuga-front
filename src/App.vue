@@ -31,7 +31,7 @@ const toggleRightDrawer = () => {
   drawers.right = !drawers.right;
 };
 
-const rightDrawerNames = ["home", "add_fish", "add_plants"];
+const rightDrawerNames = ["ecosystem_analysis", "add_fish", "add_plants"];
 router.afterEach((to) => {
   // TODO Implement via plugin
   // @ts-ignore
@@ -39,6 +39,8 @@ router.afterEach((to) => {
   ym(93933841, "hit", to.path);
   if (to.name && rightDrawerNames.includes(String(to.name))) {
     drawers.right = true;
+  } else {
+    drawers.right = false;
   }
 });
 

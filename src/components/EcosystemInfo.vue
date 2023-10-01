@@ -75,15 +75,15 @@ const props = defineProps<{
 }>();
 
 const onFullAnalysisClicked = () => {
-  router.push("/");
+  router.push("/ecosystem/analysis");
 };
 
 const onAddFishClicked = () => {
-  router.push("add_fish");
+  router.push("/ecosystem/add_fish");
 };
 
 const onAddPlantsClicked = () => {
-  router.push("add_plants");
+  router.push("/ecosystem/add_plants");
 };
 
 const ecosystemForVolume = toRef(props, "ecosystem");

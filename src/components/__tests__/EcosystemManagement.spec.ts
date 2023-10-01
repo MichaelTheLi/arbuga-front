@@ -127,7 +127,7 @@ describe("EcosystemList", () => {
     ).toHaveLength(1);
 
     expect(pushMock).toBeCalledTimes(1);
-    expect(pushMock).toBeCalledWith("/");
+    expect(pushMock).toBeCalledWith("/ecosystem/");
   });
 
   it("select one works", async () => {
@@ -140,6 +140,6 @@ describe("EcosystemList", () => {
     await wrapper.get('[data-testid="ecosystems-list-item"]').trigger("click");
 
     expect(pushMock).toBeCalledTimes(1);
-    expect(pushMock).toBeCalledWith("/");
+    expect(pushMock).toBeCalledWith("/ecosystem/");
   });
 });

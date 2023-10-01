@@ -3,6 +3,11 @@ export const i18nMessages = {
     project: {
       name: "Werel",
     },
+    home: {
+      heading: "Welcome to the @:project.name",
+      welcome_message:
+        "@:project.name is a tool and an information portal giving aquarium owners some insights on aquarium state and helping them to make more educated choices",
+    },
     account: {
       greeting: "Hello, {name}",
       your_credentials: "Your credentials",
@@ -202,6 +207,11 @@ export const i18nMessages = {
   "ru-RU": {
     project: {
       name: "Werel",
+    },
+    home: {
+      heading: "Вас приветствует @:project.name",
+      welcome_message:
+        "@:project.name - это набор инструментов и информационный портал который помогает акваристам лучше понимать состояние аквариума и его обитателей, а также помогает делать более осознанный выбор при выборе новых рыбок и растений",
     },
     account: {
       greeting: "Здравствуйте, {name}",
