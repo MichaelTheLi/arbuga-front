@@ -30,7 +30,13 @@ const emit = defineEmits<{
 const search = ref("");
 const list = ref([] as PlantCardData[]);
 
-const { options, load } = usePlantSearch(search, props.debounceTimeout);
+const { options, load } = usePlantSearch(
+  search,
+  ref(""),
+  100,
+  props.debounceTimeout,
+  false
+);
 
 watch(search, () => {
   if (search.value) {

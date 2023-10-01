@@ -128,8 +128,8 @@ export const SEARCH_FISH = gql(/* GraphQL */ `
 
 // noinspection GraphQLUnresolvedReference
 export const SEARCH_PLANT = gql(/* GraphQL */ `
-  query SearchPlant($substring: String) {
-    plantList(substring: $substring, first: 100) {
+  query SearchPlant($substring: String, $first: Int, $after: ID) {
+    plantList(substring: $substring, first: $first, after: $after) {
       edges {
         cursor
         node {
@@ -513,8 +513,28 @@ export const searchFish = (
   };
 };
 
-export const usePlantSearch = (input: Ref<string>, debounce: number) => {
-  const { result, load } = searchPlant(input, debounce);
+export const usePlantSearch = (
+  input: Ref<string>,
+  after: Ref<string>,
+  first: number,
+  debounce: number,
+  emptyAllowed: boolean
+) => {
+  const { result, loading, load } = searchPlant(
+    input,
+    after,
+    first,
+    debounce,
+    emptyAllowed
+  );
+
+  const lastCursor = computed(() => {
+    if (!result.value) {
+      return "";
+    }
+
+    return result.value.plantList.pageInfo.endCursor;
+  });
 
   const options = computed(() => {
     if (!result.value) {
@@ -530,6 +550,7 @@ export const usePlantSearch = (input: Ref<string>, debounce: number) => {
           // @ts-ignore
           return null;
         }
+
         return {
           plant: {
             id: node.id,
@@ -541,13 +562,19 @@ export const usePlantSearch = (input: Ref<string>, debounce: number) => {
       });
   });
 
-  return { options, load };
+  return { options, loading, lastCursor, load };
 };
 
-export const searchPlant = (substring: Ref<string>, debounce: number) => {
+export const searchPlant = (
+  substring: Ref<string>,
+  after: Ref<string>,
+  first: number,
+  debounce: number,
+  emptyAllowed: boolean
+) => {
   const variables = reactive({
     substring: "",
-    first: 1000,
+    first: first || 100,
     after: "",
   });
 
@@ -561,13 +588,19 @@ export const searchPlant = (substring: Ref<string>, debounce: number) => {
     });
   }
 
+  if (isRef(after)) {
+    watch(after, (newValue) => {
+      variables.after = newValue;
+    });
+  }
+
   const { loading, error, result, load } = useLazyQuery(
     SEARCH_PLANT,
     variables,
     () => ({
       fetchPolicy: "network-only",
       debounce: debounce ? debounce : undefined,
-      enabled: haveSubstring.value,
+      enabled: emptyAllowed || haveSubstring.value,
     })
   );
 
