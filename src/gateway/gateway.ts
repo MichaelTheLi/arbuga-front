@@ -767,7 +767,7 @@ export const useRegisterUser = () => {
   });
 
   result.onDone(({ data }) => {
-    localStorage.setItem("token", _.get(data, "login.token", ""));
+    localStorage.setItem("token", _.get(data, "register.token", ""));
   });
 
   return {
