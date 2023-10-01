@@ -104,8 +104,8 @@ export const LOAD_USER = gql(/* GraphQL */ `
 
 // noinspection GraphQLUnresolvedReference
 export const SEARCH_FISH = gql(/* GraphQL */ `
-  query SearchFish($substring: String) {
-    fishList(substring: $substring, first: 100) {
+  query SearchFish($substring: String, $first: Int, $after: ID) {
+    fishList(substring: $substring, first: $first, after: $after) {
       edges {
         cursor
         node {
@@ -414,8 +414,28 @@ export const fetchUser = () => {
   return { loading, error, refetch };
 };
 
-export const useFishSearch = (input: Ref<string>, debounce: number) => {
-  const { result, load } = searchFish(input, debounce);
+export const useFishSearch = (
+  input: Ref<string>,
+  after: Ref<string>,
+  first: number,
+  debounce: number,
+  emptyAllowed: boolean
+) => {
+  const { result, loading, load } = searchFish(
+    input,
+    after,
+    first,
+    debounce,
+    emptyAllowed
+  );
+
+  const lastCursor = computed(() => {
+    if (!result.value) {
+      return "";
+    }
+
+    return result.value.fishList.pageInfo.endCursor;
+  });
 
   const options = computed(() => {
     if (!result.value) {
@@ -443,13 +463,19 @@ export const useFishSearch = (input: Ref<string>, debounce: number) => {
       });
   });
 
-  return { options, load };
+  return { options, loading, lastCursor, load };
 };
 
-export const searchFish = (substring: Ref<string>, debounce: number) => {
+export const searchFish = (
+  substring: Ref<string>,
+  after: Ref<string>,
+  first: number,
+  debounce: number,
+  emptyAllowed: boolean
+) => {
   const variables = reactive({
     substring: "",
-    first: 1000,
+    first: first || 100,
     after: "",
   });
 
@@ -463,13 +489,19 @@ export const searchFish = (substring: Ref<string>, debounce: number) => {
     });
   }
 
+  if (isRef(after)) {
+    watch(after, (newValue) => {
+      variables.after = newValue;
+    });
+  }
+
   const { loading, error, result, load } = useLazyQuery(
     SEARCH_FISH,
     variables,
     () => ({
       fetchPolicy: "network-only",
       debounce: debounce ? debounce : undefined,
-      enabled: haveSubstring.value,
+      enabled: emptyAllowed || haveSubstring.value,
     })
   );
 

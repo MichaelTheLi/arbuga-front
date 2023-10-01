@@ -30,7 +30,13 @@ const emit = defineEmits<{
 const search = ref("");
 const list = ref([] as FishCardData[]);
 
-const { options, load } = useFishSearch(search, props.debounceTimeout);
+const { options, load } = useFishSearch(
+  search,
+  ref(""),
+  10,
+  props.debounceTimeout,
+  false
+);
 
 watch(search, () => {
   if (search.value) {

@@ -2,6 +2,7 @@ export const i18nMessages = {
   "en-US": {
     project: {
       name: "Werel",
+      section_wip: "Section under development",
     },
     home: {
       heading: "Welcome to the @:project.name",
@@ -219,6 +220,7 @@ export const i18nMessages = {
   "ru-RU": {
     project: {
       name: "Werel",
+      section_wip: "Раздел в разработке",
     },
     home: {
       heading: "Вас приветствует @:project.name",
