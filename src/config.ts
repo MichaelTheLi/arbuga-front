@@ -7,6 +7,12 @@ export const i18nMessages = {
       heading: "Welcome to the @:project.name",
       welcome_message:
         "@:project.name is a tool and an information portal giving aquarium owners some insights on aquarium state and helping them to make more educated choices",
+      guide: {
+        info: "Start with exploring {fish} or {plants}. Also you can create {ecosystem} and add inhabitants to it",
+        fish_link_title: "fish species",
+        plants_link_title: "plants species",
+        ecosystem_link_title: "ecosystem",
+      },
     },
     account: {
       greeting: "Hello, {name}",
@@ -197,11 +203,17 @@ export const i18nMessages = {
       add_action: "Add",
       more_info: "More info",
       search: "Search",
+      explore: {
+        heading: "Aquarium fish",
+      },
     },
     plants: {
       add_action: "Add",
       more_info: "More info",
       search: "Search",
+      explore: {
+        heading: "Aquarium plants",
+      },
     },
   },
   "ru-RU": {
@@ -212,6 +224,12 @@ export const i18nMessages = {
       heading: "Вас приветствует @:project.name",
       welcome_message:
         "@:project.name - это набор инструментов и информационный портал который помогает акваристам лучше понимать состояние аквариума и его обитателей, а также помогает делать более осознанный выбор при выборе новых рыбок и растений",
+      guide: {
+        info: "Начните с изучения {fish} или {plants}. Также вы можете создать {ecosystem} и добавлять рыбки и растения к ней",
+        fish_link_title: "рыбок",
+        plants_link_title: "растений",
+        ecosystem_link_title: "экосистему",
+      },
     },
     account: {
       greeting: "Здравствуйте, {name}",
@@ -404,11 +422,17 @@ export const i18nMessages = {
       add_action: "Добавить",
       more_info: "Информация",
       search: "Искать",
+      explore: {
+        heading: "Аквариумные рыбки",
+      },
     },
     plants: {
       add_action: "Добавить",
       more_info: "Информация",
       search: "Искать",
+      explore: {
+        heading: "Аквариумные растения",
+      },
     },
   },
 };

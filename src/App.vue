@@ -37,11 +37,7 @@ router.afterEach((to) => {
   // @ts-ignore
   // eslint-disable-next-line no-undef
   ym(93933841, "hit", to.path);
-  if (to.name && rightDrawerNames.includes(String(to.name))) {
-    drawers.right = true;
-  } else {
-    drawers.right = false;
-  }
+  drawers.right = !!(to.name && rightDrawerNames.includes(String(to.name)));
 });
 
 const onTitleClick = () => {
@@ -122,5 +118,9 @@ useMeta({
 <style>
 .q-drawer--right {
   max-width: 90vw;
+}
+
+a {
+  color: var(--q-primary);
 }
 </style>
