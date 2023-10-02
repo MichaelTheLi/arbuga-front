@@ -1,3 +1,20 @@
+export const numberFormats = {
+  "en-US": {
+    decimal: {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  },
+  "ru-RU": {
+    decimal: {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    },
+  },
+};
+
 export const i18nMessages = {
   "en-US": {
     project: {
@@ -207,6 +224,12 @@ export const i18nMessages = {
       explore: {
         heading: "Aquarium fish",
       },
+      info: {
+        temperature: "Temperature",
+        ph: "PH",
+        gh: "GH",
+        kh: "KH",
+      },
     },
     plants: {
       add_action: "Add",
@@ -214,6 +237,12 @@ export const i18nMessages = {
       search: "Search",
       explore: {
         heading: "Aquarium plants",
+      },
+      info: {
+        temperature: "Temperature",
+        ph: "PH",
+        gh: "GH",
+        kh: "KH",
       },
     },
   },
@@ -427,6 +456,12 @@ export const i18nMessages = {
       explore: {
         heading: "Аквариумные рыбки",
       },
+      info: {
+        temperature: "Температура",
+        ph: "PH",
+        gh: "GH",
+        kh: "KH",
+      },
     },
     plants: {
       add_action: "Добавить",
@@ -434,6 +469,12 @@ export const i18nMessages = {
       search: "Искать",
       explore: {
         heading: "Аквариумные растения",
+      },
+      info: {
+        temperature: "Температура",
+        ph: "PH",
+        gh: "GH",
+        kh: "KH",
       },
     },
   },

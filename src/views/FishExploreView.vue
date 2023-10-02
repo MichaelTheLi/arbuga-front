@@ -3,9 +3,10 @@ import { QInfiniteScroll, QPage, QSpinnerDots } from "quasar";
 import { useFishSearch } from "@/gateway/gateway";
 import { ref, watch } from "vue";
 import _ from "lodash";
-import type { FishCardData } from "@/components/Fish/FishCard.vue";
+import type { FishListCardData } from "@/components/Fish/FishListCard.vue";
+import FishListCard from "@/components/Fish/FishListCard.vue";
 
-const list = ref([] as FishCardData[]);
+const list = ref([] as FishListCardData[]);
 const search = ref("");
 const after = ref("");
 const { options, lastCursor, loading, load } = useFishSearch(
@@ -17,13 +18,15 @@ const { options, lastCursor, loading, load } = useFishSearch(
 );
 
 watch(options, (newOptions) => {
-  const newListItems = _.map(newOptions, (option) => {
+  const newListItems = _.map(newOptions, (option): FishListCardData => {
+    const { name, description, scientific, id, environment } = option.fish;
+
     return {
-      id: option.fish.id,
-      title: option.fish.name,
-      shortDescription: option.fish.scientific.species,
-      description: option.fish.description,
-      status: "compatible",
+      id: id,
+      title: name,
+      scientificName: scientific.species,
+      description: description,
+      environment: environment,
     };
   });
   list.value = _.concat(list.value, newListItems);
@@ -46,10 +49,12 @@ const onLoad = (index: any, done: any) => {
     <h2>{{ $t("fish.explore.heading") }}</h2>
     <h4 class="text-warning">{{ $t("project.section_wip") }}</h4>
     <q-infinite-scroll @load="onLoad" :offset="1500" :debounce="0">
-      <div v-for="(fish, index) in list" :key="index" class="caption">
-        <h5>{{ fish.title }} ({{ fish.shortDescription }})</h5>
-        <p class="text-body2">{{ fish.description }}</p>
-        <hr />
+      <div
+        v-for="(fish, index) in list"
+        :key="index"
+        class="q-pa-md q-gutter-md"
+      >
+        <FishListCard :fish="fish" />
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">

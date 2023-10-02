@@ -44,10 +44,18 @@ export interface AquariumFish {
   count: number;
 }
 
+export interface Environment {
+  waterParametersRange: {
+    min: WaterParameters;
+    max: WaterParameters;
+  };
+}
+
 export interface Fish {
   id: string;
   name: string;
   scientific: Scientific;
+  environment?: Environment;
   description: string;
 }
 
@@ -64,6 +72,7 @@ export interface Plant {
   id: string;
   name: string;
   scientific: Scientific;
+  environment?: Environment;
   description: string;
 }
 

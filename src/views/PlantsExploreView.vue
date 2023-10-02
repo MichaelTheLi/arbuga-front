@@ -3,9 +3,10 @@ import { QInfiniteScroll, QPage, QSpinnerDots } from "quasar";
 import { usePlantSearch } from "@/gateway/gateway";
 import { ref, watch } from "vue";
 import _ from "lodash";
-import type { PlantCardData } from "@/components/Plants/PlantCard.vue";
+import type { PlantListCardData } from "@/components/Plants/PlantListCard.vue";
+import PlantListCard from "@/components/Plants/PlantListCard.vue";
 
-const list = ref([] as PlantCardData[]);
+const list = ref([] as PlantListCardData[]);
 const search = ref("");
 const after = ref("");
 const { options, lastCursor, loading, load } = usePlantSearch(
@@ -17,13 +18,15 @@ const { options, lastCursor, loading, load } = usePlantSearch(
 );
 
 watch(options, (newOptions) => {
-  const newListItems = _.map(newOptions, (option) => {
+  const newListItems = _.map(newOptions, (option): PlantListCardData => {
+    const { name, description, scientific, id, environment } = option.plant;
+
     return {
-      id: option.plant.id,
-      title: option.plant.name,
-      shortDescription: option.plant.scientific.species,
-      description: option.plant.description,
-      status: "compatible",
+      id: id,
+      title: name,
+      scientificName: scientific.species,
+      description: description,
+      environment: environment,
     };
   });
   list.value = _.concat(list.value, newListItems);
@@ -46,10 +49,12 @@ const onLoad = (index: any, done: any) => {
     <h2>{{ $t("plants.explore.heading") }}</h2>
     <h4 class="text-warning">{{ $t("project.section_wip") }}</h4>
     <q-infinite-scroll @load="onLoad" :offset="1500" :debounce="0">
-      <div v-for="(plants, index) in list" :key="index" class="caption">
-        <h5>{{ plants.title }} ({{ plants.shortDescription }})</h5>
-        <p class="text-body2">{{ plants.description }}</p>
-        <hr />
+      <div
+        v-for="(plant, index) in list"
+        :key="index"
+        class="q-pa-md q-gutter-md"
+      >
+        <PlantListCard :plant="plant" />
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">

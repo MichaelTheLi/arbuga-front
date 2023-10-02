@@ -114,6 +114,32 @@ export const SEARCH_FISH = gql(/* GraphQL */ `
           scientific {
             species
           }
+          environment {
+            waterParametersRange {
+              min {
+                chemical {
+                  ph
+                  gh
+                  kh
+                  ammonia
+                  nitrite
+                  nitrate
+                }
+                temperature
+              }
+              max {
+                chemical {
+                  ph
+                  gh
+                  kh
+                  ammonia
+                  nitrite
+                  nitrate
+                }
+                temperature
+              }
+            }
+          }
           description
         }
       }
@@ -137,6 +163,26 @@ export const SEARCH_PLANT = gql(/* GraphQL */ `
           name
           scientific {
             species
+          }
+          environment {
+            waterParametersRange {
+              min {
+                chemical {
+                  ph
+                  gh
+                  kh
+                }
+                temperature
+              }
+              max {
+                chemical {
+                  ph
+                  gh
+                  kh
+                }
+                temperature
+              }
+            }
           }
           description
         }
@@ -457,6 +503,24 @@ export const useFishSearch = (
             id: node.id,
             name: node.name,
             scientific: node.scientific,
+            environment: {
+              waterParametersRange: {
+                min: {
+                  ph: node.environment.waterParametersRange.min.chemical.ph,
+                  gh: node.environment.waterParametersRange.min.chemical.gh,
+                  kh: node.environment.waterParametersRange.min.chemical.kh,
+                  temperature:
+                    node.environment.waterParametersRange.min.temperature,
+                },
+                max: {
+                  ph: node.environment.waterParametersRange.max.chemical.ph,
+                  gh: node.environment.waterParametersRange.max.chemical.gh,
+                  kh: node.environment.waterParametersRange.max.chemical.kh,
+                  temperature:
+                    node.environment.waterParametersRange.max.temperature,
+                },
+              },
+            },
             description: node.description,
           },
         };
@@ -556,6 +620,24 @@ export const usePlantSearch = (
             id: node.id,
             name: node.name,
             scientific: node.scientific,
+            environment: {
+              waterParametersRange: {
+                min: {
+                  ph: node.environment.waterParametersRange.min.chemical.ph,
+                  gh: node.environment.waterParametersRange.min.chemical.gh,
+                  kh: node.environment.waterParametersRange.min.chemical.kh,
+                  temperature:
+                    node.environment.waterParametersRange.min.temperature,
+                },
+                max: {
+                  ph: node.environment.waterParametersRange.max.chemical.ph,
+                  gh: node.environment.waterParametersRange.max.chemical.gh,
+                  kh: node.environment.waterParametersRange.max.chemical.kh,
+                  temperature:
+                    node.environment.waterParametersRange.max.temperature,
+                },
+              },
+            },
             description: node.description,
           },
         };

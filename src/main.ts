@@ -13,9 +13,10 @@ import router from "./router";
 import { DefaultApolloClient } from "@vue/apollo-composable";
 import { apolloClient } from "@/gateway/client_apollo";
 
-import { i18nMessages } from "./config";
+import { i18nMessages, numberFormats } from "./config";
 
 const i18n = createI18n({
+  numberFormats: numberFormats,
   legacy: false,
   locale: navigator.language,
   fallbackLocale: "en-US",
