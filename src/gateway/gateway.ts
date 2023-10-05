@@ -88,6 +88,42 @@ export const EcosystemFragment = gql(/* GraphQL */ `
   }
 `);
 
+export const FullAnimalFragment = gql(/* GraphQL */ `
+  fragment FullAnimal on Animal {
+    commonNames
+    scientific {
+      species
+    }
+    environment {
+      waterParametersRange {
+        min {
+          chemical {
+            ph
+            gh
+            kh
+            ammonia
+            nitrite
+            nitrate
+          }
+          temperature
+        }
+        max {
+          chemical {
+            ph
+            gh
+            kh
+            ammonia
+            nitrite
+            nitrate
+          }
+          temperature
+        }
+      }
+    }
+    description
+  }
+`);
+
 // noinspection GraphQLUnresolvedReference
 export const LOAD_USER = gql(/* GraphQL */ `
   query userQuery {
@@ -110,37 +146,7 @@ export const SEARCH_FISH = gql(/* GraphQL */ `
         cursor
         node {
           id
-          name
-          scientific {
-            species
-          }
-          environment {
-            waterParametersRange {
-              min {
-                chemical {
-                  ph
-                  gh
-                  kh
-                  ammonia
-                  nitrite
-                  nitrate
-                }
-                temperature
-              }
-              max {
-                chemical {
-                  ph
-                  gh
-                  kh
-                  ammonia
-                  nitrite
-                  nitrate
-                }
-                temperature
-              }
-            }
-          }
-          description
+          ...FullAnimal
         }
       }
       pageInfo {
@@ -160,31 +166,7 @@ export const SEARCH_PLANT = gql(/* GraphQL */ `
         cursor
         node {
           id
-          name
-          scientific {
-            species
-          }
-          environment {
-            waterParametersRange {
-              min {
-                chemical {
-                  ph
-                  gh
-                  kh
-                }
-                temperature
-              }
-              max {
-                chemical {
-                  ph
-                  gh
-                  kh
-                }
-                temperature
-              }
-            }
-          }
-          description
+          ...FullAnimal
         }
       }
       pageInfo {
@@ -192,6 +174,26 @@ export const SEARCH_PLANT = gql(/* GraphQL */ `
         endCursor
         hasNextPage
       }
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const GET_FISH = gql(/* GraphQL */ `
+  query GetFish($id: ID!) {
+    fish(id: $id) {
+      id
+      ...FullAnimal
+    }
+  }
+`);
+
+// noinspection GraphQLUnresolvedReference
+export const GET_PLANT = gql(/* GraphQL */ `
+  query GetPlant($id: ID!) {
+    plant(id: $id) {
+      id
+      ...FullAnimal
     }
   }
 `);
@@ -498,36 +500,88 @@ export const useFishSearch = (
           return null;
         }
 
+        const nodeData = useFragment(FullAnimalFragment, node);
+
         return {
           fish: {
             id: node.id,
-            name: node.name,
-            scientific: node.scientific,
-            environment: {
-              waterParametersRange: {
-                min: {
-                  ph: node.environment.waterParametersRange.min.chemical.ph,
-                  gh: node.environment.waterParametersRange.min.chemical.gh,
-                  kh: node.environment.waterParametersRange.min.chemical.kh,
-                  temperature:
-                    node.environment.waterParametersRange.min.temperature,
-                },
-                max: {
-                  ph: node.environment.waterParametersRange.max.chemical.ph,
-                  gh: node.environment.waterParametersRange.max.chemical.gh,
-                  kh: node.environment.waterParametersRange.max.chemical.kh,
-                  temperature:
-                    node.environment.waterParametersRange.max.temperature,
-                },
-              },
-            },
-            description: node.description,
+            ...propagateAnimal(nodeData),
           },
         };
       });
   });
 
   return { options, loading, lastCursor, load };
+};
+
+export const useGetFish = (id: string) => {
+  const { loading, error, result: rawResult } = useQuery(GET_FISH, { id }, {});
+
+  const result = computed((): FishOption | null => {
+    if (!rawResult.value) {
+      return null;
+    }
+
+    const fish = rawResult.value.fish;
+    const fishAnimalData = useFragment(FullAnimalFragment, fish);
+
+    return {
+      fish: {
+        id: fish?.id || "",
+        ...propagateAnimal(fishAnimalData),
+      },
+    };
+  });
+
+  return { result, loading, error };
+};
+
+export const useGetPlant = (id: string) => {
+  const { loading, error, result: rawResult } = useQuery(GET_PLANT, { id }, {});
+
+  const result = computed((): PlantOption | null => {
+    if (!rawResult.value) {
+      return null;
+    }
+
+    const plant = rawResult.value.plant;
+    const plantAnimalData = useFragment(FullAnimalFragment, plant);
+
+    return {
+      plant: {
+        id: plant?.id || "",
+        ...propagateAnimal(plantAnimalData),
+      },
+    };
+  });
+
+  return { result, loading, error };
+};
+
+const propagateAnimal = (animalData: any) => {
+  const parametersRange = animalData.environment.waterParametersRange;
+
+  return {
+    name: animalData.commonNames[0],
+    scientific: animalData.scientific,
+    environment: {
+      waterParametersRange: {
+        min: {
+          ph: parametersRange.min.chemical.ph,
+          gh: parametersRange.min.chemical.gh,
+          kh: parametersRange.min.chemical.kh,
+          temperature: parametersRange.min.temperature,
+        },
+        max: {
+          ph: parametersRange.max.chemical.ph,
+          gh: parametersRange.max.chemical.gh,
+          kh: parametersRange.max.chemical.kh,
+          temperature: parametersRange.max.temperature,
+        },
+      },
+    },
+    description: animalData.description,
+  };
 };
 
 export const searchFish = (
@@ -615,30 +669,12 @@ export const usePlantSearch = (
           return null;
         }
 
+        const nodeData = useFragment(FullAnimalFragment, node);
+
         return {
           plant: {
             id: node.id,
-            name: node.name,
-            scientific: node.scientific,
-            environment: {
-              waterParametersRange: {
-                min: {
-                  ph: node.environment.waterParametersRange.min.chemical.ph,
-                  gh: node.environment.waterParametersRange.min.chemical.gh,
-                  kh: node.environment.waterParametersRange.min.chemical.kh,
-                  temperature:
-                    node.environment.waterParametersRange.min.temperature,
-                },
-                max: {
-                  ph: node.environment.waterParametersRange.max.chemical.ph,
-                  gh: node.environment.waterParametersRange.max.chemical.gh,
-                  kh: node.environment.waterParametersRange.max.chemical.kh,
-                  temperature:
-                    node.environment.waterParametersRange.max.temperature,
-                },
-              },
-            },
-            description: node.description,
+            ...propagateAnimal(nodeData),
           },
         };
       });

@@ -28,7 +28,11 @@ const authLink = setContext((request, { headers }) => {
 });
 
 const link = authLink.concat(httpLink);
-export const cache = new InMemoryCache({});
+export const cache = new InMemoryCache({
+  possibleTypes: {
+    Animal: ["Fish", "Plant"],
+  },
+});
 
 const resolvers = {};
 
