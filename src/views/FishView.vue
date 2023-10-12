@@ -16,11 +16,11 @@ if (typeof route.params.id == "string") {
 
 const { result, loading, error } = useGetFish(id);
 
-const fish = computed((): FishDetailsData => {
+const fish = computed((): FishDetailsData | null => {
   const rawFish = result.value?.fish;
 
   if (!rawFish) {
-    return {};
+    return null;
   }
 
   return {
@@ -51,7 +51,7 @@ useMeta(() => {
 
 <template>
   <q-page padding>
-    <div v-if="result && !loading">
+    <div v-if="fish && result && !loading">
       <FishDetails :fish="fish" />
     </div>
     <div v-else-if="error">

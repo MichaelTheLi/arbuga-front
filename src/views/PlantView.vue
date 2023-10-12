@@ -16,11 +16,11 @@ if (typeof route.params.id == "string") {
 
 const { result, loading, error } = useGetPlant(id);
 
-const plant = computed((): PlantDetailsData => {
+const plant = computed((): PlantDetailsData | null => {
   const rawPlant = result.value?.plant;
 
   if (!rawPlant) {
-    return {};
+    return null;
   }
 
   return {
@@ -51,7 +51,7 @@ useMeta(() => {
 
 <template>
   <q-page padding>
-    <div v-if="result && !loading">
+    <div v-if="plant && result && !loading">
       <PlantDetails :plant="plant" />
     </div>
     <div v-else-if="error">
