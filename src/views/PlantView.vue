@@ -6,7 +6,6 @@ import PlantDetails, {
 import { useGetPlant } from "@/gateway/gateway";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
-import { MetaOptions } from "quasar/dist/types/meta";
 
 const route = useRoute();
 
@@ -33,7 +32,7 @@ const plant = computed((): PlantDetailsData => {
   };
 });
 
-useMeta((): MetaOptions => {
+useMeta(() => {
   return {
     title: plant.value?.title,
     meta: {

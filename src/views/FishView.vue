@@ -6,7 +6,6 @@ import FishDetails, {
 import { useGetFish } from "@/gateway/gateway";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
-import type { MetaOptions } from "quasar/dist/types/meta";
 
 const route = useRoute();
 
@@ -33,7 +32,7 @@ const fish = computed((): FishDetailsData => {
   };
 });
 
-useMeta((): MetaOptions => {
+useMeta(() => {
   return {
     title: fish.value?.title,
     meta: {
