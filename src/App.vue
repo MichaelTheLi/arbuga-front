@@ -49,14 +49,10 @@ fetchUser();
 const i18n = useI18n();
 const projectName = i18n.t("project.name");
 useMeta({
-  title: projectName,
-  titleTemplate: (title) => `${title} Home`,
+  title: "",
+  titleTemplate: (title) => `${projectName}: ${title}`,
 
   meta: {
-    description: {
-      name: "description",
-      content: "Home page of " + projectName,
-    },
     equiv: {
       "http-equiv": "Content-Type",
       content: "text/html; charset=UTF-8",

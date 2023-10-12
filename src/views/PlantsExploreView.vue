@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { QInfiniteScroll, QPage, QSpinnerDots } from "quasar";
+import { QInfiniteScroll, QPage, QSpinnerDots, useMeta } from "quasar";
 import { usePlantSearch } from "@/gateway/gateway";
 import { ref, watch } from "vue";
 import _ from "lodash";
 import type { PlantListCardData } from "@/components/Plants/PlantListCard.vue";
 import PlantListCard from "@/components/Plants/PlantListCard.vue";
+import { useI18n } from "vue-i18n";
 
 const list = ref([] as PlantListCardData[]);
 const search = ref("");
@@ -42,6 +43,16 @@ const onLoad = (index: any, done: any) => {
     }
   });
 };
+const i18n = useI18n();
+useMeta({
+  title: i18n.t("titles.plants_list"),
+  meta: {
+    description: {
+      name: "description",
+      content: i18n.t("descriptions.plants_list"),
+    },
+  },
+});
 </script>
 
 <template>

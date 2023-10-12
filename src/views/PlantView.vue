@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { QPage, QSpinnerDots } from "quasar";
+import { QPage, QSpinnerDots, useMeta } from "quasar";
 import PlantDetails, {
   type PlantDetailsData,
 } from "@/components/Plants/PlantDetails.vue";
 import { useGetPlant } from "@/gateway/gateway";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import { MetaOptions } from "quasar/dist/types/meta";
 
 const route = useRoute();
 
@@ -20,7 +21,7 @@ const plant = computed((): PlantDetailsData => {
   const rawPlant = result.value?.plant;
 
   if (!rawPlant) {
-    throw Error("Can't convert plant");
+    return {};
   }
 
   return {
@@ -29,6 +30,22 @@ const plant = computed((): PlantDetailsData => {
     title: rawPlant.name,
     scientificName: rawPlant.scientific.species,
     environment: rawPlant.environment,
+  };
+});
+
+useMeta((): MetaOptions => {
+  return {
+    title: plant.value?.title,
+    meta: {
+      description: {
+        name: "description",
+        content: plant.value?.description,
+      },
+      keywords: {
+        name: "keywords",
+        content: plant.value?.scientificName,
+      },
+    },
   };
 });
 </script>

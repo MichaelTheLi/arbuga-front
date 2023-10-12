@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { QPage, QSpinnerDots } from "quasar";
+import { QPage, QSpinnerDots, useMeta } from "quasar";
 import FishDetails, {
   type FishDetailsData,
 } from "@/components/Fish/FishDetails.vue";
 import { useGetFish } from "@/gateway/gateway";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import type { MetaOptions } from "quasar/dist/types/meta";
 
 const route = useRoute();
 
@@ -20,7 +21,7 @@ const fish = computed((): FishDetailsData => {
   const rawFish = result.value?.fish;
 
   if (!rawFish) {
-    throw Error("Can't convert fish");
+    return {};
   }
 
   return {
@@ -29,6 +30,22 @@ const fish = computed((): FishDetailsData => {
     title: rawFish.name,
     scientificName: rawFish.scientific.species,
     environment: rawFish.environment,
+  };
+});
+
+useMeta((): MetaOptions => {
+  return {
+    title: fish.value?.title,
+    meta: {
+      description: {
+        name: "description",
+        content: fish.value?.description,
+      },
+      keywords: {
+        name: "keywords",
+        content: fish.value?.scientificName,
+      },
+    },
   };
 });
 </script>

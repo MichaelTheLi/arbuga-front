@@ -21,6 +21,18 @@ export const i18nMessages = {
       name: "Werel",
       section_wip: "Section under development",
     },
+    titles: {
+      home: "Home",
+      fish_list: "Fish explore list",
+      plants_list: "Plants explore list",
+      your_ecosystem: "Your ecosystem",
+    },
+    descriptions: {
+      home: "Home page of {projectName}",
+      fish_list: "Information about aquarium fish",
+      plants_list: "Information about aquarium plants",
+      your_ecosystem: "Aquarium ecosystem information",
+    },
     home: {
       heading: "Welcome to the @:project.name",
       welcome_message:
@@ -250,6 +262,18 @@ export const i18nMessages = {
     project: {
       name: "Werel",
       section_wip: "Раздел в разработке",
+    },
+    titles: {
+      home: "Домашняя страница",
+      fish_list: "Рыбки",
+      plants_list: "Растения",
+      your_ecosystem: "Ваша экосистема",
+    },
+    descriptions: {
+      home: "Домашняя страница проекта {projectName}",
+      fish_list: "Информация о аквариумных рыбках",
+      plants_list: "Информация о аквариумных растениях",
+      your_ecosystem: "Информация об аквариумной экосистеме",
     },
     home: {
       heading: "Вас приветствует @:project.name",

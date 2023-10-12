@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { QInfiniteScroll, QPage, QSpinnerDots } from "quasar";
+import { QInfiniteScroll, QPage, QSpinnerDots, useMeta } from "quasar";
 import { useFishSearch } from "@/gateway/gateway";
 import { ref, watch } from "vue";
 import _ from "lodash";
 import type { FishListCardData } from "@/components/Fish/FishListCard.vue";
 import FishListCard from "@/components/Fish/FishListCard.vue";
+import { useI18n } from "vue-i18n";
 
 const list = ref([] as FishListCardData[]);
 const search = ref("");
@@ -42,6 +43,17 @@ const onLoad = (index: any, done: any) => {
     }
   });
 };
+
+const i18n = useI18n();
+useMeta({
+  title: i18n.t("titles.fish_list"),
+  meta: {
+    description: {
+      name: "description",
+      content: i18n.t("descriptions.fish_list"),
+    },
+  },
+});
 </script>
 
 <template>

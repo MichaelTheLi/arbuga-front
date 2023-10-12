@@ -1,5 +1,18 @@
 <script setup lang="ts">
-import { QPage } from "quasar";
+import { QPage, useMeta } from "quasar";
+import { useI18n } from "vue-i18n";
+
+const i18n = useI18n();
+const projectName = i18n.t("project.name");
+useMeta({
+  title: i18n.t("titles.home"),
+  meta: {
+    description: {
+      name: "description",
+      content: i18n.t("descriptions.home", { projectName }),
+    },
+  },
+});
 </script>
 
 <template>
