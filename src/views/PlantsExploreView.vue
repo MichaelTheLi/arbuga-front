@@ -28,6 +28,7 @@ watch(options, (newOptions) => {
       scientificName: scientific.species,
       description: description,
       environment: environment,
+      mainImage: option.plant.specimenImageUrls[0],
     };
   });
   list.value = _.concat(list.value, newListItems);

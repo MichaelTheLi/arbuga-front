@@ -40,7 +40,7 @@ export interface WaterParameters {
 }
 
 export interface AquariumFish {
-  fish: Fish;
+  fish: EcosystemFish;
   count: number;
 }
 
@@ -51,7 +51,7 @@ export interface Environment {
   };
 }
 
-export interface Fish {
+export interface EcosystemFish {
   id: string;
   name: string;
   scientific: Scientific;
@@ -59,13 +59,37 @@ export interface Fish {
   description: string;
 }
 
+export interface Fish {
+  id: string;
+  name: string;
+  scientific: Scientific;
+  environment?: Environment;
+  description: string;
+  specimenImageUrls: [string];
+  references: [Reference];
+}
+
+export interface Reference {
+  title: string;
+  baseTitle: string;
+  url?: string;
+}
+
 export interface FishOption {
   fish: Fish;
 }
 
 export interface AquariumPlant {
-  plant: Plant;
+  plant: EcosystemPlant;
   count: number;
+}
+
+export interface EcosystemPlant {
+  id: string;
+  name: string;
+  scientific: Scientific;
+  environment?: Environment;
+  description: string;
 }
 
 export interface Plant {
@@ -74,6 +98,8 @@ export interface Plant {
   scientific: Scientific;
   environment?: Environment;
   description: string;
+  specimenImageUrls: [string];
+  references: [Reference];
 }
 
 export interface Scientific {

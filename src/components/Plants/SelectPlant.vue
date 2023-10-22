@@ -54,6 +54,7 @@ watch(options, (newOptions) => {
       shortDescription: option.plant.scientific.species,
       description: option.plant.description,
       status: "compatible",
+      mainImage: option.plant.specimenImageUrls[0],
     };
   });
 });

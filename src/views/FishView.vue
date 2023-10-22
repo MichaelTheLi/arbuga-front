@@ -29,6 +29,8 @@ const fish = computed((): FishDetailsData | null => {
     title: rawFish.name,
     scientificName: rawFish.scientific.species,
     environment: rawFish.environment,
+    images: rawFish.specimenImageUrls,
+    references: rawFish.references,
   };
 });
 

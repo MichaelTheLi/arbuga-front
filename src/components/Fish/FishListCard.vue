@@ -87,10 +87,7 @@
       </q-card-section>
 
       <q-card-section class="col-5 flex flex-center">
-        <q-img
-          class="rounded-borders"
-          src="https://loremflickr.com/320/240/fish?lock=1"
-        />
+        <q-img class="rounded-borders" :src="props.fish.mainImage" />
       </q-card-section>
     </q-card-section>
   </q-card>
@@ -106,6 +103,7 @@ export interface FishListCardData {
   scientificName: string;
   description: string;
   environment?: Environment;
+  mainImage?: string;
 }
 
 const props = defineProps<{

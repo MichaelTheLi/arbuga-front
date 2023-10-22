@@ -81,21 +81,51 @@
             }}</span>
           </div>
         </div>
+        <div class="references text-body2 text-grey q-mt-md q-mb-xs">
+          <div
+            v-for="reference in props.fish.references"
+            v-bind:key="reference"
+          >
+            <a :href="reference.url">{{ reference.title }}</a>
+            <span>&nbsp;</span>
+            <span>{{ reference.baseTitle }}</span>
+          </div>
+        </div>
       </q-card-section>
 
       <q-card-section class="col-5 flex flex-center">
-        <q-img
-          class="rounded-borders"
-          src="https://loremflickr.com/320/240/fish?lock=1"
-        />
+        <div class="carousel-container">
+          <q-carousel
+            animated
+            :arrows="navigationActive"
+            :navigation="navigationActive"
+            infinite
+            v-model="slide"
+            class="rounded-borders"
+          >
+            <q-carousel-slide
+              v-for="(imageSrc, index) in props.fish.images"
+              v-bind:key="index"
+              :name="index"
+              :img-src="imageSrc"
+            />
+          </q-carousel>
+        </div>
       </q-card-section>
     </q-card-section>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import { QCard, QCardSection, QImg } from "quasar";
+import { QCard, QCardSection, QCarousel, QCarouselSlide } from "quasar";
 import type { Environment } from "@/stores/ecosystems";
+import { computed, ref } from "vue";
+
+export interface Reference {
+  title: string;
+  baseTitle: string;
+  url?: string;
+}
 
 export interface FishDetailsData {
   id: string;
@@ -103,11 +133,21 @@ export interface FishDetailsData {
   scientificName: string;
   description: string;
   environment?: Environment;
+  images?: [string];
+  references?: [Reference];
 }
 
 const props = defineProps<{
   fish: FishDetailsData;
 }>();
+const slide = ref(0);
+const navigationActive = computed(() => {
+  return props.fish.images && props.fish.images.length > 1;
+});
 </script>
 
-<style scoped></style>
+<style scoped>
+.carousel-container {
+  width: 100%;
+}
+</style>

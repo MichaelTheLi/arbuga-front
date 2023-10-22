@@ -29,6 +29,8 @@ const plant = computed((): PlantDetailsData | null => {
     title: rawPlant.name,
     scientificName: rawPlant.scientific.species,
     environment: rawPlant.environment,
+    images: rawPlant.specimenImageUrls,
+    references: rawPlant.references,
   };
 });
 

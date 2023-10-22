@@ -94,6 +94,12 @@ export const FullAnimalFragment = gql(/* GraphQL */ `
     scientific {
       species
     }
+    specimenImageUrls
+    references {
+      title
+      baseTitle
+      url
+    }
     environment {
       waterParametersRange {
         min {
@@ -581,6 +587,14 @@ const propagateAnimal = (animalData: any) => {
       },
     },
     description: animalData.description,
+    specimenImageUrls: animalData.specimenImageUrls,
+    references: animalData.references.map((reference: any) => {
+      return {
+        title: reference.title,
+        baseTitle: reference.baseTitle,
+        url: reference.url,
+      };
+    }),
   };
 };
 

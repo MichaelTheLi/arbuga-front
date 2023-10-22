@@ -54,6 +54,7 @@ watch(options, (newOptions) => {
       shortDescription: option.fish.scientific.species,
       description: option.fish.description,
       status: "compatible",
+      mainImage: option.fish.specimenImageUrls[0],
     };
   });
 });

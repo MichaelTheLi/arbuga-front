@@ -87,10 +87,7 @@
       </q-card-section>
 
       <q-card-section class="col-5 flex flex-center">
-        <q-img
-          class="rounded-borders"
-          src="https://loremflickr.com/320/240/aquarium?lock=14"
-        />
+        <q-img class="rounded-borders" :src="props.plant.mainImage" />
       </q-card-section>
     </q-card-section>
   </q-card>
@@ -106,6 +103,7 @@ export interface PlantListCardData {
   scientificName: string;
   description: string;
   environment?: Environment;
+  mainImage?: string;
 }
 
 const props = defineProps<{
