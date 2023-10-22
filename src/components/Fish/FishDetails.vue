@@ -83,10 +83,10 @@
         </div>
         <div class="references text-body2 text-grey q-mt-md q-mb-xs">
           <div
-            v-for="reference in props.fish.references"
-            v-bind:key="reference"
+            v-for="(reference, index) in props.fish.references"
+            v-bind:key="index"
           >
-            <a :href="reference.url">{{ reference.title }}</a>
+            <a :href="reference.url" target="_blank">{{ reference.title }}</a>
             <span>&nbsp;</span>
             <span>{{ reference.baseTitle }}</span>
           </div>
@@ -133,8 +133,8 @@ export interface FishDetailsData {
   scientificName: string;
   description: string;
   environment?: Environment;
-  images?: [string];
-  references?: [Reference];
+  images?: string[];
+  references?: Reference[];
 }
 
 const props = defineProps<{

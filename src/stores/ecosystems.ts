@@ -65,8 +65,8 @@ export interface Fish {
   scientific: Scientific;
   environment?: Environment;
   description: string;
-  specimenImageUrls: [string];
-  references: [Reference];
+  specimenImageUrls: string[];
+  references: Reference[];
 }
 
 export interface Reference {
@@ -98,8 +98,8 @@ export interface Plant {
   scientific: Scientific;
   environment?: Environment;
   description: string;
-  specimenImageUrls: [string];
-  references: [Reference];
+  specimenImageUrls: string[];
+  references: Reference[];
 }
 
 export interface Scientific {

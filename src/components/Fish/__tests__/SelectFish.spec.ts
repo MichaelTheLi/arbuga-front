@@ -19,6 +19,17 @@ const options = [
       scientific: {
         species: "Species 1",
       },
+      specimenImageUrls: [
+        "https://example.com/img1",
+        "https://example.com/img2",
+      ],
+      references: [
+        {
+          title: "Test",
+          baseTitle: "TestBase",
+          url: "https://example.com/ref",
+        },
+      ],
     },
   },
   {
@@ -29,6 +40,17 @@ const options = [
       scientific: {
         species: "Species 2",
       },
+      specimenImageUrls: [
+        "https://example.com/img1",
+        "https://example.com/img2",
+      ],
+      references: [
+        {
+          title: "Test",
+          baseTitle: "TestBase",
+          url: "https://example.com/ref",
+        },
+      ],
     },
   },
   {
@@ -39,6 +61,17 @@ const options = [
       scientific: {
         species: "Species 3",
       },
+      specimenImageUrls: [
+        "https://example.com/img1",
+        "https://example.com/img2",
+      ],
+      references: [
+        {
+          title: "Test",
+          baseTitle: "TestBase",
+          url: "https://example.com/ref",
+        },
+      ],
     },
   },
 ];
