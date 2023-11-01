@@ -5,9 +5,9 @@ import typeDefs from "./src/gateway/schema";
 const config: CodegenConfig = {
   overwrite: true,
   schema: "https://api.werel.ru/query",
-  documents: ["src/**/*.vue", "src/**/*.ts", "!src/background/**/*.ts"],
+  documents: ["src/background/**/*.ts"],
   generates: {
-    "./src/__generated__/": {
+    "./src/background/__generated__/": {
       schema: typeDefs,
       preset: "client",
       config: {
@@ -19,7 +19,7 @@ const config: CodegenConfig = {
         gqlTagName: "gql",
       },
     },
-    "./graphql.schema.json": {
+    "./src/background/graphql.schema.json": {
       plugins: ["introspection"],
     },
   },

@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
+    "sitemap-build": "tsc -p tsconfig.background.json",
+    "sitemap-run": "node dist_background/src/background/sitemap/sitemap.js",
+    "sitemap": "run-s sitemap-build sitemap-run",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
     "test:coverage": "vitest --environment jsdom --root src/ --run --coverage",
@@ -13,7 +16,8 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "codegen-background": "graphql-codegen --config codegen.background.ts"
   },
   "dependencies": {
     "@apollo/client": "^3.7.5",

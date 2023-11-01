@@ -11,7 +11,7 @@ import router from "./router";
 
 // import "./assets/main.css";
 import { DefaultApolloClient } from "@vue/apollo-composable";
-import { apolloClient } from "@/gateway/client_apollo";
+import { createClient } from "@/gateway/client_apollo";
 
 import { i18nMessages, numberFormats } from "./config";
 
@@ -24,6 +24,23 @@ const i18n = createI18n({
   messages: i18nMessages,
 });
 
+class LocalStorageTokenStorage {
+  getToken(): string | null {
+    return localStorage.getItem("token");
+  }
+  setToken(token: string | null): void {
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }
+}
+
+const { apolloClient } = createClient(
+  import.meta.env.VITE_BACKEND_URL,
+  new LocalStorageTokenStorage()
+);
 // noinspection JSUnusedGlobalSymbols
 const app = createApp({
   setup() {
