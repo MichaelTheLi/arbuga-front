@@ -40,7 +40,7 @@ useMeta(() => {
     meta: {
       description: {
         name: "description",
-        content: plant.value?.description,
+        content: plant.value?.scientificName,
       },
       keywords: {
         name: "keywords",

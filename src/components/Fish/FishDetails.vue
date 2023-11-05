@@ -10,77 +10,90 @@
             </div>
           </div>
         </div>
-        <div class="text-body1 text-grey q-mb-md">
-          {{ props.fish.description }}
-        </div>
-        <div class="text-body1 text-grey q-mb-xs">
-          <div>
-            <span>{{ $t("plants.info.temperature") }}:&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.min.temperature ||
-                  0,
-                "decimal"
-              )
-            }}</span>
-            <span>&nbsp;-&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.max.temperature ||
-                  0,
-                "decimal"
-              )
-            }}</span>
-          </div>
-          <div>
-            <span>{{ $t("plants.info.ph") }}:&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.min.ph || 0,
-                "decimal"
-              )
-            }}</span>
-            <span>&nbsp;-&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.max.ph || 0,
-                "decimal"
-              )
-            }}</span>
-          </div>
-          <div>
-            <span>{{ $t("plants.info.gh") }}:&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.min.gh || 0,
-                "decimal"
-              )
-            }}</span>
-            <span>&nbsp;-&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.max.gh || 0,
-                "decimal"
-              )
-            }}</span>
-          </div>
-          <div>
-            <span>{{ $t("plants.info.kh") }}:&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.min.kh || 0,
-                "decimal"
-              )
-            }}</span>
-            <span>&nbsp;-&nbsp;</span>
-            <span>{{
-              $n(
-                props.fish.environment?.waterParametersRange.max.kh || 0,
-                "decimal"
-              )
-            }}</span>
-          </div>
-        </div>
+        <table class="text-body1 text-grey q-mb-xs">
+          <tr>
+            <td>{{ $t("plants.info.temperature") }}:&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.min
+                    .temperature || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+            <td>&nbsp;-&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.max
+                    .temperature || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td>{{ $t("plants.info.ph") }}:&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.min.ph || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+            <td>&nbsp;-&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.max.ph || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td>{{ $t("plants.info.gh") }}:&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.min.gh || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+            <td>&nbsp;-&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.max.gh || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+          </tr>
+          <tr>
+            <td>{{ $t("plants.info.kh") }}:&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.min.kh || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+            <td>&nbsp;-&nbsp;</td>
+            <td>
+              {{
+                $n(
+                  props.fish.environment?.waterParametersRange.max.kh || 0,
+                  "decimal"
+                )
+              }}
+            </td>
+          </tr>
+        </table>
         <div class="references text-body2 text-grey q-mt-md q-mb-xs">
           <div
             v-for="(reference, index) in props.fish.references"
@@ -149,5 +162,8 @@ const navigationActive = computed(() => {
 <style scoped>
 .carousel-container {
   width: 100%;
+}
+table td {
+  text-align: right;
 }
 </style>

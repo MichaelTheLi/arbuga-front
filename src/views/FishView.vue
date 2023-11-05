@@ -40,7 +40,7 @@ useMeta(() => {
     meta: {
       description: {
         name: "description",
-        content: fish.value?.description,
+        content: fish.value?.scientificName,
       },
       keywords: {
         name: "keywords",

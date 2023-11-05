@@ -61,12 +61,13 @@ useMeta({
   <q-page padding>
     <h2>{{ $t("fish.explore.heading") }}</h2>
     <h4 class="text-warning">{{ $t("project.section_wip") }}</h4>
-    <q-infinite-scroll @load="onLoad" :offset="1500" :debounce="0">
-      <div
-        v-for="(fish, index) in list"
-        :key="index"
-        class="q-pa-md q-gutter-md"
-      >
+    <q-infinite-scroll
+      @load="onLoad"
+      :offset="1500"
+      :debounce="0"
+      class="q-pa-md row items-start q-gutter-md"
+    >
+      <div v-for="(fish, index) in list" :key="index" class="list-item">
         <FishListCard :fish="fish" />
       </div>
       <template v-slot:loading>
@@ -77,3 +78,10 @@ useMeta({
     </q-infinite-scroll>
   </q-page>
 </template>
+
+<style scoped>
+.list-item {
+  width: 100%;
+  max-width: 300px;
+}
+</style>
